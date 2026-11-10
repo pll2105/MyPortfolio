@@ -98,9 +98,9 @@
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after { width: 100%; }
 
-/* Theme toggle — .btn-icon from glass.css handles all styling */
-.nav-theme-btn {
-  composes: btn-icon;
+/* Theme toggle + mobile menu — .p-btn-icon from glass.css handles all styling */
+.nav-theme-btn,
+.nav-mobile-toggle {
   background:              var(--glass-fill);
   backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -112,8 +112,6 @@
   border-bottom-color:     var(--glass-border-rest);
   border-radius:           var(--r-md);
   padding:                 0;
-  width:                   40px;
-  height:                  40px;
   display:                 flex;
   align-items:             center;
   justify-content:         center;
@@ -127,45 +125,13 @@
     background   var(--ease-fast);
 }
 
-.nav-theme-btn:hover {
-  color:               var(--accent);
-  background:          var(--glass-fill-hover);
-  border-top-color:    rgba(255,255,255,0.28);
-  border-left-color:   rgba(255,109,41,0.30);
-  border-right-color:  rgba(255,109,41,0.30);
-  border-bottom-color: rgba(255,109,41,0.30);
-}
+.nav-theme-btn { width: 40px; height: 40px; }
+.nav-mobile-toggle { width: 44px; height: 44px; display: none; }
 
-.nav-theme-btn svg { width: 16px; height: 16px; }
+.nav-theme-btn svg  { width: 16px; height: 16px; }
+.nav-mobile-toggle svg { width: 20px; height: 20px; }
 
-/* Mobile nav toggle — .btn-icon styles from glass.css */
-.nav-mobile-toggle {
-  display:                 none;
-  background:              var(--glass-fill);
-  backdrop-filter:         blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border:                  1px solid transparent;
-  border-top-color:        var(--glass-border-top);
-  border-left-color:       var(--glass-border-rest);
-  border-right-color:      var(--glass-border-rest);
-  border-bottom-color:     var(--glass-border-rest);
-  color:                   var(--muted);
-  border-radius:           var(--r-md);
-  padding:                 0;
-  width:                   44px;
-  height:                  44px;
-  align-items:             center;
-  justify-content:         center;
-  box-shadow:
-    0 0 16px rgba(255,109,41,0.12),
-    0 2px 10px rgba(0,0,0,0.50),
-    inset 0 1px 0 rgba(255,255,255,0.10);
-  transition:
-    color        var(--ease-fast),
-    border-color var(--ease-fast),
-    background   var(--ease-fast);
-}
-
+.nav-theme-btn:hover,
 .nav-mobile-toggle:hover {
   color:               var(--accent);
   background:          var(--glass-fill-hover);
@@ -174,8 +140,6 @@
   border-right-color:  rgba(255,109,41,0.30);
   border-bottom-color: rgba(255,109,41,0.30);
 }
-
-.nav-mobile-toggle svg { width: 20px; height: 20px; }
 
 @media (max-width: 767px) {
   .top-nav { padding: 0 var(--s2); }

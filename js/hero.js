@@ -169,7 +169,7 @@ function renderNav() {
           <a href="${l.href}">${l.label}</a>
         </li>`).join('')}
       <li>
-        <button class="nav-theme-btn theme-btn"
+        <button class="nav-theme-btn p-btn-icon theme-btn"
           type="button" aria-label="Switch theme">
           ${Icons.sun}
         </button>
@@ -177,13 +177,13 @@ function renderNav() {
     </ul>
 
     <div style="display:flex; gap:.5rem; align-items:center;">
-      <button class="nav-theme-btn theme-btn" id="theme-btn-mobile"
+      <button class="nav-theme-btn p-btn-icon theme-btn" id="theme-btn-mobile"
         type="button" aria-label="Switch theme"
         style="display:none;">
         ${Icons.sun}
       </button>
       <button
-        class="nav-mobile-toggle"
+        class="nav-mobile-toggle p-btn-icon"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#mobile-drawer"

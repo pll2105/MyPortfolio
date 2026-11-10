@@ -1,26 +1,22 @@
 /* ==========================================================================
-   glass.css — Glassmorphism component system
-   Inspo: dark capsule with solid base, frosted white border, orange outer glow
+   glass.css — Glassmorphism components
+   Uses .p-btn prefix to avoid Bootstrap .btn specificity conflicts.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    TOKENS
    -------------------------------------------------------------------------- */
 :root {
-  /* Glass fill — dark enough to always be visible, never disappears */
-  --glass-fill:        #1e1519;              /* dark near-black warm tint   */
-  --glass-fill-hover:  #2b1c18;              /* slightly warmer on hover    */
-  --glass-border-top:  rgba(255,255,255,0.18); /* bright top-edge highlight  */
-  --glass-border-rest: rgba(255,255,255,0.08); /* dimmer sides + bottom      */
+  --glass-fill:        #1e1519;
+  --glass-fill-hover:  #2b1c18;
+  --glass-border-top:  rgba(255,255,255,0.18);
+  --glass-border-rest: rgba(255,255,255,0.08);
   --glass-blur:        16px;
-
-  /* Outer glow — the orange halo from the inspo */
   --glass-glow:
-    0 0 0 1px rgba(255,255,255,0.08),          /* border ring                */
-    0 0 24px 2px rgba(255,109,41,0.18),        /* soft orange outer halo     */
-    0 4px 20px rgba(0,0,0,0.60),               /* depth shadow               */
-    inset 0 1px 0 rgba(255,255,255,0.12);      /* inner top highlight        */
-
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 24px 2px rgba(255,109,41,0.18),
+    0 4px 20px rgba(0,0,0,0.60),
+    inset 0 1px 0 rgba(255,255,255,0.12);
   --glass-glow-hover:
     0 0 0 1px rgba(255,109,41,0.35),
     0 0 36px 6px rgba(255,109,41,0.32),
@@ -46,13 +42,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   GLASS CARD — content tiles (projects, certs, skills)
+   GLASS CARD
    -------------------------------------------------------------------------- */
 .glass-card {
   background:              var(--glass-fill);
   backdrop-filter:         blur(var(--glass-blur)) saturate(140%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  /* Multi-stop border: bright on top, dim on sides */
   border:                  1px solid transparent;
   border-top-color:        var(--glass-border-top);
   border-left-color:       var(--glass-border-rest);
@@ -61,11 +56,8 @@
   border-radius:           var(--r-lg);
   box-shadow:              var(--glass-glow);
   padding:                 var(--s3);
-  transition:
-    background   var(--ease-mid),
-    box-shadow   var(--ease-mid),
-    transform    var(--ease-mid),
-    border-color var(--ease-mid);
+  transition: background var(--ease-mid), box-shadow var(--ease-mid),
+              transform var(--ease-mid), border-color var(--ease-mid);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -82,7 +74,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   BASE GLASS LAYER — generic container
+   GLASS (generic container)
    -------------------------------------------------------------------------- */
 .glass {
   background:              var(--glass-fill);
@@ -98,10 +90,10 @@
 }
 
 /* --------------------------------------------------------------------------
-   BUTTONS — base
-   All buttons share: pill shape, Krona One, 44px touch target, lift on hover
+   BUTTONS  —  .p-btn base + modifiers
+   Prefixed to avoid Bootstrap .btn specificity collisions.
    -------------------------------------------------------------------------- */
-.btn {
+.p-btn {
   display:                 inline-flex;
   align-items:             center;
   justify-content:         center;
@@ -127,21 +119,19 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover { transform: translateY(-2px); }
+  .p-btn:hover { transform: translateY(-2px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: background var(--ease-fast), color var(--ease-fast); }
-  .btn:hover { transform: none; }
+  .p-btn { transition: background var(--ease-fast), color var(--ease-fast); }
+  .p-btn:hover { transform: none; }
 }
 
-/* --------------------------------------------------------------------------
-   .btn-solid — filled orange, primary CTA
-   -------------------------------------------------------------------------- */
-.btn-solid {
-  background: var(--accent);
-  color:      var(--on-accent);
-  border:     1px solid transparent;
+/* Solid — filled orange */
+.p-btn-solid {
+  background:       var(--accent);
+  color:            var(--on-accent);
+  border:           1px solid transparent;
   border-top-color: rgba(255,255,255,0.20);
   box-shadow:
     0 0 20px rgba(255,109,41,0.40),
@@ -149,19 +139,16 @@
     inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
-.btn-solid:hover {
-  color:      var(--on-accent);
+.p-btn-solid:hover {
+  color: var(--on-accent);
   box-shadow:
     0 0 32px rgba(255,109,41,0.65),
     0 8px 24px rgba(0,0,0,0.50),
     inset 0 1px 0 rgba(255,255,255,0.22);
 }
 
-/* --------------------------------------------------------------------------
-   .btn-ghost — the capsule from the inspo image
-   Dark fill, frosted border, orange outer glow — always visible
-   -------------------------------------------------------------------------- */
-.btn-ghost {
+/* Ghost — dark glass capsule with orange glow (matches inspo) */
+.p-btn-ghost {
   background:              var(--glass-fill);
   backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -174,7 +161,7 @@
   box-shadow:              var(--glass-glow);
 }
 
-.btn-ghost:hover {
+.p-btn-ghost:hover {
   background:          var(--glass-fill-hover);
   color:               var(--text);
   border-top-color:    rgba(255,255,255,0.28);
@@ -184,10 +171,8 @@
   box-shadow:          var(--glass-glow-hover);
 }
 
-/* --------------------------------------------------------------------------
-   .btn-icon — 40×40 glass square (theme toggle, close, menu)
-   -------------------------------------------------------------------------- */
-.btn-icon {
+/* Icon — 40×40 glass square (theme toggle, hamburger) */
+.p-btn-icon {
   background:              var(--glass-fill);
   backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -218,7 +203,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-icon:hover {
+.p-btn-icon:hover {
   color:               var(--accent);
   background:          var(--glass-fill-hover);
   border-top-color:    rgba(255,255,255,0.28);
@@ -231,10 +216,10 @@
     inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
-.btn-icon svg { width: 16px; height: 16px; pointer-events: none; }
+.p-btn-icon svg { width: 16px; height: 16px; pointer-events: none; }
 
 /* --------------------------------------------------------------------------
-   GLASS NAV — nav bar glass (used by .top-nav.scrolled in hero.css)
+   GLASS NAV
    -------------------------------------------------------------------------- */
 .glass-nav,
 .top-nav.scrolled {
@@ -255,7 +240,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   GLASS PILL — tech stack tag / inline badge
+   GLASS PILL — tech stack tag
    -------------------------------------------------------------------------- */
 .glass-pill {
   display:                 inline-flex;
@@ -279,6 +264,6 @@
 }
 
 .glass-pill:hover {
-  color:       var(--accent);
-  box-shadow:  0 0 10px rgba(255,109,41,0.20);
+  color:      var(--accent);
+  box-shadow: 0 0 10px rgba(255,109,41,0.20);
 }
