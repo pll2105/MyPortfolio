@@ -22,9 +22,13 @@
   --accent-dim:  rgba(45, 212, 191, 0.12);
   --accent-glow: rgba(45, 212, 191, 0.20);
 
-  /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  /* Typography
+     --font-display : Krona One  — titles, nav, headings, section labels
+     --font-sans    : Inter      — body copy, subtexts, captions, UI labels
+     --font-mono    : system monospace — code tags, tech stack tags           */
+  --font-display: 'Krona One', system-ui, sans-serif;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 
   /* Spacing (8px scale) */
   --s1:  0.5rem;   /*  8px */

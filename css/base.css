@@ -23,13 +23,25 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-sans);  /* Inter — body copy, subtexts */
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.65;
   min-height: 100dvh;
   overflow-x: hidden;
   transition: background-color var(--ease-mid), color var(--ease-mid);
+}
+
+/*
+   FONT RULE (apply consistently across all pages):
+   --font-display (Krona One) → titles, section headings, nav links, logo
+   --font-sans    (Inter)     → body paragraphs, subtexts, labels, captions
+   --font-mono                → code, tech stack tags
+*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Krona One is a single-weight face */
+  line-height: 1.25;
 }
 
 img, svg, video { display: block; max-width: 100%; }

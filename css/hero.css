@@ -53,10 +53,11 @@
 
 /* Logo / monogram */
 .nav-logo {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400; /* Krona One is a single-weight display face */
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -81,9 +82,12 @@
 }
 
 .nav-links a {
-  font-size: 0.9375rem;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;  /* slightly smaller — Krona One reads large at display size */
+  font-weight: 400;
   color: var(--muted);
   text-decoration: none;
+  letter-spacing: 0.03em;
   transition: color var(--ease-fast);
   position: relative;
 }
@@ -173,11 +177,14 @@
 }
 
 .drawer-nav a {
-  font-size: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 400;
   color: var(--muted);
   padding: 0.625rem var(--s3);
   transition: color var(--ease-fast), background var(--ease-fast);
   text-decoration: none;
+  letter-spacing: 0.02em;
 }
 
 .drawer-nav a:hover {
@@ -255,8 +262,9 @@
 
 /* Greeting line: "Hi! ✌️" */
 .hero-greeting {
+  font-family: var(--font-display);
   font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--accent);
   margin-bottom: var(--s2);
   display: flex;
@@ -268,19 +276,22 @@
 
 /* "my name is [NAME]" line */
 .hero-name-line {
+  font-family: var(--font-display);
   font-size: clamp(1.125rem, 2.5vw, 1.5rem);
   color: var(--muted);
   margin-bottom: 0.25rem;
   line-height: 1.4;
+  font-weight: 400;
 }
 
 .hero-name-line strong {
   color: var(--text);
-  font-weight: 600;
+  font-weight: 400; /* Krona One has no bold weight — inherits the display look */
 }
 
 /* Tagline / hero line */
 .hero-tagline {
+  font-family: var(--font-display);
   font-size: clamp(1rem, 2vw, 1.3125rem);
   color: var(--accent);
   font-weight: 400;
