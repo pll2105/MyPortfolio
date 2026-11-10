@@ -41,14 +41,15 @@
 }
 
 .top-nav.scrolled {
-  background: rgba(22, 19, 22, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 var(--border);
+  background:          rgba(22, 19, 22, 0.70);
+  backdrop-filter:     blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom:       1px solid var(--glass-border);
+  box-shadow:          0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 [data-theme="light"] .top-nav.scrolled {
-  background: rgba(255, 245, 239, 0.90);
+  background: rgba(255, 245, 239, 0.80);
 }
 
 /* Logo / monogram */
@@ -107,37 +108,57 @@
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after { width: 100%; }
 
-/* Theme toggle in nav */
+/* Theme toggle — uses .btn-icon from glass.css */
 .nav-theme-btn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  color: var(--muted);
-  padding: 0.375rem 0.5rem;
-  display: flex;
-  align-items: center;
-  transition: color var(--ease-fast), border-color var(--ease-fast);
+  composes: btn-icon; /* fallback explicit styles below */
+  background:   var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border:       1px solid var(--glass-border);
+  color:        var(--muted);
+  border-radius: var(--r-md);
+  padding:      0;
+  width:        40px;
+  height:       40px;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  box-shadow:   0 2px 10px rgba(0,0,0,0.30),
+                0 1px 0 rgba(255,255,255,0.07) inset;
+  transition:   color var(--ease-fast), border-color var(--ease-fast),
+                background var(--ease-fast);
 }
 
 .nav-theme-btn:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color:        var(--accent);
+  border-color: rgba(255, 109, 41, 0.40);
+  background:   var(--glass-bg-hover);
 }
 
 .nav-theme-btn svg { width: 16px; height: 16px; }
 
-/* Mobile nav toggle */
+/* Mobile nav toggle — uses .btn-icon styles from glass.css */
 .nav-mobile-toggle {
   display: none;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  color: var(--muted);
-  padding: 0.375rem;
-  align-items: center;
-  min-width: 44px;
-  min-height: 44px;
+  background:   var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border:       1px solid var(--glass-border);
+  color:        var(--muted);
+  border-radius: var(--r-md);
+  padding:      0;
+  width:        44px;
+  height:       44px;
+  align-items:  center;
   justify-content: center;
+  box-shadow:   0 2px 10px rgba(0,0,0,0.30),
+                0 1px 0 rgba(255,255,255,0.07) inset;
+  transition:   color var(--ease-fast), border-color var(--ease-fast);
+}
+
+.nav-mobile-toggle:hover {
+  color: var(--accent);
+  border-color: rgba(255, 109, 41, 0.40);
 }
 
 .nav-mobile-toggle svg { width: 20px; height: 20px; }
@@ -152,10 +173,19 @@
    3. MOBILE DRAWER (offcanvas) — Bootstrap-powered
    -------------------------------------------------------------------------- */
 #mobile-drawer.offcanvas {
-  background: var(--surface);
-  color: var(--text);
-  border-right: 1px solid var(--border);
-  width: min(260px, 80vw);
+  background:          rgba(22, 19, 22, 0.80);
+  backdrop-filter:     blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-right:        1px solid var(--glass-border);
+  box-shadow:          4px 0 32px rgba(0, 0, 0, 0.50);
+  color:               var(--text);
+  width:               min(260px, 80vw);
+}
+
+[data-theme="light"] #mobile-drawer.offcanvas {
+  background: rgba(255, 245, 239, 0.88);
+  border-right: 1px solid var(--glass-border);
+  box-shadow:   4px 0 32px rgba(69, 48, 39, 0.15);
 }
 
 #mobile-drawer .offcanvas-header {
@@ -311,38 +341,8 @@
 /* Accent word highlight inside bio */
 .hero-bio .hl { color: var(--accent); }
 
-/* CTA button */
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--on-accent);
-  background: var(--accent);
-  border: none;
-  border-radius: var(--r-sm);
-  padding: 0.875rem 1.75rem;
-  text-decoration: none;
-  transition: opacity var(--ease-fast), transform var(--ease-fast);
-  align-self: flex-start;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hero-cta:hover {
-    opacity: 0.88;
-    transform: translateY(-2px);
-    color: var(--on-accent);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-cta { transition: opacity var(--ease-fast); }
-  .hero-cta:hover { transform: none; }
-}
+/* CTA — uses shared .btn .btn-solid from glass.css */
+/* pill shape and hover lift already handled globally */
 
 /* --------------------------------------------------------------------------
    6. HERO PHOTO — right column, bleeds to edge
