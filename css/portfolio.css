@@ -463,47 +463,120 @@
 }
 
 /* --------------------------------------------------------------------------
-   C. STATS ROW
+   C. TECH LOGOS ROW  ("I'M GOOD AT THIS")
    -------------------------------------------------------------------------- */
-.stats-section {
+.tech-section {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: var(--s4) 0;
+  padding: var(--s5) 0;
   background: var(--surface);
+  overflow: hidden;
 }
 
-.stats-inner {
+.tech-inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--s4);
-  display: flex;
-  justify-content: space-around;
-  gap: var(--s4);
-  flex-wrap: wrap;
 }
 
-@media (max-width: 480px) { .stats-inner { padding: 0 var(--s2); gap: var(--s3); } }
+@media (max-width: 480px) { .tech-inner { padding: 0 var(--s2); } }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  text-align: center;
-}
-
-.stat-number {
+.tech-label {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--s3);
 }
 
-.stat-label {
-  font-size: 0.875rem;
-  color: var(--muted);
-  font-weight: 400;
+.tech-logos {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px; /* prevent clip of drop-shadow */
+}
+
+.tech-logos::-webkit-scrollbar { display: none; }
+
+/* Each logo is a link */
+.tech-logo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  position: relative;
+  transition: transform 220ms ease, filter 220ms ease;
+  /* tooltip via title attribute — enhanced with custom tooltip below */
+}
+
+.tech-logo-btn img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+  /* slightly desaturate at rest */
+  filter: saturate(0.85);
+  transition: filter 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tech-logo-btn:hover {
+    transform: translateY(-6px) scale(1.12);
+  }
+
+  .tech-logo-btn:hover img {
+    filter: saturate(1) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18));
+  }
+
+  /* Custom tooltip */
+  .tech-logo-btn::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 3px 8px;
+    border-radius: var(--r-sm);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease, transform 150ms ease;
+    z-index: 10;
+  }
+
+  .tech-logo-btn:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-logo-btn,
+  .tech-logo-btn img { transition: none; }
+  .tech-logo-btn:hover { transform: none; }
+}
+
+/* GitHub logo is black — invert in dark mode so it stays visible */
+[data-theme="dark"] .tech-logo-btn[data-name="GitHub"] img {
+  filter: saturate(0) invert(1) opacity(0.75);
+}
+
+[data-theme="dark"] .tech-logo-btn[data-name="GitHub"]:hover img {
+  filter: saturate(0) invert(1) opacity(1) drop-shadow(0 4px 12px rgba(255,255,255,0.15));
 }
 
 /* --------------------------------------------------------------------------

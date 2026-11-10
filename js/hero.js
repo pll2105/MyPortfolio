@@ -5,7 +5,7 @@
 
 import {
   meta, navLinks, stats, projects, projectFilters,
-  skills, skillCards, certifications, roleLens, terminalLines,
+  skills, skillCards, certifications, roleLens, terminalLines, techLogos,
 } from './data.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -718,6 +718,30 @@ function initScrollspy() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// TECH LOGOS ROW
+// ─────────────────────────────────────────────────────────────────────────────
+function renderTechLogos() {
+  const el = document.getElementById('tech-logos');
+  if (!el) return;
+
+  el.innerHTML = techLogos.map(logo => `
+    <a href="${logo.url}"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="tech-logo-btn"
+       role="listitem"
+       data-name="${logo.name}"
+       aria-label="${logo.name} — open official site">
+      <img src="${logo.img}"
+           alt="${logo.name} logo"
+           width="48" height="48"
+           loading="lazy"
+           decoding="async"
+           onerror="this.style.display='none'">
+    </a>`).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────────────────────
 function init() {
@@ -731,7 +755,7 @@ function init() {
   renderLens('role-lens-strip');
   renderLens('role-lens-desktop');
   renderHero();
-  renderStats();
+  renderTechLogos();
   renderFilterChips();
   renderProjectGrid();
   renderSkillCards();

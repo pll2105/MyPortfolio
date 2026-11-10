@@ -379,6 +379,65 @@ export const roleLens = [
 ];
 
 // ---------------------------------------------------------------------------
+// TECH LOGOS ROW  ("I'm good at this")
+// img: URL to official logo (CDN — no local files needed)
+// url: official site — opens in new tab on click
+// name: shown as tooltip on hover
+// ---------------------------------------------------------------------------
+export const techLogos = [
+  {
+    name: "HTML5",
+    url:  "https://developer.mozilla.org/en-US/docs/Web/HTML",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+  },
+  {
+    name: "CSS3",
+    url:  "https://developer.mozilla.org/en-US/docs/Web/CSS",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  },
+  {
+    name: "JavaScript",
+    url:  "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+  },
+  {
+    name: "React",
+    url:  "https://react.dev",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  },
+  {
+    name: "Tailwind CSS",
+    url:  "https://tailwindcss.com",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+  },
+  {
+    name: "Java",
+    url:  "https://www.java.com",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+  },
+  {
+    name: "Flutter",
+    url:  "https://flutter.dev",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+  },
+  {
+    name: "Supabase",
+    url:  "https://supabase.com",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",
+  },
+  {
+    name: "Figma",
+    url:  "https://figma.com",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+  },
+  {
+    name: "GitHub",
+    url:  "https://github.com",
+    img:  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+  },
+];
+
+// ---------------------------------------------------------------------------
 // TERMINAL LINES (typing animation)
 // type: "prompt" | "output" | "output-name" | "output-accent" | "blinking"
 // ---------------------------------------------------------------------------
