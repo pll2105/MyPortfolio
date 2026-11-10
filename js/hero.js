@@ -274,6 +274,14 @@ function renderSocialRail() {
     <a href="${meta.linkedin}" target="_blank" rel="noopener noreferrer"
        aria-label="LinkedIn profile">${Icons.linkedin}</a>
   `;
+
+  // Also populate the right-side email rail
+  const emailLink = document.getElementById('rail-email');
+  if (emailLink) {
+    emailLink.href = `mailto:${meta.email}`;
+    emailLink.textContent = meta.email;
+    emailLink.setAttribute('aria-label', `Send email to ${meta.email}`);
+  }
 }
 
 // ---------------------------------------------------------------------------

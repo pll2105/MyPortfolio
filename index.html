@@ -49,10 +49,21 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════════════════════════════
-       FIXED SOCIAL RAIL (desktop)
+       FIXED SOCIAL RAIL — left side (desktop only)
        ═══════════════════════════════════════════════════════════════════ -->
-  <aside id="social-rail" class="social-rail" aria-label="Social links">
+  <aside id="social-rail" class="social-rail social-rail--left" aria-label="Social links">
     <!-- Populated by hero.js → renderSocialRail() -->
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FIXED EMAIL RAIL — right side (desktop only)
+       ═══════════════════════════════════════════════════════════════════ -->
+  <aside class="social-rail social-rail--right" aria-label="Email contact">
+    <a href="mailto:your@email.com" id="rail-email"
+       class="rail-email"
+       aria-label="Send email">
+      your@email.com
+    </a>
   </aside>
 
   <!-- ═══════════════════════════════════════════════════════════════════

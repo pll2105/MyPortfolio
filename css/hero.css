@@ -28,7 +28,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 100;             /* above everything */
   height: var(--nav-h);
   display: flex;
   align-items: center;
@@ -207,11 +207,12 @@
   position: fixed;
   left: var(--s3);
   bottom: 0;
-  z-index: 40;
+  z-index: 60;              /* above hero, below nav (z-index:50) */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--s2);
+  padding-bottom: 0;        /* line handles the bottom spacing */
 }
 
 /* Vertical line below icons */
@@ -219,9 +220,8 @@
   content: '';
   display: block;
   width: 1px;
-  height: 80px;
-  background: var(--muted);
-  opacity: 0.4;
+  height: 96px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
   margin-top: var(--s1);
 }
 
@@ -229,7 +229,13 @@
   color: var(--muted);
   display: flex;
   align-items: center;
-  transition: color var(--ease-fast), transform var(--ease-fast);
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  transition: color var(--ease-fast), transform var(--ease-fast),
+              background var(--ease-fast);
+  text-decoration: none;
 }
 
 .social-rail a svg { width: 18px; height: 18px; }
@@ -238,12 +244,42 @@
   .social-rail a:hover {
     color: var(--accent);
     transform: translateY(-3px);
+    background: var(--glass-fill);
   }
 }
 
-/* Hide on narrow screens — social links move into drawer */
+/* Hide on mobile — social links available in drawer */
 @media (max-width: 767px) {
   .social-rail { display: none; }
+}
+
+/* Left rail (social icons) */
+.social-rail--left {
+  left: var(--s3);
+  right: auto;
+}
+
+/* Right rail (email — rotated) */
+.social-rail--right {
+  right: var(--s3);
+  left: auto;
+}
+
+.rail-email {
+  font-family:    var(--font-mono);
+  font-size:      0.6875rem;
+  letter-spacing: 0.12em;
+  color:          var(--muted);
+  text-decoration: none;
+  writing-mode:   vertical-rl;   /* rotate text sideways */
+  transform:      rotate(180deg); /* read bottom-to-top like the inspo */
+  transition:     color var(--ease-fast), transform var(--ease-fast);
+  padding-bottom: var(--s1);
+  white-space:    nowrap;
+}
+
+.rail-email:hover {
+  color: var(--accent);
 }
 
 /* --------------------------------------------------------------------------
