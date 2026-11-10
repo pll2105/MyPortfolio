@@ -1,0 +1,17 @@
+/*
+ * tailwind-input.css — Tailwind CLI entry point for production builds.
+ *
+ * Usage (after npm install -D tailwindcss):
+ *   npx tailwindcss -i ./css/tailwind-input.css -o ./css/tailwind.css --minify
+ *
+ * Then in index.html, replace:
+ *   <script src="https://cdn.tailwindcss.com"></script>
+ * with:
+ *   <link rel="stylesheet" href="css/tailwind.css">
+ *
+ * And remove the window.tailwind config <script> block.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
