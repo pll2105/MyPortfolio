@@ -7,37 +7,37 @@
    TOKENS
    -------------------------------------------------------------------------- */
 :root {
-  --glass-fill:        #1e1519;
-  --glass-fill-hover:  #2b1c18;
-  --glass-border-top:  rgba(255,255,255,0.18);
-  --glass-border-rest: rgba(255,255,255,0.08);
+  --glass-fill:        #1a2e38;    /* slightly lighter than Mirage bg */
+  --glass-fill-hover:  #1f3a46;
+  --glass-border-top:  rgba(234,240,239,0.18);  /* Wild Sand tint */
+  --glass-border-rest: rgba(234,240,239,0.07);
   --glass-blur:        16px;
   --glass-glow:
-    0 0 0 1px rgba(255,255,255,0.08),
-    0 0 24px 2px rgba(255,109,41,0.18),
-    0 4px 20px rgba(0,0,0,0.60),
-    inset 0 1px 0 rgba(255,255,255,0.12);
+    0 0 0 1px rgba(234,240,239,0.08),
+    0 0 24px 2px rgba(255,91,4,0.16),
+    0 4px 20px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(234,240,239,0.10);
   --glass-glow-hover:
-    0 0 0 1px rgba(255,109,41,0.35),
-    0 0 36px 6px rgba(255,109,41,0.32),
-    0 8px 32px rgba(0,0,0,0.70),
-    inset 0 1px 0 rgba(255,255,255,0.16);
+    0 0 0 1px rgba(255,91,4,0.35),
+    0 0 36px 6px rgba(255,91,4,0.30),
+    0 8px 32px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(234,240,239,0.14);
 }
 
 [data-theme="light"] {
-  --glass-fill:        rgba(255,245,239,0.72);
-  --glass-fill-hover:  rgba(255,245,239,0.90);
+  --glass-fill:        rgba(234,240,239,0.72);
+  --glass-fill-hover:  rgba(234,240,239,0.90);
   --glass-border-top:  rgba(255,255,255,0.90);
   --glass-border-rest: rgba(255,255,255,0.55);
   --glass-glow:
     0 0 0 1px rgba(255,255,255,0.55),
-    0 0 20px 2px rgba(229,90,24,0.12),
-    0 4px 16px rgba(69,48,39,0.14),
+    0 0 20px 2px rgba(229,80,0,0.10),
+    0 4px 16px rgba(22,35,42,0.12),
     inset 0 1px 0 rgba(255,255,255,0.90);
   --glass-glow-hover:
-    0 0 0 1px rgba(229,90,24,0.30),
-    0 0 28px 4px rgba(229,90,24,0.20),
-    0 8px 24px rgba(69,48,39,0.20),
+    0 0 0 1px rgba(229,80,0,0.28),
+    0 0 28px 4px rgba(229,80,0,0.18),
+    0 8px 24px rgba(22,35,42,0.18),
     inset 0 1px 0 rgba(255,255,255,0.90);
 }
 
@@ -134,7 +134,7 @@
   border:           1px solid transparent;
   border-top-color: rgba(255,255,255,0.20);
   box-shadow:
-    0 0 20px rgba(255,109,41,0.40),
+    0 0 20px rgba(255,91,4,0.40),
     0 4px 16px rgba(0,0,0,0.40),
     inset 0 1px 0 rgba(255,255,255,0.18);
 }
@@ -142,7 +142,7 @@
 .p-btn-solid:hover {
   color: var(--on-accent);
   box-shadow:
-    0 0 32px rgba(255,109,41,0.65),
+    0 0 32px rgba(255,91,4,0.65),
     0 8px 24px rgba(0,0,0,0.50),
     inset 0 1px 0 rgba(255,255,255,0.22);
 }
@@ -165,9 +165,9 @@
   background:          var(--glass-fill-hover);
   color:               var(--text);
   border-top-color:    rgba(255,255,255,0.28);
-  border-left-color:   rgba(255,109,41,0.25);
-  border-right-color:  rgba(255,109,41,0.25);
-  border-bottom-color: rgba(255,109,41,0.25);
+  border-left-color:   rgba(255,91,4,0.25);
+  border-right-color:  rgba(255,91,4,0.25);
+  border-bottom-color: rgba(255,91,4,0.25);
   box-shadow:          var(--glass-glow-hover);
 }
 
@@ -192,7 +192,7 @@
   justify-content:         center;
   cursor:                  pointer;
   box-shadow:
-    0 0 16px rgba(255,109,41,0.12),
+    0 0 16px rgba(255,91,4,0.12),
     0 2px 10px rgba(0,0,0,0.50),
     inset 0 1px 0 rgba(255,255,255,0.10);
   transition:
@@ -207,11 +207,11 @@
   color:               var(--accent);
   background:          var(--glass-fill-hover);
   border-top-color:    rgba(255,255,255,0.28);
-  border-left-color:   rgba(255,109,41,0.30);
-  border-right-color:  rgba(255,109,41,0.30);
-  border-bottom-color: rgba(255,109,41,0.30);
+  border-left-color:   rgba(255,91,4,0.30);
+  border-right-color:  rgba(255,91,4,0.30);
+  border-bottom-color: rgba(255,91,4,0.30);
   box-shadow:
-    0 0 24px rgba(255,109,41,0.28),
+    0 0 24px rgba(255,91,4,0.28),
     0 4px 14px rgba(0,0,0,0.55),
     inset 0 1px 0 rgba(255,255,255,0.14);
 }
@@ -223,20 +223,20 @@
    -------------------------------------------------------------------------- */
 .glass-nav,
 .top-nav.scrolled {
-  background:              rgba(22,19,22,0.78);
+  background:              rgba(22,35,42,0.82);
   backdrop-filter:         blur(20px) saturate(170%);
   -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border-bottom:           1px solid rgba(255,255,255,0.07);
+  border-bottom:           1px solid rgba(234,240,239,0.07);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.04),
+    0 1px 0 rgba(234,240,239,0.04),
     0 4px 24px rgba(0,0,0,0.40);
 }
 
 [data-theme="light"] .glass-nav,
 [data-theme="light"] .top-nav.scrolled {
-  background:    rgba(255,245,239,0.84);
+  background:    rgba(234,240,239,0.88);
   border-bottom: 1px solid rgba(255,255,255,0.70);
-  box-shadow:    0 1px 0 rgba(255,255,255,0.80), 0 4px 16px rgba(69,48,39,0.10);
+  box-shadow:    0 1px 0 rgba(255,255,255,0.80), 0 4px 16px rgba(22,35,42,0.10);
 }
 
 /* --------------------------------------------------------------------------
@@ -265,5 +265,5 @@
 
 .glass-pill:hover {
   color:      var(--accent);
-  box-shadow: 0 0 10px rgba(255,109,41,0.20);
+  box-shadow: 0 0 10px rgba(255,91,4,0.20);
 }

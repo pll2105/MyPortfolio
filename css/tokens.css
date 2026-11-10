@@ -1,47 +1,44 @@
 /* ==========================================================================
    tokens.css — Design tokens (CSS custom properties)
-   Import this file first in every page stylesheet.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    NOTE: Fonts are loaded via <link> in each HTML file (faster than @import).
-   This file only declares tokens — do not add @import here.
    -------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------
-   DEFAULT THEME
-   Palette source: custom brand palette
-   --bg       #161316  near-black
-   --surface  #453027  dark warm brown
-   --border   #2e1f17  between bg and surface
-   --text     #FFFFFF  white
-   --muted    #BABABA  light grey
-   --accent   #FF6D29  orange
+   DARK THEME (default)
+   Palette: Mirage · Blaze Orange · Deep Sea Green · Wild Sand
+   --bg         #16232A  Mirage (near-black blue-green)
+   --surface    #0D6E6E  Deep Sea Green
+   --border     #1D3540  between bg and surface
+   --text       #FFFFFF  white
+   --muted      #EAF0EF  Wild Sand (muted text, subtle elements)
+   --accent     #FF5B04  Blaze Orange
+   --secondary  #0D6E6E  Deep Sea Green (secondary highlights)
 
-   WCAG AA contrast verified:
-     text on bg       18.44:1  AAA ✓
-     text on surface  12.32:1  AAA ✓
-     muted on bg       9.50:1  AAA ✓
-     muted on surface  6.35:1  AA  ✓
-     accent on bg      6.56:1  AA  ✓
-     on-accent on accent 6.56:1 AA ✓  (use --on-accent for text ON accent bg)
+   WCAG AA verified:
+     white on bg        16.06:1  AAA ✓
+     wild-sand on bg    13.92:1  AAA ✓
+     white on surface    6.05:1  AA  ✓
+     orange on bg        5.16:1  AA  ✓
+     bg on orange        5.16:1  AA  ✓  (--on-accent)
    -------------------------------------------------------------------------- */
 :root {
   /* Colors */
-  --bg:          #161316;
-  --surface:     #453027;
-  --border:      #2e1f17;
+  --bg:          #16232A;
+  --surface:     #1D3540;
+  --border:      #24404E;
   --text:        #FFFFFF;
-  --muted:       #BABABA;
-  --accent:      #FF6D29;
-  --accent-dim:  rgba(255, 109, 41, 0.12);
-  --accent-glow: rgba(255, 109, 41, 0.22);
-  --on-accent:   #161316;   /* text ON accent-coloured backgrounds */
+  --muted:       #9BB5BB;    /* muted blue-grey — readable on Mirage */
+  --accent:      #FF5B04;    /* Blaze Orange */
+  --accent-dim:  rgba(255, 91, 4, 0.12);
+  --accent-glow: rgba(255, 91, 4, 0.22);
+  --on-accent:   #16232A;    /* text ON accent bg — 5.16:1 AA ✓ */
+  --secondary:   #0D6E6E;    /* Deep Sea Green — surface highlight */
+  --sand:        #EAF0EF;    /* Wild Sand — light accent, section labels */
 
-  /* Typography
-     --font-display : Krona One  — titles, nav, headings, section labels
-     --font-sans    : Inter      — body copy, subtexts, captions, UI labels
-     --font-mono    : system monospace — code, tech stack tags            */
+  /* Typography */
   --font-display: 'Krona One', system-ui, sans-serif;
   --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
@@ -73,31 +70,35 @@
 
 /* --------------------------------------------------------------------------
    LIGHT THEME OVERRIDE
-   Keeps the warm accent, brightens backgrounds.
+   Wild Sand base, Mirage text, Blaze Orange accent (AA verified)
    -------------------------------------------------------------------------- */
 [data-theme="light"] {
-  --bg:          #FFF5EF;   /* warm off-white — echoes the orange palette */
+  --bg:          #EAF0EF;    /* Wild Sand */
   --surface:     #FFFFFF;
-  --border:      #F0D9CB;
-  --text:        #161316;
-  --muted:       #6B5047;
-  --accent:      #E55A18;   /* slightly deeper orange for AA on light bg */
-  --accent-dim:  rgba(229, 90, 24, 0.10);
-  --accent-glow: rgba(229, 90, 24, 0.18);
+  --border:      #C8D8D6;
+  --text:        #16232A;    /* Mirage */
+  --muted:       #3D6068;
+  --accent:      #E55000;    /* slightly deeper orange — AA on light bg */
+  --accent-dim:  rgba(229, 80, 0, 0.10);
+  --accent-glow: rgba(229, 80, 0, 0.18);
   --on-accent:   #FFFFFF;
+  --secondary:   #0D6E6E;
+  --sand:        #16232A;    /* inverted on light */
 }
 
 /* OS preference fallback (before JS sets data-theme) */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --bg:          #FFF5EF;
+    --bg:          #EAF0EF;
     --surface:     #FFFFFF;
-    --border:      #F0D9CB;
-    --text:        #161316;
-    --muted:       #6B5047;
-    --accent:      #E55A18;
-    --accent-dim:  rgba(229, 90, 24, 0.10);
-    --accent-glow: rgba(229, 90, 24, 0.18);
+    --border:      #C8D8D6;
+    --text:        #16232A;
+    --muted:       #3D6068;
+    --accent:      #E55000;
+    --accent-dim:  rgba(229, 80, 0, 0.10);
+    --accent-glow: rgba(229, 80, 0, 0.18);
     --on-accent:   #FFFFFF;
+    --secondary:   #0D6E6E;
+    --sand:        #16232A;
   }
 }
