@@ -40,17 +40,7 @@
               box-shadow var(--ease-mid);
 }
 
-.top-nav.scrolled {
-  background:          rgba(22, 19, 22, 0.70);
-  backdrop-filter:     blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom:       1px solid var(--glass-border);
-  box-shadow:          0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-[data-theme="light"] .top-nav.scrolled {
-  background: rgba(255, 245, 239, 0.80);
-}
+/* Scrolled glass state handled by glass.css (.top-nav.scrolled) */
 
 /* Logo / monogram */
 .nav-logo {
@@ -108,57 +98,81 @@
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after { width: 100%; }
 
-/* Theme toggle — uses .btn-icon from glass.css */
+/* Theme toggle — .btn-icon from glass.css handles all styling */
 .nav-theme-btn {
-  composes: btn-icon; /* fallback explicit styles below */
-  background:   var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  composes: btn-icon;
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border:       1px solid var(--glass-border);
-  color:        var(--muted);
-  border-radius: var(--r-md);
-  padding:      0;
-  width:        40px;
-  height:       40px;
-  display:      flex;
-  align-items:  center;
-  justify-content: center;
-  box-shadow:   0 2px 10px rgba(0,0,0,0.30),
-                0 1px 0 rgba(255,255,255,0.07) inset;
-  transition:   color var(--ease-fast), border-color var(--ease-fast),
-                background var(--ease-fast);
+  color:                   var(--muted);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  border-radius:           var(--r-md);
+  padding:                 0;
+  width:                   40px;
+  height:                  40px;
+  display:                 flex;
+  align-items:             center;
+  justify-content:         center;
+  box-shadow:
+    0 0 16px rgba(255,109,41,0.12),
+    0 2px 10px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+  transition:
+    color        var(--ease-fast),
+    border-color var(--ease-fast),
+    background   var(--ease-fast);
 }
 
 .nav-theme-btn:hover {
-  color:        var(--accent);
-  border-color: rgba(255, 109, 41, 0.40);
-  background:   var(--glass-bg-hover);
+  color:               var(--accent);
+  background:          var(--glass-fill-hover);
+  border-top-color:    rgba(255,255,255,0.28);
+  border-left-color:   rgba(255,109,41,0.30);
+  border-right-color:  rgba(255,109,41,0.30);
+  border-bottom-color: rgba(255,109,41,0.30);
 }
 
 .nav-theme-btn svg { width: 16px; height: 16px; }
 
-/* Mobile nav toggle — uses .btn-icon styles from glass.css */
+/* Mobile nav toggle — .btn-icon styles from glass.css */
 .nav-mobile-toggle {
-  display: none;
-  background:   var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  display:                 none;
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border:       1px solid var(--glass-border);
-  color:        var(--muted);
-  border-radius: var(--r-md);
-  padding:      0;
-  width:        44px;
-  height:       44px;
-  align-items:  center;
-  justify-content: center;
-  box-shadow:   0 2px 10px rgba(0,0,0,0.30),
-                0 1px 0 rgba(255,255,255,0.07) inset;
-  transition:   color var(--ease-fast), border-color var(--ease-fast);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  color:                   var(--muted);
+  border-radius:           var(--r-md);
+  padding:                 0;
+  width:                   44px;
+  height:                  44px;
+  align-items:             center;
+  justify-content:         center;
+  box-shadow:
+    0 0 16px rgba(255,109,41,0.12),
+    0 2px 10px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+  transition:
+    color        var(--ease-fast),
+    border-color var(--ease-fast),
+    background   var(--ease-fast);
 }
 
 .nav-mobile-toggle:hover {
-  color: var(--accent);
-  border-color: rgba(255, 109, 41, 0.40);
+  color:               var(--accent);
+  background:          var(--glass-fill-hover);
+  border-top-color:    rgba(255,255,255,0.28);
+  border-left-color:   rgba(255,109,41,0.30);
+  border-right-color:  rgba(255,109,41,0.30);
+  border-bottom-color: rgba(255,109,41,0.30);
 }
 
 .nav-mobile-toggle svg { width: 20px; height: 20px; }

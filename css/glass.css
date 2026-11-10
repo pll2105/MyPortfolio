@@ -1,113 +1,129 @@
 /* ==========================================================================
-   glass.css — iOS-inspired glassmorphism components
-   Import after tokens.css and base.css.
-   Usage: add class  .glass  .glass-card  .btn  .btn-ghost  .btn-solid
+   glass.css — Glassmorphism component system
+   Inspo: dark capsule with solid base, frosted white border, orange outer glow
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   SHARED GLASS MIXIN VALUES
-   These custom properties centralise the look so tweaking one number
-   updates every component at once.
+   TOKENS
    -------------------------------------------------------------------------- */
 :root {
-  --glass-bg:      rgba(255, 255, 255, 0.055);
-  --glass-bg-hover:rgba(255, 255, 255, 0.095);
-  --glass-border:  rgba(255, 255, 255, 0.10);
-  --glass-blur:    18px;
-  --glass-shadow:  0 8px 32px rgba(0, 0, 0, 0.45),
-                   0 1px 0   rgba(255, 255, 255, 0.07) inset;
+  /* Glass fill — dark enough to always be visible, never disappears */
+  --glass-fill:        #1e1519;              /* dark near-black warm tint   */
+  --glass-fill-hover:  #2b1c18;              /* slightly warmer on hover    */
+  --glass-border-top:  rgba(255,255,255,0.18); /* bright top-edge highlight  */
+  --glass-border-rest: rgba(255,255,255,0.08); /* dimmer sides + bottom      */
+  --glass-blur:        16px;
+
+  /* Outer glow — the orange halo from the inspo */
+  --glass-glow:
+    0 0 0 1px rgba(255,255,255,0.08),          /* border ring                */
+    0 0 24px 2px rgba(255,109,41,0.18),        /* soft orange outer halo     */
+    0 4px 20px rgba(0,0,0,0.60),               /* depth shadow               */
+    inset 0 1px 0 rgba(255,255,255,0.12);      /* inner top highlight        */
+
+  --glass-glow-hover:
+    0 0 0 1px rgba(255,109,41,0.35),
+    0 0 36px 6px rgba(255,109,41,0.32),
+    0 8px 32px rgba(0,0,0,0.70),
+    inset 0 1px 0 rgba(255,255,255,0.16);
 }
 
 [data-theme="light"] {
-  --glass-bg:       rgba(255, 255, 255, 0.55);
-  --glass-bg-hover: rgba(255, 255, 255, 0.75);
-  --glass-border:   rgba(255, 255, 255, 0.70);
-  --glass-shadow:   0 8px 32px rgba(69, 48, 39, 0.12),
-                    0 1px 0   rgba(255, 255, 255, 0.90) inset;
+  --glass-fill:        rgba(255,245,239,0.72);
+  --glass-fill-hover:  rgba(255,245,239,0.90);
+  --glass-border-top:  rgba(255,255,255,0.90);
+  --glass-border-rest: rgba(255,255,255,0.55);
+  --glass-glow:
+    0 0 0 1px rgba(255,255,255,0.55),
+    0 0 20px 2px rgba(229,90,24,0.12),
+    0 4px 16px rgba(69,48,39,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.90);
+  --glass-glow-hover:
+    0 0 0 1px rgba(229,90,24,0.30),
+    0 0 28px 4px rgba(229,90,24,0.20),
+    0 8px 24px rgba(69,48,39,0.20),
+    inset 0 1px 0 rgba(255,255,255,0.90);
 }
 
 /* --------------------------------------------------------------------------
-   BASE GLASS LAYER — apply to any container
-   -------------------------------------------------------------------------- */
-.glass {
-  background:          var(--glass-bg);
-  backdrop-filter:     blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  border:              1px solid var(--glass-border);
-  border-radius:       var(--r-lg);
-  box-shadow:          var(--glass-shadow);
-  transition:          background var(--ease-mid), box-shadow var(--ease-mid);
-}
-
-/* --------------------------------------------------------------------------
-   GLASS CARD
-   Block-level card — projects, certs, any content tile.
+   GLASS CARD — content tiles (projects, certs, skills)
    -------------------------------------------------------------------------- */
 .glass-card {
-  background:          var(--glass-bg);
-  backdrop-filter:     blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  border:              1px solid var(--glass-border);
-  border-radius:       var(--r-lg);
-  box-shadow:          var(--glass-shadow);
-  padding:             var(--s3);
-  transition:          background var(--ease-mid), transform var(--ease-mid),
-                       box-shadow var(--ease-mid), border-color var(--ease-mid);
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  /* Multi-stop border: bright on top, dim on sides */
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  border-radius:           var(--r-lg);
+  box-shadow:              var(--glass-glow);
+  padding:                 var(--s3);
+  transition:
+    background   var(--ease-mid),
+    box-shadow   var(--ease-mid),
+    transform    var(--ease-mid),
+    border-color var(--ease-mid);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .glass-card:hover {
-    background:    var(--glass-bg-hover);
-    border-color:  rgba(255, 109, 41, 0.35);
-    transform:     translateY(-4px);
-    box-shadow:    0 16px 48px rgba(0, 0, 0, 0.55),
-                   0 0 0 1px rgba(255, 109, 41, 0.15),
-                   0 1px 0 rgba(255, 255, 255, 0.10) inset;
+    background:  var(--glass-fill-hover);
+    box-shadow:  var(--glass-glow-hover);
+    transform:   translateY(-4px);
   }
 }
 
-[data-theme="light"] .glass-card:hover {
-  border-color: rgba(229, 90, 24, 0.30);
-  box-shadow:   0 16px 48px rgba(69, 48, 39, 0.18),
-                0 0 0 1px rgba(229, 90, 24, 0.12),
-                0 1px 0 rgba(255, 255, 255, 0.90) inset;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .glass-card { transition: background var(--ease-fast), border-color var(--ease-fast); }
+  .glass-card { transition: box-shadow var(--ease-fast); }
   .glass-card:hover { transform: none; }
 }
 
 /* --------------------------------------------------------------------------
-   BUTTONS
-   .btn          → base (inherits glass look)
-   .btn-solid    → filled accent (primary CTA)
-   .btn-ghost    → glass border, no fill (secondary action)
-   .btn-icon     → square/circle icon-only button
+   BASE GLASS LAYER — generic container
    -------------------------------------------------------------------------- */
+.glass {
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  border-radius:           var(--r-lg);
+  box-shadow:              var(--glass-glow);
+}
 
-/* Base */
+/* --------------------------------------------------------------------------
+   BUTTONS — base
+   All buttons share: pill shape, Krona One, 44px touch target, lift on hover
+   -------------------------------------------------------------------------- */
 .btn {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             0.5rem;
-  font-family:     var(--font-display);
-  font-size:       0.8125rem;
-  font-weight:     400;
-  letter-spacing:  0.07em;
-  text-transform:  uppercase;
-  text-decoration: none;
-  border:          none;
-  border-radius:   var(--r-full);   /* pill shape — iOS feel */
-  padding:         0.75rem 1.625rem;
-  cursor:          pointer;
-  white-space:     nowrap;
-  transition:      background var(--ease-fast), color var(--ease-fast),
-                   transform var(--ease-fast), box-shadow var(--ease-fast),
-                   opacity var(--ease-fast);
+  display:                 inline-flex;
+  align-items:             center;
+  justify-content:         center;
+  gap:                     0.5rem;
+  font-family:             var(--font-display);
+  font-size:               0.8125rem;
+  font-weight:             400;
+  letter-spacing:          0.07em;
+  text-transform:          uppercase;
+  text-decoration:         none;
+  border-radius:           var(--r-full);
+  padding:                 0.75rem 1.75rem;
+  cursor:                  pointer;
+  white-space:             nowrap;
+  min-height:              44px;
   -webkit-tap-highlight-color: transparent;
-  min-height:      44px;            /* touch target */
+  transition:
+    background   var(--ease-fast),
+    color        var(--ease-fast),
+    box-shadow   var(--ease-fast),
+    transform    var(--ease-fast),
+    border-color var(--ease-fast);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -119,114 +135,150 @@
   .btn:hover { transform: none; }
 }
 
-/* Solid — filled accent, primary CTA */
+/* --------------------------------------------------------------------------
+   .btn-solid — filled orange, primary CTA
+   -------------------------------------------------------------------------- */
 .btn-solid {
-  background:  var(--accent);
-  color:       var(--on-accent);
-  box-shadow:  0 4px 20px rgba(255, 109, 41, 0.35),
-               0 1px 0 rgba(255, 255, 255, 0.15) inset;
+  background: var(--accent);
+  color:      var(--on-accent);
+  border:     1px solid transparent;
+  border-top-color: rgba(255,255,255,0.20);
+  box-shadow:
+    0 0 20px rgba(255,109,41,0.40),
+    0 4px 16px rgba(0,0,0,0.40),
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 .btn-solid:hover {
-  opacity: 0.90;
-  box-shadow: 0 8px 28px rgba(255, 109, 41, 0.50),
-              0 1px 0 rgba(255, 255, 255, 0.20) inset;
-  color: var(--on-accent);
+  color:      var(--on-accent);
+  box-shadow:
+    0 0 32px rgba(255,109,41,0.65),
+    0 8px 24px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.22);
 }
 
-[data-theme="light"] .btn-solid {
-  box-shadow: 0 4px 20px rgba(229, 90, 24, 0.28),
-              0 1px 0 rgba(255, 255, 255, 0.40) inset;
-}
-
-/* Ghost — glass border, transparent fill */
+/* --------------------------------------------------------------------------
+   .btn-ghost — the capsule from the inspo image
+   Dark fill, frosted border, orange outer glow — always visible
+   -------------------------------------------------------------------------- */
 .btn-ghost {
-  background:   var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border:       1px solid var(--glass-border);
-  color:        var(--text);
-  box-shadow:   0 4px 16px rgba(0, 0, 0, 0.25),
-                0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  color:                   var(--text);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  box-shadow:              var(--glass-glow);
 }
 
 .btn-ghost:hover {
-  background:   var(--glass-bg-hover);
-  border-color: rgba(255, 109, 41, 0.40);
-  color:        var(--accent);
-  box-shadow:   0 6px 24px rgba(0, 0, 0, 0.35),
-                0 1px 0 rgba(255, 255, 255, 0.10) inset;
+  background:          var(--glass-fill-hover);
+  color:               var(--text);
+  border-top-color:    rgba(255,255,255,0.28);
+  border-left-color:   rgba(255,109,41,0.25);
+  border-right-color:  rgba(255,109,41,0.25);
+  border-bottom-color: rgba(255,109,41,0.25);
+  box-shadow:          var(--glass-glow-hover);
 }
 
-[data-theme="light"] .btn-ghost {
-  box-shadow: 0 4px 16px rgba(69, 48, 39, 0.10),
-              0 1px 0 rgba(255, 255, 255, 0.90) inset;
-}
-
-/* Icon button — square glass pill */
+/* --------------------------------------------------------------------------
+   .btn-icon — 40×40 glass square (theme toggle, close, menu)
+   -------------------------------------------------------------------------- */
 .btn-icon {
-  background:   var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border:       1px solid var(--glass-border);
-  color:        var(--muted);
-  border-radius: var(--r-md);
-  padding:      0;
-  width:        40px;
-  height:       40px;
-  min-height:   40px;
-  box-shadow:   0 2px 10px rgba(0, 0, 0, 0.30),
-                0 1px 0 rgba(255, 255, 255, 0.07) inset;
-  transition:   color var(--ease-fast), border-color var(--ease-fast),
-                background var(--ease-fast), transform var(--ease-fast);
+  color:                   var(--muted);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  border-radius:           var(--r-md);
+  width:                   40px;
+  height:                  40px;
+  min-height:              40px;
+  padding:                 0;
+  display:                 inline-flex;
+  align-items:             center;
+  justify-content:         center;
+  cursor:                  pointer;
+  box-shadow:
+    0 0 16px rgba(255,109,41,0.12),
+    0 2px 10px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+  transition:
+    color        var(--ease-fast),
+    border-color var(--ease-fast),
+    background   var(--ease-fast),
+    box-shadow   var(--ease-fast);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-icon:hover {
-  color:         var(--accent);
-  border-color:  rgba(255, 109, 41, 0.40);
-  background:    var(--glass-bg-hover);
+  color:               var(--accent);
+  background:          var(--glass-fill-hover);
+  border-top-color:    rgba(255,255,255,0.28);
+  border-left-color:   rgba(255,109,41,0.30);
+  border-right-color:  rgba(255,109,41,0.30);
+  border-bottom-color: rgba(255,109,41,0.30);
+  box-shadow:
+    0 0 24px rgba(255,109,41,0.28),
+    0 4px 14px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
-.btn-icon svg { width: 16px; height: 16px; }
+.btn-icon svg { width: 16px; height: 16px; pointer-events: none; }
 
 /* --------------------------------------------------------------------------
-   NAV GLASS — applied to .top-nav.scrolled via hero.css override
-   Also exposed as a standalone class for future nav bars.
+   GLASS NAV — nav bar glass (used by .top-nav.scrolled in hero.css)
    -------------------------------------------------------------------------- */
-.glass-nav {
-  background:          rgba(22, 19, 22, 0.70);
-  backdrop-filter:     blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom:       1px solid var(--glass-border);
-  box-shadow:          0 1px 0 rgba(255, 255, 255, 0.04);
+.glass-nav,
+.top-nav.scrolled {
+  background:              rgba(22,19,22,0.78);
+  backdrop-filter:         blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border-bottom:           1px solid rgba(255,255,255,0.07);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04),
+    0 4px 24px rgba(0,0,0,0.40);
 }
 
-[data-theme="light"] .glass-nav {
-  background: rgba(255, 245, 239, 0.80);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.60);
+[data-theme="light"] .glass-nav,
+[data-theme="light"] .top-nav.scrolled {
+  background:    rgba(255,245,239,0.84);
+  border-bottom: 1px solid rgba(255,255,255,0.70);
+  box-shadow:    0 1px 0 rgba(255,255,255,0.80), 0 4px 16px rgba(69,48,39,0.10);
 }
 
 /* --------------------------------------------------------------------------
-   GLASS PILL — small inline tag / badge
+   GLASS PILL — tech stack tag / inline badge
    -------------------------------------------------------------------------- */
 .glass-pill {
-  display:      inline-flex;
-  align-items:  center;
-  gap:          0.3rem;
-  font-family:  var(--font-mono);
-  font-size:    0.6875rem;
-  letter-spacing: 0.03em;
-  color:        var(--muted);
-  background:   var(--glass-bg);
-  backdrop-filter: blur(8px);
+  display:                 inline-flex;
+  align-items:             center;
+  gap:                     0.3rem;
+  font-family:             var(--font-mono);
+  font-size:               0.6875rem;
+  letter-spacing:          0.03em;
+  color:                   var(--muted);
+  background:              var(--glass-fill);
+  backdrop-filter:         blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border:       1px solid var(--glass-border);
-  border-radius: var(--r-full);
-  padding:      0.2rem 0.65rem;
-  transition:   color var(--ease-fast), border-color var(--ease-fast);
+  border:                  1px solid transparent;
+  border-top-color:        var(--glass-border-top);
+  border-left-color:       var(--glass-border-rest);
+  border-right-color:      var(--glass-border-rest);
+  border-bottom-color:     var(--glass-border-rest);
+  border-radius:           var(--r-full);
+  padding:                 0.2rem 0.65rem;
+  transition:              color var(--ease-fast), box-shadow var(--ease-fast);
 }
 
 .glass-pill:hover {
-  color:        var(--accent);
-  border-color: rgba(255, 109, 41, 0.35);
+  color:       var(--accent);
+  box-shadow:  0 0 10px rgba(255,109,41,0.20);
 }
