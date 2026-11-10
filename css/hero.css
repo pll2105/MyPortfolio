@@ -46,7 +46,7 @@
 .nav-logo {
   font-family: var(--font-display);
   font-size: 1.125rem;
-  font-weight: 400; /* Krona One is a single-weight display face */
+  font-weight: 400;
   color: var(--text);
   letter-spacing: 0.01em;
   text-decoration: none;
@@ -74,7 +74,7 @@
 
 .nav-links a {
   font-family: var(--font-display);
-  font-size: 0.8125rem;  /* slightly smaller — Krona One reads large at display size */
+  font-size: 0.875rem;  /* Momo Trust Display — slightly smaller at display size */
   font-weight: 400;
   color: var(--muted);
   text-decoration: none;
@@ -330,7 +330,7 @@
 
 .hero-name-line strong {
   color: var(--text);
-  font-weight: 400; /* Krona One has no bold weight — inherits the display look */
+  font-weight: 400;
 }
 
 /* Tagline / hero line */

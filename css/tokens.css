@@ -38,8 +38,11 @@
   --secondary:   #0D6E6E;    /* Deep Sea Green — surface highlight */
   --sand:        #EAF0EF;    /* Wild Sand — light accent, section labels */
 
-  /* Typography */
-  --font-display: 'Krona One', system-ui, sans-serif;
+  /* Typography
+     --font-display : Momo Trust Display — titles, nav, headings, section labels
+     --font-sans    : Inter              — body copy, subtexts, captions, UI labels
+     --font-mono    : system monospace  — code, tech stack tags            */
+  --font-display: 'Momo Trust Display', sans-serif;
   --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 

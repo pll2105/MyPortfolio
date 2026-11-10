@@ -34,13 +34,13 @@ body {
 
 /*
    FONT RULE (apply consistently across all pages):
-   --font-display (Krona One) → titles, section headings, nav links, logo
-   --font-sans    (Inter)     → body paragraphs, subtexts, labels, captions
-   --font-mono                → code, tech stack tags
+   --font-display (Momo Trust Display) → titles, section headings, nav links, logo
+   --font-sans    (Inter)              → body paragraphs, subtexts, labels, captions
+   --font-mono                         → code, tech stack tags
 */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 400; /* Krona One is a single-weight face */
+  font-weight: 400; /* Momo Trust Display regular weight */
   line-height: 1.25;
 }
 
