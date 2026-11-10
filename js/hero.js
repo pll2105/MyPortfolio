@@ -1,18 +1,19 @@
 /**
  * hero.js — Full portfolio application.
- * All content comes from data.js — never hardcode strings here.
+ * All content from data.js — never hardcode strings here.
  */
 
 import {
   meta, navLinks, stats, projects, projectFilters,
-  skills, skillCards, certifications, roleLens, terminalLines, techLogos,
+  skills, skillCards, certifications, roleLens, terminalLines,
+  techLogos, focusAreas,
 } from './data.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CONSTANTS
+// CONSTANTS & STATE
 // ─────────────────────────────────────────────────────────────────────────────
-const THEME_KEY    = 'portfolio-theme';
-const LENS_KEY     = 'portfolio-lens';
+const THEME_KEY     = 'portfolio-theme';
+const LENS_KEY      = 'portfolio-lens';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -20,7 +21,7 @@ let activeLens   = localStorage.getItem(LENS_KEY) || 'ba';
 let activeFilter = 'all';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SVG ICONS (inline — zero extra requests)
+// SVG ICONS
 // ─────────────────────────────────────────────────────────────────────────────
 const I = {
   sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -49,14 +50,14 @@ const I = {
 
   github: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217
-    .682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11
-    -1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53
-    2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951
-    0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564
-    9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027
-    .546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566
-    4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02
-    10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>`,
+    .682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158
+    -1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032
+    .892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113
+    -4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27
+    2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747
+    -1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688
+    0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012
+    2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>`,
 
   linkedin: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
@@ -68,8 +69,7 @@ const I = {
 
   mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1
-    0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
     <polyline points="22,6 12,13 2,6"/></svg>`,
 
   copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -122,7 +122,7 @@ function toggleTheme() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DOT-GRID BACKGROUND (keep existing behavior, recolored with new tokens)
+// DOT-GRID BACKGROUND
 // ─────────────────────────────────────────────────────────────────────────────
 let mx = -9999, my = -9999;
 
@@ -134,10 +134,8 @@ function initDotGrid() {
 
   function draw() {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    // dots: ~12% of ink color
     const dot   = dark ? 'rgba(232,237,247,0.10)' : 'rgba(20,33,61,0.10)';
     const hover = dark ? 'rgba(124,155,255,0.35)' : 'rgba(47,91,255,0.28)';
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const GAP = 28, R = 1, HR = 160;
     for (let x = GAP / 2; x < canvas.width; x += GAP) {
@@ -190,11 +188,9 @@ function initSpotlight() {
 // HEADER
 // ─────────────────────────────────────────────────────────────────────────────
 function renderHeader() {
-  // Brand name
   const brand = document.getElementById('brand-name');
   if (brand) brand.textContent = meta.name;
 
-  // Desktop nav
   const nav = document.getElementById('desktop-nav');
   if (nav) {
     nav.innerHTML = navLinks.map(l =>
@@ -202,15 +198,12 @@ function renderHeader() {
     ).join('');
   }
 
-  // Theme toggle
   const toggle = document.getElementById('theme-toggle');
   if (toggle) toggle.addEventListener('click', toggleTheme);
 
-  // Menu btn icon
   const menuBtn = document.getElementById('menu-btn');
   if (menuBtn) menuBtn.innerHTML = I.menu;
 
-  // Scroll → header shadow
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
     header?.classList.toggle('scrolled', window.scrollY > 10);
@@ -250,7 +243,6 @@ function renderOffcanvas() {
           type="button" aria-label="Switch theme"
           style="margin-left:auto;"></button>
       </div>`;
-
     document.getElementById('theme-toggle-mobile')
       ?.addEventListener('click', toggleTheme);
   }
@@ -262,7 +254,6 @@ function renderOffcanvas() {
 function renderLens(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
-
   el.innerHTML = roleLens.map(r => `
     <button class="lens-chip" data-lens="${r.key}"
       type="button" aria-pressed="${activeLens === r.key}"
@@ -270,7 +261,6 @@ function renderLens(containerId) {
       <span class="check-icon" style="width:13px;height:13px;">${I.check}</span>
       ${r.shortLabel}
     </button>`).join('');
-
   el.querySelectorAll('.lens-chip').forEach(btn =>
     btn.addEventListener('click', () => setLens(btn.dataset.lens))
   );
@@ -281,12 +271,10 @@ function setLens(key) {
   activeLens = key;
   localStorage.setItem(LENS_KEY, key);
 
-  // Update all lens buttons
   document.querySelectorAll('.lens-chip').forEach(btn => {
     btn.setAttribute('aria-pressed', btn.dataset.lens === key ? 'true' : 'false');
   });
 
-  // Announce to screen readers
   const obj = roleLens.find(r => r.key === key);
   const ann = document.getElementById('lens-announce');
   if (ann && obj) {
@@ -294,7 +282,6 @@ function setLens(key) {
     setTimeout(() => { ann.textContent = ''; }, 2000);
   }
 
-  // Update hero subtitle
   const sub = document.getElementById('hero-subtitle');
   if (sub) {
     sub.style.opacity = '0';
@@ -304,19 +291,17 @@ function setLens(key) {
     }, reducedMotion ? 0 : 180);
   }
 
-  // Reorder skill cards
   if (!reducedMotion) {
     const grid = document.getElementById('skills-grid');
-    if (grid) { grid.style.opacity = '0'; }
+    if (grid) grid.style.opacity = '0';
     setTimeout(() => {
       renderSkillCards();
       if (grid) grid.style.opacity = '1';
-    }, reducedMotion ? 0 : 200);
+    }, 200);
   } else {
     renderSkillCards();
   }
 
-  // Swap project bullets
   projects.forEach(p => {
     const list = document.getElementById(`bullets-${p.id}`);
     if (!list) return;
@@ -331,6 +316,9 @@ function setLens(key) {
       list.innerHTML = bullets.map(b => `<li>${b}</li>`).join('');
     }
   });
+
+  // Update What I Do Focus badges
+  if (typeof updateFocusBadges === 'function') updateFocusBadges(key);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -339,20 +327,18 @@ function setLens(key) {
 function renderHero() {
   const para = document.getElementById('hero-para');
   if (para) para.textContent = meta.heroParagraph;
-
   const sub = document.getElementById('hero-subtitle');
   if (sub) sub.textContent = meta.heroSubtitles[activeLens] || '';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TERMINAL  (typing animation)
+// TERMINAL
 // ─────────────────────────────────────────────────────────────────────────────
 function initTerminal() {
   const body = document.getElementById('terminal-body');
   if (!body) return;
 
   if (reducedMotion) {
-    // Show all lines instantly, last line gets caret
     body.innerHTML = terminalLines.map((l, i) => {
       const isLast = i === terminalLines.length - 1;
       const cls = lineClass(l.type);
@@ -370,8 +356,6 @@ function initTerminal() {
     if (lineIdx >= terminalLines.length) return;
     const line = terminalLines[lineIdx];
     const cls  = lineClass(line.type);
-
-    // Create the span if it doesn't exist yet
     let span = document.getElementById(`tl-${lineIdx}`);
     if (!span) {
       span = document.createElement('span');
@@ -379,13 +363,11 @@ function initTerminal() {
       span.className = `terminal-line ${cls}`;
       body.appendChild(span);
     }
-
     if (charIdx < line.text.length) {
       span.textContent = line.text.slice(0, charIdx + 1);
       charIdx++;
       setTimeout(typeNext, CHAR_DELAY);
     } else {
-      // Line complete
       const isLast = lineIdx === terminalLines.length - 1;
       if (isLast && line.type === 'blinking') {
         const caret = document.createElement('span');
@@ -394,23 +376,16 @@ function initTerminal() {
       }
       lineIdx++;
       charIdx = 0;
-      if (lineIdx < terminalLines.length) {
-        setTimeout(typeNext, LINE_PAUSE);
-      }
+      if (lineIdx < terminalLines.length) setTimeout(typeNext, LINE_PAUSE);
     }
   }
-
   typeNext();
 }
 
 function lineClass(type) {
-  return {
-    prompt:        'terminal-line--prompt',
-    output:        'terminal-line--output',
-    'output-name': 'terminal-line--name',
-    'output-accent':'terminal-line--accent',
-    blinking:      'terminal-line--output',
-  }[type] || 'terminal-line--output';
+  return { prompt:'terminal-line--prompt', output:'terminal-line--output',
+    'output-name':'terminal-line--name', 'output-accent':'terminal-line--accent',
+    blinking:'terminal-line--output' }[type] || 'terminal-line--output';
 }
 
 function escHtml(s) {
@@ -418,31 +393,16 @@ function escHtml(s) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// STATS ROW
-// ─────────────────────────────────────────────────────────────────────────────
-function renderStats() {
-  const el = document.getElementById('stats-inner');
-  if (!el) return;
-  el.innerHTML = stats.map(s => `
-    <div class="stat-item">
-      <span class="stat-number">${s.number}</span>
-      <span class="stat-label">${s.label}</span>
-    </div>`).join('');
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PROJECTS
+// PROJECTS (filter chips + grid for modal data)
 // ─────────────────────────────────────────────────────────────────────────────
 function renderFilterChips() {
   const row = document.getElementById('filter-row');
   if (!row) return;
   row.innerHTML = projectFilters.map(f => `
     <button class="filter-chip${activeFilter === f.key ? ' active' : ''}"
-      data-filter="${f.key}" type="button"
-      aria-pressed="${activeFilter === f.key}">
+      data-filter="${f.key}" type="button" aria-pressed="${activeFilter === f.key}">
       ${f.label}
     </button>`).join('');
-
   row.querySelectorAll('.filter-chip').forEach(btn =>
     btn.addEventListener('click', () => {
       activeFilter = btn.dataset.filter;
@@ -455,16 +415,13 @@ function renderFilterChips() {
 function renderProjectGrid() {
   const grid = document.getElementById('project-grid');
   if (!grid) return;
-
   const filtered = activeFilter === 'all'
     ? projects
     : projects.filter(p => p.category === activeFilter);
-
-  if (filtered.length === 0) {
+  if (!filtered.length) {
     grid.innerHTML = `<p style="color:var(--muted);font-size:.9375rem;">No projects match this filter.</p>`;
     return;
   }
-
   grid.innerHTML = filtered.map(p => {
     const bullets = p.roleBullets[activeLens] || [];
     return `
@@ -486,8 +443,6 @@ function renderProjectGrid() {
       </div>
     </button>`;
   }).join('');
-
-  // Attach click → modal
   grid.querySelectorAll('.project-card').forEach(card =>
     card.addEventListener('click', () => openModal(card.dataset.project))
   );
@@ -499,10 +454,7 @@ function renderProjectGrid() {
 function openModal(projectId) {
   const p = projects.find(x => x.id === projectId);
   if (!p) return;
-
   const gradClass = `card-shot--${p.gradient}`;
-
-  // Header
   const hdr = document.getElementById('modal-header-grad');
   if (hdr) {
     hdr.className = `modal-header-grad ${gradClass}`;
@@ -512,59 +464,43 @@ function openModal(projectId) {
       <div class="modal-project-name" id="modal-project-name">${p.title}</div>
       <div class="modal-project-summary">${p.summary}</div>`;
   }
-
-  // Body
   const body = document.getElementById('modal-body-content');
   if (body) {
     body.innerHTML = `
-      <div>
-        <div class="modal-section-label">Problem</div>
-        <p class="modal-text">${p.caseStudy.problem}</p>
-      </div>
-      <div>
-        <div class="modal-section-label">My Role</div>
-        <p class="modal-text">${p.caseStudy.myRoleDetail}</p>
-      </div>
-      <div>
-        <div class="modal-section-label">What I Did</div>
+      <div><div class="modal-section-label">Problem</div>
+        <p class="modal-text">${p.caseStudy.problem}</p></div>
+      <div><div class="modal-section-label">My Role</div>
+        <p class="modal-text">${p.caseStudy.myRoleDetail}</p></div>
+      <div><div class="modal-section-label">What I Did</div>
         <ul class="modal-list">
           ${p.caseStudy.whatIDid.map(item => `<li>${item}</li>`).join('')}
-        </ul>
-      </div>
-      <div>
-        <div class="modal-section-label">Tech Stack</div>
+        </ul></div>
+      <div><div class="modal-section-label">Tech Stack</div>
         <div class="card-tags" style="margin-top:.5rem;">
           ${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}
-        </div>
-      </div>`;
+        </div></div>`;
   }
-
-  // Actions
   const actions = document.getElementById('modal-actions');
   if (actions) {
     const demoOk = !p.demoUrl.startsWith('[');
     const srcOk  = !p.sourceUrl.startsWith('[');
     actions.innerHTML = `
-      <a href="${demoOk ? p.demoUrl : '#'}"
-         class="btn-modal-link"
+      <a href="${demoOk ? p.demoUrl : '#'}" class="btn-modal-link"
          ${demoOk ? 'target="_blank" rel="noopener noreferrer"'
                   : 'aria-disabled="true" tabindex="-1" style="opacity:.4;pointer-events:none;"'}
          title="${demoOk ? 'Open live demo' : 'Live demo URL not yet confirmed'}">
         ${I.external} Live demo
       </a>
-      <a href="${srcOk ? p.sourceUrl : '#'}"
-         class="btn-modal-link"
+      <a href="${srcOk ? p.sourceUrl : '#'}" class="btn-modal-link"
          ${srcOk ? 'target="_blank" rel="noopener noreferrer"'
                  : 'aria-disabled="true" tabindex="-1" style="opacity:.4;pointer-events:none;"'}
          title="${srcOk ? 'View source code' : 'GitHub URL not yet confirmed'}">
         ${I.github} Source code
       </a>`;
   }
-
   const modal = document.getElementById('project-modal');
   if (modal && window.bootstrap?.Modal) {
-    const bsModal = window.bootstrap.Modal.getOrCreateInstance(modal);
-    bsModal.show();
+    window.bootstrap.Modal.getOrCreateInstance(modal).show();
   }
 }
 
@@ -574,20 +510,14 @@ function openModal(projectId) {
 function renderSkillCards() {
   const grid = document.getElementById('skills-grid');
   if (!grid) return;
-
-  const lens = roleLens.find(r => r.key === activeLens);
+  const lens     = roleLens.find(r => r.key === activeLens);
   const priority = lens ? lens.priorityCards : [];
-
-  // Sort: priority first, then rest
-  const sorted = [...skillCards].sort((a, b) => {
-    const ai = priority.indexOf(a.key);
-    const bi = priority.indexOf(b.key);
+  const sorted   = [...skillCards].sort((a, b) => {
+    const ai = priority.indexOf(a.key), bi = priority.indexOf(b.key);
     if (ai === -1 && bi === -1) return 0;
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
+    if (ai === -1) return 1; if (bi === -1) return -1;
     return ai - bi;
   });
-
   grid.innerHTML = sorted.map(card => {
     const isHighlight = priority.includes(card.key);
     return `
@@ -622,18 +552,14 @@ function renderEduCard() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CONTACT / FOOTER
+// CONTACT
 // ─────────────────────────────────────────────────────────────────────────────
 function renderContact() {
   const el = document.getElementById('contact-actions');
   if (!el) return;
-
-  const emailOk = !meta.email.startsWith('[');
-
   el.innerHTML = `
-    <button class="btn-contact btn-contact--email"
-      id="copy-email-btn" type="button"
-      aria-label="Copy email address">
+    <button class="btn-contact btn-contact--email" id="copy-email-btn"
+      type="button" aria-label="Copy email address">
       ${I.copy} Copy email
     </button>
     <a href="mailto:${meta.email}" class="btn-contact btn-contact--outline"
@@ -652,12 +578,10 @@ function renderContact() {
        class="btn-contact btn-contact--outline" aria-label="Download resume PDF">
       ${I.download} Download resume
     </a>`;
-
   document.getElementById('copy-email-btn')?.addEventListener('click', () => {
     navigator.clipboard.writeText(meta.email)
       .then(() => showToast('Email copied!'))
       .catch(() => {
-        // Fallback
         const ta = Object.assign(document.createElement('textarea'),
           { value: meta.email, style: 'position:fixed;opacity:0' });
         document.body.appendChild(ta);
@@ -675,14 +599,12 @@ function renderContact() {
 function showToast(msg) {
   const container = document.getElementById('toast-container');
   if (!container) return;
-
   const el = document.createElement('div');
   el.className = 'toast custom-toast show';
   el.setAttribute('role', 'status');
   el.innerHTML = `<div class="toast-body">
     <span class="toast-icon">${I.check}</span>${msg}</div>`;
   container.appendChild(el);
-
   if (window.bootstrap?.Toast) {
     const t = new window.bootstrap.Toast(el, { delay: 2500 });
     t.show();
@@ -693,80 +615,459 @@ function showToast(msg) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SCROLLSPY — active nav highlight
+// SCROLLSPY
 // ─────────────────────────────────────────────────────────────────────────────
 function initScrollspy() {
-  const sections = navLinks
-    .map(l => document.getElementById(l.href.slice(1)))
-    .filter(Boolean);
-
+  const sections = navLinks.map(l => document.getElementById(l.href.slice(1))).filter(Boolean);
   if (!sections.length) return;
-
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id;
         document.querySelectorAll('.header-nav a').forEach(a => {
-          a.setAttribute('aria-current',
-            a.dataset.section === id ? 'true' : 'false');
+          a.setAttribute('aria-current', a.dataset.section === id ? 'true' : 'false');
         });
       }
     });
   }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-
   sections.forEach(s => obs.observe(s));
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TECH LOGOS ROW
+// TECH LOGOS
 // ─────────────────────────────────────────────────────────────────────────────
 function renderTechLogos() {
   const el = document.getElementById('tech-logos');
   if (!el) return;
-
   el.innerHTML = techLogos.map(logo => `
-    <a href="${logo.url}"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="tech-logo-btn"
-       role="listitem"
-       data-name="${logo.name}"
-       aria-label="${logo.name} — open official site">
-      <img src="${logo.img}"
-           alt="${logo.name} logo"
-           width="48" height="48"
-           loading="lazy"
-           decoding="async"
+    <a href="${logo.url}" target="_blank" rel="noopener noreferrer"
+       class="tech-logo-btn" role="listitem"
+       data-name="${logo.name}" aria-label="${logo.name} — open official site">
+      <img src="${logo.img}" alt="${logo.name} logo"
+           width="48" height="48" loading="lazy" decoding="async"
            onerror="this.style.display='none'">
     </a>`).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WHAT I DO — render + scroll thread
+// ─────────────────────────────────────────────────────────────────────────────
+const PROJECT_DISPLAY = {
+  alwan: 'ALWAN', nookph: 'NOOK PH', kyakoyarn: 'Kya Ko Yarn',
+};
+
+const CHECK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+  aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+function renderWhatIDo() {
+  const container = document.getElementById('wid-items');
+  if (!container) return;
+  document.body.classList.add('wid-js');
+
+  container.innerHTML = focusAreas.map(area => {
+    const skillChips = area.tags.map(t => `<span class="wid-tag">${t}</span>`).join('');
+    const projectBtns = area.projects.map(pid => {
+      const name = PROJECT_DISPLAY[pid] || pid;
+      return `<button class="wid-project-tag" type="button"
+        data-project="${pid}" aria-label="View case study for ${name}">${name}</button>`;
+    }).join('');
+    const badge = `<span class="wid-focus-badge" data-role="${area.roleKey}"
+      aria-label="Focus area for current role">${CHECK_SVG} FOCUS</span>`;
+
+    return `
+    <div class="wid-item" data-role="${area.roleKey}" data-number="${area.number}">
+      <div class="wid-item-dot-wrap" aria-hidden="true">
+        <div class="wid-item-dot"></div>
+      </div>
+      <div class="wid-item-title-col">
+        <div class="wid-item-number"><span>${area.number}</span></div>
+        <div class="wid-title-badge-row">
+          <h3 class="wid-item-title">${area.title}</h3>
+          ${badge}
+        </div>
+      </div>
+      <div class="wid-item-content-col">
+        <p class="wid-item-desc">${area.description}</p>
+        <div class="wid-item-tags">${skillChips}${projectBtns}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  container.querySelectorAll('.wid-project-tag').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.project));
+  });
+}
+
+function updateFocusBadges(key) {
+  document.querySelectorAll('.wid-focus-badge').forEach(badge => {
+    badge.classList.toggle('wid-focus-badge--active', badge.dataset.role === key);
+  });
+  const ann = document.getElementById('lens-announce');
+  if (ann) {
+    const names = focusAreas.filter(a => a.roleKey === key).map(a => a.title).join(' and ');
+    if (names) {
+      setTimeout(() => {
+        ann.textContent = `Focus areas: ${names}.`;
+        setTimeout(() => { ann.textContent = ''; }, 3000);
+      }, 300);
+    }
+  }
+}
+
+function initScrollLine() {
+  const section  = document.getElementById('what-i-do');
+  const itemsWrap = document.getElementById('wid-items');
+  if (!section || !itemsWrap) return;
+
+  const isMobile = () => window.innerWidth <= 760;
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg   = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('class', 'wid-svg');
+  svg.setAttribute('aria-hidden', 'true');
+  const trackPath = document.createElementNS(svgNS, 'path');
+  trackPath.setAttribute('class', 'wid-svg-track');
+  const drawPath = document.createElementNS(svgNS, 'path');
+  drawPath.setAttribute('class', 'wid-svg-draw');
+  svg.appendChild(trackPath);
+  svg.appendChild(drawPath);
+  section.insertBefore(svg, section.firstChild);
+
+  let totalLen = 0;
+  let dotNodes = [];
+
+  function buildPath() {
+    const items  = itemsWrap.querySelectorAll('.wid-item');
+    if (!items.length) return;
+    const secRect = section.getBoundingClientRect();
+    const secTop  = secRect.top + window.scrollY;
+    const mobile  = isMobile();
+    const threadX = mobile ? 28 : window.innerWidth * 0.5;
+    const swing   = mobile ? 18 : window.innerWidth * 0.10;
+
+    dotNodes = [];
+    items.forEach(item => {
+      const dotEl = item.querySelector('.wid-item-dot');
+      if (!dotEl) return;
+      const r  = dotEl.getBoundingClientRect();
+      const cx = mobile ? threadX : (r.left + r.right) / 2;
+      const cy = r.top + window.scrollY - secTop + r.height / 2;
+      dotNodes.push({ el: item, dotEl, cx, cy });
+    });
+
+    if (!dotNodes.length) return;
+    const startY = dotNodes[0].cy - window.innerHeight * 0.3;
+    const endY   = dotNodes[dotNodes.length - 1].cy + window.innerHeight * 0.3;
+
+    let d = `M ${threadX} ${startY} L ${threadX} ${dotNodes[0].cy}`;
+    for (let i = 0; i < dotNodes.length - 1; i++) {
+      const p1  = dotNodes[i], p2 = dotNodes[i + 1];
+      const dir = i % 2 === 0 ? 1 : -1;
+      const cp1x = p1.cx + dir * swing;
+      const cp2x = p2.cx - dir * swing;
+      const midY = (p1.cy + p2.cy) / 2;
+      d += ` C ${cp1x} ${midY}, ${cp2x} ${midY}, ${p2.cx} ${p2.cy}`;
+    }
+    d += ` L ${threadX} ${endY}`;
+
+    trackPath.setAttribute('d', d);
+    drawPath.setAttribute('d', d);
+    totalLen = drawPath.getTotalLength ? drawPath.getTotalLength() : 1000;
+    drawPath.style.strokeDasharray  = totalLen;
+    drawPath.style.strokeDashoffset = totalLen;
+  }
+
+  function findLenAtY(targetY) {
+    if (!totalLen) return 0;
+    let lo = 0, hi = totalLen;
+    for (let i = 0; i < 16; i++) {
+      const mid = (lo + hi) / 2;
+      const pt  = drawPath.getPointAtLength(mid);
+      if (pt.y < targetY) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
+  let rafId = null;
+  function onScroll() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => { rafId = null; tick(); });
+  }
+
+  function tick() {
+    if (!totalLen || !dotNodes.length) return;
+    const secRect    = section.getBoundingClientRect();
+    const readingY   = window.innerHeight * 0.6;
+    const targetAbsY = window.scrollY + readingY - (secRect.top + window.scrollY);
+    const len   = findLenAtY(targetAbsY);
+    const clamp = Math.max(0, Math.min(totalLen, len));
+    drawPath.style.strokeDashoffset = totalLen - clamp;
+    dotNodes.forEach(({ el, cy }) => el.classList.toggle('wid-in', cy <= targetAbsY));
+  }
+
+  let resizeTimer = null;
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { buildPath(); tick(); }, 80);
+  }
+
+  if (reducedMotion) {
+    buildPath();
+    if (totalLen) drawPath.style.strokeDashoffset = '0';
+    dotNodes.forEach(({ el }) => el.classList.add('wid-in'));
+    return;
+  }
+
+  buildPath();
+  tick();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
+  if (document.fonts?.ready) document.fonts.ready.then(() => { buildPath(); tick(); });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WAVE STRIP
+// ─────────────────────────────────────────────────────────────────────────────
+const WS_COLORS = ['#ffc94a', '#8da2ff', '#ff7a6b', '#5fe3b5'];
+
+const WS_ICONS = [
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="12" rx="10" ry="4"/>
+    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/>
+    <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-60 12 12)"/>
+    <circle cx="12" cy="12" r="1.5" class="f"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="6" cy="6" r="2" class="f"/>
+    <circle cx="6" cy="18" r="2" class="f"/>
+    <circle cx="18" cy="6" r="2" class="f"/>
+    <line x1="6" y1="8" x2="6" y2="16"/>
+    <path d="M6 8c0-2 3-2 6-2h2a2 2 0 0 1 2 2v0a2 2 0 0 0 2 2"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2" class="f"/>
+    <polyline points="7 9 11 12 7 15"/>
+    <line x1="13" y1="15" x2="17" y2="15"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="6" rx="8" ry="3" class="f"/>
+    <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
+    <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 22 8.5 12 15 2 8.5" class="f"/>
+    <polyline points="2 13 12 19.5 22 13"/>
+    <polyline points="2 17.5 12 24 22 17.5"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="6" y="2" width="12" height="20" rx="2" class="f"/>
+    <line x1="12" y1="17" x2="12" y2="17.5"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 10a6 6 0 0 0-11.74-1.5A4 4 0 1 0 5 16h13a3 3 0 0 0 0-6z" class="f"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 2l1.88 1.88M14.12 3.88 16 2"/>
+    <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" class="f"/>
+    <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/>
+    <line x1="12" y1="10" x2="12" y2="20"/>
+    <line x1="8"  y1="14" x2="4"  y2="14"/>
+    <line x1="20" y1="14" x2="16" y2="14"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" class="f"/>
+    <line x1="9" y1="12" x2="15" y2="12" stroke-dasharray="2 2"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3"  y="12" width="4" height="9" class="f"/>
+    <rect x="10" y="7"  width="4" height="14" class="f"/>
+    <rect x="17" y="4"  width="4" height="17" class="f"/>
+    <line x1="2" y1="21" x2="22" y2="21"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" class="f"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="3" width="20" height="18" rx="2" class="f"/>
+    <line x1="2" y1="8" x2="22" y2="8"/>
+    <line x1="8" y1="8" x2="8"  y2="21"/></svg>`,
+];
+
+function initWaveStrip() {
+  const strip = document.getElementById('wave-strip');
+  const track = document.getElementById('wave-track');
+  if (!strip || !track) return;
+
+  const tileSize  = () => strip.offsetWidth <= 700 ? 84 : 124;
+  const tileCount = () => Math.ceil(strip.offsetWidth / (tileSize() * 1.2)) + 2;
+
+  let tiles = [], rafId = null, lastScrollY = window.scrollY;
+  let scrollVel = 0, time = 0;
+
+  function buildTiles() {
+    track.innerHTML = '';
+    tiles = [];
+    const count = tileCount();
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'ws-tile';
+      const color = WS_COLORS[i % WS_COLORS.length];
+      el.style.setProperty('--c', color);
+      el.innerHTML = WS_ICONS[i % WS_ICONS.length];
+      el.setAttribute('aria-hidden', 'true');
+      track.appendChild(el);
+      const sz = tileSize();
+      tiles.push({ el, x: i * sz * 1.2 });
+    }
+  }
+
+  function render() {
+    if (!tiles.length) return;
+    const sz     = tileSize();
+    const stripH = strip.offsetHeight;
+    tiles.forEach(t => {
+      const phase = t.x * 0.0042 + time * 0.0007;
+      const y     = Math.sin(phase) * (stripH * 0.2);
+      const rot   = Math.cos(phase) * 16;
+      t.el.style.cssText = `position:absolute;left:0;top:0;width:${sz}px;height:${sz}px;` +
+        `transform:translate(${t.x}px,calc(50% + ${y}px)) rotate(${rot}deg);will-change:transform;`;
+    });
+  }
+
+  if (reducedMotion) { buildTiles(); render(); return; }
+
+  function loop() {
+    const dy    = window.scrollY - lastScrollY;
+    lastScrollY = window.scrollY;
+    scrollVel   = scrollVel * 0.92 + dy * 0.12;
+    const speed = 0.35 + Math.abs(scrollVel) * 0.5;
+    const sz    = tileSize();
+    const total = tiles.length * sz * 1.2;
+    tiles.forEach(t => { t.x -= speed; if (t.x < -sz) t.x += total; });
+    time++;
+    render();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  buildTiles(); render(); loop();
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      cancelAnimationFrame(rafId);
+      buildTiles(); loop();
+    }, 120);
+  }, { passive: true });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MY PROJECTS (editorial layout)
+// ─────────────────────────────────────────────────────────────────────────────
+const MY_PROJECTS_DATA = [
+  {
+    id: 'project-placeholder-1',
+    title: 'LOREM IPSUM',
+    titleCase: 'upper',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod ' +
+      'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ' +
+      'veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    tags: ['Lorem','Ipsum','Dolor','Sit','Amet','Consectetur','Adipiscing','Elit','Sed','Do'],
+    link:     '#',
+    imageSrc: null,  // REPLACE: 'assets/project-1.jpg'
+  },
+  {
+    id: 'project-placeholder-2',
+    title: 'Lorem Ipsum',
+    titleCase: 'original',
+    description:
+      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum ' +
+      'dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' +
+      'proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    tags: ['Lorem','Ipsum','Dolor','Sit','Amet','Consectetur','Adipiscing','Elit','Sed','Do'],
+    link:     '#',
+    imageSrc: null,  // REPLACE: 'assets/project-2.jpg'
+  },
+];
+
+function renderMyProjects() {
+  const container = document.getElementById('my-projects-rows');
+  if (!container) return;
+  container.innerHTML = MY_PROJECTS_DATA.map(p => {
+    const title  = p.titleCase === 'upper' ? p.title.toUpperCase() : p.title;
+    const tagRun = p.tags.map((t, i) =>
+      `<span class="mp-tag-item" style="color:${i%2===0?'#3a5a8c':'#8a6a4a'}">${t}</span>`
+    ).join(`<span style="color:#9aa8c4"> / </span>`);
+    const imageTile = p.imageSrc
+      ? `<img src="${p.imageSrc}" alt="${title} screenshot" loading="lazy">`
+      : `<div class="mp-placeholder-tile">
+           <span class="mp-placeholder-label">image placeholder</span>
+           <span class="mp-placeholder-title">${title}</span>
+         </div>`;
+    return `
+    <div class="mp-row" data-mp-row>
+      <div class="mp-text-col">
+        <h3 class="mp-title">${title}</h3>
+        <p class="mp-desc">${p.description}</p>
+        <p class="mp-tags">${tagRun}</p>
+        <a href="${p.link}" class="mp-link">View project ↗</a>
+      </div>
+      <div class="mp-image-col">
+        <div class="mp-image-tile" data-mp-tile>${imageTile}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function initProjectReveal() {
+  if (reducedMotion) {
+    document.querySelectorAll('[data-mp-tile]').forEach(el => el.classList.add('mp-revealed'));
+    return;
+  }
+  const tiles = document.querySelectorAll('[data-mp-tile]');
+  if (!tiles.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('mp-revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  tiles.forEach(tile => io.observe(tile));
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────────────────────
 function init() {
-  // Theme before first paint (inline script in <head> already set data-theme;
-  // this call syncs the button icon)
   applyTheme(getStoredTheme());
 
-  // Render all sections
   renderHeader();
   renderOffcanvas();
   renderLens('role-lens-strip');
   renderLens('role-lens-desktop');
   renderHero();
   renderTechLogos();
+  renderWhatIDo();
+  updateFocusBadges(activeLens);
   renderFilterChips();
   renderProjectGrid();
+  renderMyProjects();
   renderSkillCards();
   renderEduCard();
   renderContact();
 
-  // Start ambient effects
   initDotGrid();
   initSpotlight();
   initTerminal();
   initScrollspy();
+  initScrollLine();
+  initWaveStrip();
+  initProjectReveal();
 }
 
 if (document.readyState === 'loading') {

@@ -9,8 +9,6 @@
     Seeking a 400-hour internship.">
   <meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0f1626"  media="(prefers-color-scheme: dark)">
-
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Portfolio — BSIT Student · Aspiring Business Analyst">
   <meta property="og:description" content="4th-year BSIT student seeking 400-hour internship in BA/PM, Front-End, UI/UX, or QA.">
@@ -19,284 +17,214 @@
   <title>Portfolio — BSIT Student · Aspiring Business Analyst</title>
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 
-  <!-- ── Fonts: Bricolage Grotesque 500/700/800 + IBM Plex Sans 400/500 ─── -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap"
         rel="stylesheet">
 
-  <!-- ── Bootstrap CSS (JS components: modal, offcanvas, toast, scrollspy) -->
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous">
 
-  <!-- ── Stylesheets (order matters) ───────────────────────────────────── -->
-  <link rel="stylesheet" href="css/tokens.css">     <!-- design tokens      -->
-  <link rel="stylesheet" href="css/base.css">       <!-- reset + typography -->
-  <link rel="stylesheet" href="css/portfolio.css">  <!-- all sections       -->
-  <link rel="stylesheet" href="css/tailwind.css">   <!-- CLI-built Tailwind -->
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/portfolio.css">
+  <link rel="stylesheet" href="css/whatido.css">
+  <link rel="stylesheet" href="css/projects-new.css">
+  <link rel="stylesheet" href="css/tailwind.css">
 
-  <!-- Prevent flash of wrong theme before JS runs -->
+  <!-- Prevent theme flash -->
   <script>
     (function(){
-      var stored = localStorage.getItem('portfolio-theme');
-      var pref   = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      var theme  = stored || pref;
-      document.documentElement.setAttribute('data-theme', theme);
+      var s=localStorage.getItem('portfolio-theme');
+      var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      document.documentElement.setAttribute('data-theme',s||p);
     })();
   </script>
 </head>
 
 <body>
-  <!-- Skip link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
-
-  <!-- ARIA live region for Role Lens announcements -->
   <div id="lens-announce" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- Dot-grid background -->
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-  <!-- Cursor spotlight -->
   <div id="spotlight" aria-hidden="true"></div>
 
   <div id="page-wrapper">
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         A. HEADER
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- HEADER -->
     <header class="site-header" id="site-header">
       <div class="header-inner">
-
-        <!-- Brand -->
         <a href="#main-content" class="header-brand" aria-label="Go to top">
           <img src="assets/logo.svg" alt="" width="32" height="32">
-          <span class="brand-name" id="brand-name"><!-- filled by JS --></span>
+          <span class="brand-name" id="brand-name"></span>
         </a>
-
-        <!-- Desktop nav -->
-        <nav id="desktop-nav" class="header-nav" aria-label="Main navigation">
-          <!-- filled by JS -->
-        </nav>
-
-        <!-- Right cluster: role lens (desktop hidden, shown via CSS at ≥1024px) +
-             theme toggle + hamburger -->
+        <nav id="desktop-nav" class="header-nav" aria-label="Main navigation"></nav>
         <div class="header-right">
           <button class="theme-toggle" id="theme-toggle"
-            type="button" aria-label="Switch to dark mode">
-            <!-- icon injected by JS -->
-          </button>
-          <button class="menu-btn" id="menu-btn"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#mobile-menu"
-            aria-controls="mobile-menu"
-            aria-label="Open navigation menu">
-            <!-- icon injected by JS -->
-          </button>
+            type="button" aria-label="Switch to dark mode"></button>
+          <button class="menu-btn" id="menu-btn" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#mobile-menu"
+            aria-controls="mobile-menu" aria-label="Open navigation menu"></button>
         </div>
       </div>
     </header>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         ROLE LENS — sticky chip strip (mobile / tablet)
-         ═══════════════════════════════════════════════════════════════ -->
-    <div id="role-lens-strip"
-         class="role-lens-strip"
-         role="group"
-         aria-label="View portfolio as role">
-      <!-- filled by JS -->
-    </div>
+    <!-- ROLE LENS (mobile) -->
+    <div id="role-lens-strip" class="role-lens-strip"
+         role="group" aria-label="View portfolio as role"></div>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         MAIN CONTENT
-         ═══════════════════════════════════════════════════════════════ -->
     <main id="main-content" tabindex="-1">
 
-      <!-- B. HERO ──────────────────────────────────────────────────── -->
+      <!-- B. HERO -->
       <section id="hero" class="hero" aria-label="Introduction">
         <div class="hero-inner">
-
-          <!-- Left: text -->
           <div class="hero-left">
             <h1 class="hero-h1">
               I turn messy requirements into software that
               <mark class="hero-highlight">works.</mark>
             </h1>
-
-            <p class="hero-subtitle" id="hero-subtitle" aria-live="polite">
-              <!-- filled by JS (Role Lens) -->
-            </p>
-
-            <p class="hero-para" id="hero-para">
-              <!-- filled by JS from data.js -->
-            </p>
-
+            <p class="hero-subtitle" id="hero-subtitle" aria-live="polite"></p>
+            <p class="hero-para"     id="hero-para"></p>
             <div class="hero-buttons">
-              <a href="#projects" class="btn-primary">View my projects</a>
-              <a href="#contact"  class="btn-secondary">Get in touch</a>
+              <a href="#my-projects" class="btn-primary">View my projects</a>
+              <a href="#contact"     class="btn-secondary">Get in touch</a>
             </div>
-
-            <!-- Role Lens (desktop — inside hero) -->
-            <div id="role-lens-desktop"
-                 class="role-lens-desktop"
-                 role="group"
-                 aria-label="View portfolio as role">
-              <!-- filled by JS -->
-            </div>
+            <div id="role-lens-desktop" class="role-lens-desktop"
+                 role="group" aria-label="View portfolio as role"></div>
           </div>
-
-          <!-- Right: terminal -->
           <div class="hero-right" aria-hidden="true">
             <div class="terminal-card" id="terminal-card">
               <div class="terminal-title-bar">
                 <div class="terminal-dots">
-                  <span class="terminal-dot terminal-dot--red"  aria-hidden="true"></span>
-                  <span class="terminal-dot terminal-dot--yellow" aria-hidden="true"></span>
-                  <span class="terminal-dot terminal-dot--green"  aria-hidden="true"></span>
+                  <span class="terminal-dot terminal-dot--red"></span>
+                  <span class="terminal-dot terminal-dot--yellow"></span>
+                  <span class="terminal-dot terminal-dot--green"></span>
                 </div>
                 <span class="terminal-title">bash</span>
               </div>
-              <div class="terminal-body" id="terminal-body">
-                <!-- typed by JS -->
-              </div>
+              <div class="terminal-body" id="terminal-body"></div>
             </div>
           </div>
-
         </div>
       </section>
 
-      <!-- C. TECH LOGOS ROW ───────────────────────────────────────── -->
+      <!-- C. TECH LOGOS -->
       <div class="tech-section" id="tech-strip">
         <div class="tech-inner">
           <p class="tech-label">I'M GOOD AT THIS</p>
-          <div class="tech-logos" id="tech-logos" role="list">
-            <!-- filled by JS -->
+          <div class="tech-logos" id="tech-logos" role="list"></div>
+        </div>
+      </div>
+
+      <!-- D. WHAT I DO -->
+      <section id="what-i-do" class="wid-section" aria-labelledby="wid-heading">
+        <div class="wid-intro" id="wid-intro">
+          <p class="wid-eyebrow">WHAT I DO</p>
+          <h2 id="wid-heading" class="wid-headline">
+            From requirements to a working product.
+          </h2>
+          <p class="wid-subtext">
+            I like understanding the problem first, then helping the team
+            plan, design, build, and test the solution.
+          </p>
+          <div class="wid-scroll-hint" aria-hidden="true">
+            <span>Scroll</span>
+            <span class="wid-scroll-hint-line"></span>
+          </div>
+        </div>
+        <div id="wid-items" class="wid-items-wrap"></div>
+      </section>
+
+      <!-- E. DARK WRAPPER + WAVE STRIP -->
+      <div class="dark-wrapper" id="dark-wrapper">
+        <div class="wave-strip" id="wave-strip" aria-hidden="true">
+          <div class="wave-strip-track" id="wave-track">
+            <!-- tiles injected by initWaveStrip() -->
           </div>
         </div>
       </div>
 
-      <!-- D. PROJECTS ──────────────────────────────────────────────── -->
-      <section id="projects" class="section" aria-labelledby="projects-heading">
-        <div class="section-inner">
-          <div class="section-header">
-            <h2 id="projects-heading" class="section-title">Projects</h2>
-            <p class="section-subtitle">
-              Click a project to see my role, what I did, and the stack.
-            </p>
-          </div>
-
-          <!-- Filter chips -->
-          <div id="filter-row"
-               class="filter-row"
-               role="group"
-               aria-label="Filter projects by category">
-            <!-- filled by JS -->
-          </div>
-
-          <!-- Project grid -->
-          <div id="project-grid"
-               class="project-grid"
-               aria-label="Project cards">
-            <!-- filled by JS -->
-          </div>
+      <!-- F. MY PROJECTS -->
+      <section id="my-projects"
+               class="my-projects-section"
+               aria-labelledby="my-projects-heading">
+        <h2 id="my-projects-heading" class="mp-intro-headline">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </h2>
+        <div id="my-projects-rows">
+          <!-- filled by renderMyProjects() -->
         </div>
       </section>
 
-      <!-- E. SKILLS ────────────────────────────────────────────────── -->
+      <!-- G. OLD PROJECTS (hidden — keeps Bootstrap modal DOM alive) -->
+      <section id="projects" aria-hidden="true"
+               style="display:none;visibility:hidden;pointer-events:none;"
+               aria-labelledby="projects-heading-hidden">
+        <h2 id="projects-heading-hidden" class="sr-only">Projects (modal data)</h2>
+        <div id="filter-row"    role="group" aria-label="Filter"></div>
+        <div id="project-grid" aria-label="Project cards"></div>
+      </section>
+
+      <!-- H. SKILLS -->
       <section id="skills" class="section" aria-labelledby="skills-heading"
                style="background: var(--surface);">
         <div class="section-inner">
           <div class="section-header">
             <h2 id="skills-heading" class="section-title">Skills</h2>
           </div>
-
-          <div id="skills-grid"
-               class="skills-grid"
-               aria-live="polite">
-            <!-- filled + reordered by JS (Role Lens) -->
-          </div>
-
-          <!-- Education + Certifications -->
-          <div id="edu-card"
-               class="edu-card"
-               style="margin-top: var(--s3);">
-            <!-- filled by JS -->
-          </div>
+          <div id="skills-grid" class="skills-grid" aria-live="polite"></div>
+          <div id="edu-card" class="edu-card" style="margin-top: var(--s3);"></div>
         </div>
       </section>
 
-      <!-- F. CONTACT ───────────────────────────────────────────────── -->
+      <!-- I. CONTACT -->
       <section id="contact" class="contact-section" aria-labelledby="contact-heading">
         <div class="contact-inner">
           <h2 id="contact-heading" class="contact-heading">Let's talk.</h2>
           <p class="contact-sub">Open to internship opportunities.</p>
-          <div id="contact-actions" class="contact-actions">
-            <!-- filled by JS -->
-          </div>
+          <div id="contact-actions" class="contact-actions"></div>
         </div>
       </section>
 
-    </main><!-- /#main-content -->
-
+    </main>
   </div><!-- /#page-wrapper -->
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       OFFCANVAS MOBILE MENU (Bootstrap)
-       ═══════════════════════════════════════════════════════════════ -->
-  <div class="offcanvas offcanvas-start"
-       tabindex="-1"
-       id="mobile-menu"
-       aria-labelledby="mobile-menu-label">
+  <!-- OFFCANVAS -->
+  <div class="offcanvas offcanvas-start" tabindex="-1"
+       id="mobile-menu" aria-labelledby="mobile-menu-label">
     <div class="offcanvas-header">
       <span id="mobile-menu-label" class="sr-only">Navigation</span>
-      <!-- filled by JS -->
     </div>
-    <div class="offcanvas-body d-flex flex-column">
-      <!-- filled by JS -->
-    </div>
+    <div class="offcanvas-body d-flex flex-column"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       PROJECT MODAL (Bootstrap)
-       ═══════════════════════════════════════════════════════════════ -->
-  <div class="modal fade"
-       id="project-modal"
-       tabindex="-1"
-       aria-labelledby="modal-project-name"
-       aria-modal="true"
-       role="dialog">
+  <!-- PROJECT MODAL -->
+  <div class="modal fade" id="project-modal" tabindex="-1"
+       aria-labelledby="modal-project-name" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
       <div class="modal-content">
-        <!-- gradient header + body filled by JS on card click -->
-        <div id="modal-header-grad" class="modal-header-grad">
-          <!-- filled by JS -->
-        </div>
-        <div class="modal-body-custom" id="modal-body-content">
-          <!-- filled by JS -->
-        </div>
-        <div id="modal-actions" class="modal-actions">
-          <!-- filled by JS -->
-        </div>
+        <div id="modal-header-grad" class="modal-header-grad"></div>
+        <div class="modal-body-custom" id="modal-body-content"></div>
+        <div id="modal-actions" class="modal-actions"></div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       TOAST CONTAINER
-       ═══════════════════════════════════════════════════════════════ -->
-  <div id="toast-container"
-       class="toast-container"
-       aria-live="polite"
-       aria-atomic="true"></div>
+  <!-- TOAST -->
+  <div id="toast-container" class="toast-container"
+       aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ── Bootstrap JS bundle ───────────────────────────────────── -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmsSINzMX8UKZG0bAfnhT6LoRXZb"
     crossorigin="anonymous"></script>
 
-  <!-- ── Portfolio application (ES module) ────────────────────── -->
+  <!-- Portfolio application -->
   <script type="module" src="js/hero.js"></script>
 
 </body>

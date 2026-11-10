@@ -449,3 +449,66 @@ export const terminalLines = [
   { text: "$ status",                      type: "prompt"       },
   { text: "open to internship (400 hrs)",  type: "blinking"     },
 ];
+
+// ---------------------------------------------------------------------------
+// FOCUS AREAS — "What I Do" scroll-timeline section
+// roleKey matches existing roleLens keys: "ba" | "fe" | "ux" | "qa"
+// projects: IDs that match the projects array — "alwan" | "nookph" | "kyakoyarn"
+// Keep every [CONFIRM] marker until replaced.
+// ---------------------------------------------------------------------------
+export const focusAreas = [
+  {
+    number: "01",
+    title: "Business analysis",
+    description:
+      "Researching the problem, gathering requirements, and turning them " +
+      "into clear documentation for developers and stakeholders.",
+    roleKey: "ba",
+    tags: ["Research", "Documentation", "Requirements"],
+    projects: ["alwan", "nookph", "kyakoyarn"],
+  },
+  {
+    number: "02",
+    title: "Project coordination",
+    description:
+      "Assigning tasks, tracking progress, and keeping the team aligned. " +
+      "I led a team of 3 on ALWAN and distributed tasks in a team of 6 on Kya Ko Yarn.",
+    roleKey: "ba",
+    tags: ["Task tracking", "Team coordination", "Jira (basic)"],
+    projects: ["alwan", "kyakoyarn", "nookph"],
+  },
+  {
+    number: "03",
+    title: "Front-end development",
+    description:
+      "Building responsive interfaces with HTML, CSS, JavaScript, React, " +
+      "and Tailwind CSS. I deployed Kya Ko Yarn on Vercel.",
+    roleKey: "fe",
+    tags: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Certiport HTML and CSS"],
+    projects: ["alwan", "nookph", "kyakoyarn"],
+  },
+  {
+    number: "04",
+    title: "UI/UX design",
+    // CONFIRM: which projects and what I designed
+    description:
+      "Planning screens and user flows in Figma before building them. " +
+      "[CONFIRM which projects and what I designed]",
+    roleKey: "ux",
+    // CONFIRM: add confirmed wireframe tools/deliverables
+    tags: ["Figma", "Wireframes [CONFIRM]", "User flows"],
+    projects: [],
+  },
+  {
+    number: "05",
+    title: "QA and testing",
+    // CONFIRM: what testing I actually did
+    description:
+      "Checking that features work as expected, validating requirements, " +
+      "and reporting bugs. [CONFIRM what testing I actually did]",
+    roleKey: "qa",
+    // CONFIRM: confirm Postman usage
+    tags: ["Testing", "Validation", "Bug reporting", "Postman [CONFIRM]"],
+    projects: [],
+  },
+];
