@@ -1,7 +1,6 @@
 /**
- * data.js — All portfolio content lives here.
- * Edit this file to update the site; never touch index.html or main.js for content.
- *
+ * data.js — Single source of truth for all portfolio content.
+ * Edit this file to update the site. Never hardcode content in HTML or JS.
  * Search for // CONFIRM or // ADD DETAIL to find every placeholder.
  */
 
@@ -14,81 +13,102 @@ export const meta = {
 
   title: "BSIT Student · Aspiring Business Analyst",
 
-  hero: "Aspiring Business Analyst and Project Coordinator who also builds and tests the interfaces.",
+  // Hero paragraph — shown below h1
+  heroParagraph:
+    "I'm YOUR FULL NAME, a 4th-year BSIT student at National University – " +
+    "Dasmariñas, looking for a 400-hour internship in business analysis, " +
+    "project coordination, front-end, UI/UX, or QA.",
 
-  // CONFIRM: e.g. "2025" or "2026"
-  gradYear: "[CONFIRM GRADUATION YEAR]",
+  // Hero subtitle — updated by Role Lens
+  heroSubtitles: {
+    ba: "Currently viewing highlights for Business Analysis & PM roles.",
+    fe: "Currently viewing highlights for Front-End Developer roles.",
+    ux: "Currently viewing highlights for UI/UX Designer roles.",
+    qa: "Currently viewing highlights for QA Tester roles.",
+  },
+
+  // CONFIRM: Replace with your email
+  email: "your@email.com",
+
+  // CONFIRM: Replace with your phone (optional — delete if not wanted)
+  phone: "[CONFIRM PHONE]",
+
+  // CONFIRM: Replace with your LinkedIn URL
+  linkedin: "https://linkedin.com/in/your-handle",
+
+  // CONFIRM: Replace with your GitHub URL
+  github: "https://github.com/your-handle",
+
+  // Resume PDF — place at assets/resume.pdf
+  resume: "assets/resume.pdf",
+
+  // CONFIRM: graduation year
+  gradYear: "[CONFIRM YEAR]",
 
   school: "National University – Dasmariñas",
   degree: "Bachelor of Science in Information Technology",
 
-  // 400-hour OJT target — CONFIRM the month/year
-  ojtTarget: "Seeking 400-hr Internship · [CONFIRM MONTH YEAR]",
-
-  // CONFIRM: Replace with your actual email
-  email: "your@email.com",
-
-  // CONFIRM: Replace with your phone number (optional — delete if you don't want it shown)
-  phone: "[CONFIRM PHONE]",
-
-  // CONFIRM: Replace with your actual LinkedIn profile URL
-  linkedin: "https://linkedin.com/in/your-handle",
-
-  // CONFIRM: Replace with your actual GitHub profile URL
-  github: "https://github.com/your-handle",
-
-  // Resume PDF — place your file at assets/resume.pdf
-  resume: "assets/resume.pdf",
+  // OJT target — CONFIRM month/year
+  ojtTarget: "[CONFIRM MONTH YEAR]",
 };
 
 // ---------------------------------------------------------------------------
-// NAV LINKS (order = scroll order)
+// NAV LINKS
 // ---------------------------------------------------------------------------
 export const navLinks = [
-  { label: "About",          href: "#about" },
-  { label: "Projects",       href: "#projects" },
-  { label: "Skills",         href: "#skills" },
-  { label: "Timeline",       href: "#timeline" },
-  { label: "Certifications", href: "#certifications" },
-  { label: "Contact",        href: "#contact" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills",   href: "#skills"   },
+  { label: "Contact",  href: "#contact"  },
+];
+
+// ---------------------------------------------------------------------------
+// STATS ROW  (use only verified facts — no invented numbers)
+// ---------------------------------------------------------------------------
+export const stats = [
+  { number: "3",    label: "academic projects"      },
+  { number: "3",    label: "Certiport certificates" },
+  { number: "4",    label: "role paths"             },
+  { number: "400",  label: "hr internship goal"     },
 ];
 
 // ---------------------------------------------------------------------------
 // PROJECTS
-// Role bullets: provide 2 bullets per role key so Role Lens can swap them.
-// Keys: ba | fe | ux | qa
+// gradient: "blue" | "orange" | "green" | "purple"
+// category: used by filter chips
+// roleBullets: 2 bullets per lens key (ba | fe | ux | qa)
 // ---------------------------------------------------------------------------
 export const projects = [
   {
     id: "alwan",
     title: "ALWAN",
-    summary: "Online Lending Application — mobile and web platform for loan management.",
+    summary: "Online Lending Application",
+    category: "mobile",
+    gradient: "blue",
+    year: "2024",
     teamSize: 3,
     myRole: "Project Lead",
     stack: ["Flutter", "Laravel", "Supabase"],
-    // CONFIRM: Add live demo URL when available
+    // CONFIRM: live demo URL
     demoUrl: "[CONFIRM LIVE DEMO URL]",
-    // CONFIRM: Add GitHub repository URL
-    githubUrl: "[CONFIRM GITHUB URL]",
+    // CONFIRM: GitHub repo URL
+    sourceUrl: "[CONFIRM GITHUB URL]",
 
-    // Modal case-study content
     caseStudy: {
       problem:
-        "Users needed a streamlined digital channel for loan applications and approvals, " +
-        "replacing a manual, paper-based process. [ADD DETAIL — describe the specific pain points]",
+        "Users needed a streamlined digital channel for loan applications and " +
+        "approvals, replacing a manual paper-based process. [ADD DETAIL]",
       myRoleDetail:
-        "Served as Project Lead for a team of three. Responsible for task assignment, " +
+        "Served as Project Lead for a team of 3. Responsible for task assignment, " +
         "research and documentation, stakeholder coordination, and frontend contribution.",
       whatIDid: [
         "Defined project scope and assigned development tasks across the team.",
         "Conducted stakeholder interviews and produced requirements documentation.",
-        "Coordinated between frontend and backend developers throughout sprints.",
+        "Coordinated between frontend and backend developers throughout development.",
         "Contributed to Flutter UI screens for the loan application flow.",
         // ADD DETAIL: add more specifics once available
       ],
     },
 
-    // Role Lens bullets — 2 per role (shown on card, swapped by lens)
     roleBullets: {
       ba: [
         "Led requirements gathering and produced end-to-end documentation.",
@@ -112,22 +132,25 @@ export const projects = [
   {
     id: "nookph",
     title: "NOOK PH",
-    summary: "Rental Management System — platform for property listings and tenant coordination.",
+    summary: "Rental Management System",
+    category: "web",
+    gradient: "orange",
+    year: "2024",
     teamSize: 5,
     myRole: "Team Member",
-    // CONFIRM: Confirm the actual stack used
+    // CONFIRM: confirm the actual stack
     stack: ["[CONFIRM]"],
-    // CONFIRM: Add live demo URL when available
+    // CONFIRM: live demo URL
     demoUrl: "[CONFIRM LIVE DEMO URL]",
-    // CONFIRM: Add GitHub repository URL
-    githubUrl: "[CONFIRM GITHUB URL]",
+    // CONFIRM: GitHub repo URL
+    sourceUrl: "[CONFIRM GITHUB URL]",
 
     caseStudy: {
       problem:
         "Property managers needed a centralized system to handle rental listings, " +
         "tenant records, and payment tracking. [ADD DETAIL]",
       myRoleDetail:
-        "Team member in a group of five. Focused on team coordination, research and " +
+        "Team member in a group of 5. Focused on team coordination, research and " +
         "documentation, and frontend contribution.",
       whatIDid: [
         "Supported team coordination and helped unblock cross-functional dependencies.",
@@ -160,23 +183,26 @@ export const projects = [
   {
     id: "kyakoyarn",
     title: "Kya Ko Yarn",
-    summary: "Web application for yarn crafters — deployed on Vercel.",
+    summary: "Web Application — deployed on Vercel",
+    category: "web",
+    gradient: "green",
+    year: "2024",
     teamSize: 6,
     myRole: "Team Member",
-    // CONFIRM: Confirm the actual stack used
-    stack: ["[CONFIRM]", "Vercel"],
     deployedOn: "Vercel",
-    // CONFIRM: Add live demo URL (deployed on Vercel)
-    demoUrl: "[CONFIRM VERCEL LIVE URL]",
-    // CONFIRM: Add GitHub repository URL
-    githubUrl: "[CONFIRM GITHUB URL]",
+    // CONFIRM: confirm the actual stack
+    stack: ["[CONFIRM]", "Vercel"],
+    // CONFIRM: live Vercel URL
+    demoUrl: "[CONFIRM VERCEL URL]",
+    // CONFIRM: GitHub repo URL
+    sourceUrl: "[CONFIRM GITHUB URL]",
 
     caseStudy: {
       problem:
         "Yarn enthusiasts lacked a dedicated platform to browse, track, and share " +
         "yarn projects and stash inventory. [ADD DETAIL]",
       myRoleDetail:
-        "Team member in a group of six. Handled task distribution, research and " +
+        "Team member in a group of 6. Handled task distribution, research and " +
         "documentation, and frontend contribution.",
       whatIDid: [
         "Distributed development tasks and tracked progress across six contributors.",
@@ -208,104 +234,86 @@ export const projects = [
 ];
 
 // ---------------------------------------------------------------------------
-// SKILLS
-// levels: "Basic" | "Working" | "Comfortable"
-// category keys must match ROLE_LENS keys: ba | fe | ux | qa | other
+// PROJECT FILTER CHIPS
 // ---------------------------------------------------------------------------
-export const skills = [
-  // --- Business Analyst / PM ---
-  { name: "Requirements & Research",   category: "ba",    level: "Working" },
-  { name: "Documentation",             category: "ba",    level: "Working" },
-  { name: "Task Tracking",             category: "ba",    level: "Working" },
-  { name: "Stakeholder Coordination",  category: "ba",    level: "Working" },
-  { name: "Jira",                      category: "ba",    level: "Basic"   },
-
-  // --- Front-End ---
-  { name: "HTML",                      category: "fe",    level: "Working" },
-  { name: "CSS",                       category: "fe",    level: "Working" },
-  { name: "JavaScript",                category: "fe",    level: "Working" },
-  { name: "React",                     category: "fe",    level: "Working" },
-  { name: "Tailwind CSS",              category: "fe",    level: "Working" },
-
-  // --- UI/UX ---
-  { name: "Figma",                     category: "ux",    level: "Working" },
-  { name: "Wireframing",               category: "ux",    level: "Working" },
-  { name: "User Flows",                category: "ux",    level: "Working" },
-
-  // --- QA ---
-  { name: "Testing & Validation",      category: "qa",    level: "Working" },
-  { name: "Bug Reporting",             category: "qa",    level: "Working" },
-  // CONFIRM: Confirm whether Postman is used for QA and at what level
-  { name: "Postman",                   category: "qa",    level: "Working" }, // CONFIRM level
-
-  // --- Other / Cross-cutting ---
-  { name: "Java",                      category: "other", level: "Working" },
-  { name: "Supabase",                  category: "other", level: "Working" },
-  { name: "GitHub",                    category: "other", level: "Working" },
-  { name: "Google Workspace",          category: "other", level: "Working" },
-  { name: "Microsoft Excel",           category: "other", level: "Working" },
-  { name: "AI-Assisted Development",   category: "other", level: "Working" },
-  { name: "Flutter",                   category: "other", level: "Working" },
+export const projectFilters = [
+  { key: "all",    label: "All" },
+  { key: "web",    label: "Web" },
+  { key: "mobile", label: "Mobile" },
 ];
 
 // ---------------------------------------------------------------------------
-// ROLE LENS CONFIG
-// order: array of category keys; first = default shown at top of skills section
+// SKILLS
+// category: ba | fe | ux | qa | other
+// level: "Basic" | "Working" | "Comfortable"
 // ---------------------------------------------------------------------------
-export const roleLens = [
+export const skills = [
+  // Front-End
+  { name: "HTML",             category: "fe",    level: "Working"     },
+  { name: "CSS",              category: "fe",    level: "Working"     },
+  { name: "JavaScript",       category: "fe",    level: "Working"     },
+  { name: "React",            category: "fe",    level: "Working"     },
+  { name: "Tailwind CSS",     category: "fe",    level: "Working"     },
+
+  // Business Analyst / PM
+  { name: "Requirements & Research", category: "ba", level: "Working" },
+  { name: "Documentation",    category: "ba",    level: "Working"     },
+  { name: "Task Tracking",    category: "ba",    level: "Working"     },
+  { name: "Stakeholder Coordination", category: "ba", level: "Working"},
+  // CONFIRM: Jira level
+  { name: "Jira",             category: "ba",    level: "Basic"       },
+
+  // UI/UX
+  { name: "Figma",            category: "ux",    level: "Working"     },
+  { name: "Wireframing",      category: "ux",    level: "Working"     },
+  { name: "User Flows",       category: "ux",    level: "Working"     },
+
+  // QA
+  { name: "Testing & Validation", category: "qa", level: "Working"   },
+  { name: "Bug Reporting",    category: "qa",    level: "Working"     },
+  // CONFIRM: Postman level
+  { name: "Postman",          category: "qa",    level: "Working"     },
+
+  // Other
+  { name: "Java",             category: "other", level: "Working"     },
+  { name: "Supabase",         category: "other", level: "Working"     },
+  { name: "GitHub",           category: "other", level: "Working"     },
+  { name: "Google Workspace", category: "other", level: "Working"     },
+  { name: "Microsoft Excel",  category: "other", level: "Working"     },
+  { name: "AI-Assisted Development", category: "other", level: "Working"},
+];
+
+// ---------------------------------------------------------------------------
+// SKILL CARDS (displayed in the Skills section — 4 role cards)
+// ---------------------------------------------------------------------------
+export const skillCards = [
   {
     key: "ba",
-    label: "Business Analyst / PM",
-    shortLabel: "BA/PM",
-    // Which skill categories bubble to the top when this lens is active
-    priorityCategories: ["ba", "other"],
+    title: "Business Analysis & PM",
+    icon: "📋",
+    description: "Requirements gathering, documentation, task tracking, and stakeholder coordination.",
+    skills: ["Requirements & Research", "Documentation", "Task Tracking", "Stakeholder Coordination", "Jira"],
   },
   {
     key: "fe",
-    label: "Front-End Developer",
-    shortLabel: "Front-End",
-    priorityCategories: ["fe", "other"],
+    title: "Front-End",
+    icon: "💻",
+    description: "Building clean, responsive interfaces with modern web technologies.",
+    skills: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
   },
   {
     key: "ux",
-    label: "UI/UX Designer",
-    shortLabel: "UI/UX",
-    priorityCategories: ["ux", "fe", "other"],
+    title: "UI/UX",
+    icon: "🎨",
+    description: "Wireframing, user flows, and interface design using Figma.",
+    skills: ["Figma", "Wireframing", "User Flows"],
   },
   {
     key: "qa",
-    label: "QA Tester",
-    shortLabel: "QA",
-    priorityCategories: ["qa", "other"],
-  },
-];
-
-// ---------------------------------------------------------------------------
-// TIMELINE
-// type: "education" | "work" | "ojt"
-// ---------------------------------------------------------------------------
-export const timeline = [
-  {
-    id: "bsit",
-    type: "education",
-    year: "2021 – Present",
-    title: "Bachelor of Science in Information Technology",
-    org: "National University – Dasmariñas",
-    // CONFIRM: Add graduation year/semester
-    detail:
-      "4th-year student, graduating [CONFIRM YEAR]. Coursework includes software engineering, " +
-      "systems analysis, database management, and web development.",
-  },
-  {
-    id: "ojt",
-    type: "ojt",
-    // CONFIRM: Confirm the target internship month and year
-    year: "[CONFIRM MONTH YEAR]",
-    title: "Seeking 400-Hour Internship / OJT",
-    org: "Open to opportunities",
-    detail:
-      "Targeting roles in Business Analysis / Project Management, with secondary interest " +
-      "in Front-End Development, UI/UX Design, and QA Testing.",
+    title: "QA & Testing",
+    icon: "🧪",
+    description: "Testing, validation, bug reporting, and API testing.",
+    skills: ["Testing & Validation", "Bug Reporting", "Postman"],
   },
 ];
 
@@ -314,48 +322,71 @@ export const timeline = [
 // ---------------------------------------------------------------------------
 export const certifications = [
   {
-    id: "cert-html",
     name: "Certiport — HTML",
     issuer: "Certiport",
-    // CONFIRM: Add the certification date (e.g. "March 2024")
+    // CONFIRM: certification date
     date: "[CONFIRM DATE]",
-    // CONFIRM: Add credential URL if available
-    url: "[CONFIRM CREDENTIAL URL]",
+    // CONFIRM: credential URL if available
+    url: "[CONFIRM URL]",
   },
   {
-    id: "cert-css",
     name: "Certiport — CSS",
     issuer: "Certiport",
-    // CONFIRM: Add the certification date
+    // CONFIRM: certification date
     date: "[CONFIRM DATE]",
-    // CONFIRM: Add credential URL if available
-    url: "[CONFIRM CREDENTIAL URL]",
+    // CONFIRM: credential URL if available
+    url: "[CONFIRM URL]",
   },
   {
-    id: "cert-db",
     name: "Certiport — Databases",
     issuer: "Certiport",
-    // CONFIRM: Add the certification date
+    // CONFIRM: certification date
     date: "[CONFIRM DATE]",
-    // CONFIRM: Add credential URL if available
-    url: "[CONFIRM CREDENTIAL URL]",
+    // CONFIRM: credential URL if available
+    url: "[CONFIRM URL]",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// ABOUT PARAGRAPH
-// Keep under ~70 characters per line for readability in the editor.
+// ROLE LENS CONFIG
 // ---------------------------------------------------------------------------
-export const about = [
-  "I'm a 4th-year BSIT student at National University – Dasmariñas, " +
-    "graduating [CONFIRM YEAR], with hands-on experience leading " +
-    "academic software projects from requirements gathering to deployment.",
-  "My primary focus is Business Analysis and Project Coordination — " +
-    "I enjoy translating user needs into clear requirements, keeping " +
-    "teams aligned, and making sure nothing falls through the cracks.",
-  "I also contribute on the frontend and have a keen interest in " +
-    "interface design and quality assurance, so I bring a cross-functional " +
-    "perspective to every project I join.",
-  "Currently seeking a 400-hour OJT / internship where I can " +
-    "apply these skills in a real-world environment.",
+export const roleLens = [
+  {
+    key: "ba",
+    label: "Business Analyst/PM",
+    shortLabel: "BA/PM",
+    // Skill cards to highlight (put at top) when this lens is active
+    priorityCards: ["ba", "other"],
+  },
+  {
+    key: "fe",
+    label: "Front-End",
+    shortLabel: "Front-End",
+    priorityCards: ["fe", "other"],
+  },
+  {
+    key: "ux",
+    label: "UI/UX",
+    shortLabel: "UI/UX",
+    priorityCards: ["ux", "fe", "other"],
+  },
+  {
+    key: "qa",
+    label: "QA",
+    shortLabel: "QA",
+    priorityCards: ["qa", "other"],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// TERMINAL LINES (typing animation)
+// type: "prompt" | "output" | "output-name" | "output-accent" | "blinking"
+// ---------------------------------------------------------------------------
+export const terminalLines = [
+  { text: "$ whoami",                      type: "prompt"       },
+  { text: "YOUR FULL NAME, BSIT student",  type: "output-name"  },
+  { text: "$ ls projects/",                type: "prompt"       },
+  { text: "ALWAN  NOOK-PH  Kya-Ko-Yarn",   type: "output-accent"},
+  { text: "$ status",                      type: "prompt"       },
+  { text: "open to internship (400 hrs)",  type: "blinking"     },
 ];
