@@ -41,14 +41,14 @@
 }
 
 .top-nav.scrolled {
-  background: rgba(11, 18, 32, 0.85);
+  background: rgba(22, 19, 22, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--border);
 }
 
 [data-theme="light"] .top-nav.scrolled {
-  background: rgba(248, 250, 252, 0.88);
+  background: rgba(255, 245, 239, 0.90);
 }
 
 /* Logo / monogram */
@@ -316,11 +316,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--on-accent);
   background: var(--accent);
   border: none;
   border-radius: var(--r-sm);
@@ -330,16 +331,12 @@
   align-self: flex-start;
 }
 
-[data-theme="light"] .hero-cta { color: #ffffff; }
-
 @media (hover: hover) and (pointer: fine) {
   .hero-cta:hover {
     opacity: 0.88;
     transform: translateY(-2px);
-    color: var(--text);
+    color: var(--on-accent);
   }
-
-  [data-theme="light"] .hero-cta:hover { color: #ffffff; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -111,8 +111,8 @@ function initDotGrid() {
   function draw() {
     if (!ctx) return;
     const dark = document.documentElement.getAttribute('data-theme') !== 'light';
-    const dot   = dark ? 'rgba(45,212,191,0.10)' : 'rgba(15,118,110,0.14)';
-    const hover = dark ? 'rgba(45,212,191,0.45)' : 'rgba(15,118,110,0.40)';
+    const dot   = dark ? 'rgba(255,109,41,0.08)'  : 'rgba(229,90,24,0.10)';
+    const hover = dark ? 'rgba(255,109,41,0.40)'  : 'rgba(229,90,24,0.38)';
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
