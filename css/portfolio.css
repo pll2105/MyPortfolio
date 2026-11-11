@@ -492,13 +492,12 @@
 }
 
 .tech-logos {
-  display: flex;
-  align-items: center;
-  gap: var(--s4);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 4px; /* prevent clip of drop-shadow */
+  display:    flex;
+  align-items:center;
+  flex-wrap:  wrap;          /* logos wrap to the next line instead of scrolling */
+  gap:        var(--s3) var(--s4);
+  overflow-x: visible;
+  padding-bottom: 4px;
 }
 
 .tech-logos::-webkit-scrollbar { display: none; }
