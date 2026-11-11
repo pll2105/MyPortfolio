@@ -468,7 +468,7 @@
 .tech-section {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  padding: var(--s5) 0;
+  padding: var(--s3) 0 var(--s5);   /* reduced top — page-wrapper already clears the header */
   background: var(--surface);
   overflow: hidden;
 }

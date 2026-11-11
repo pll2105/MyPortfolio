@@ -43,9 +43,10 @@
   box-shadow:          0 1px 0 rgba(0,0,0,0.06) !important;
 }
 
-/* Compensate for the fixed header so the existing site doesn't get clipped */
+/* Compensate for the fixed header — only the page content below the splash
+   needs clearance; the splash hero handles its own top padding internally.  */
 #page-wrapper {
-  padding-top: var(--nav-h);
+  padding-top: 0;
 }
 
 /* ─── SECTION wrapper ────────────────────────────────────────────────────── */
