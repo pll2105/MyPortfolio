@@ -40,13 +40,13 @@ export const meta = {
   resume: "assets/resume.pdf",
 
   // CONFIRM: graduation year
-  gradYear: "[CONFIRM YEAR]",
+  gradYear: "2027",
 
   school: "National University – Dasmariñas",
-  degree: "Bachelor of Science in Information Technology",
+  degree: "Bachelor of Science in Information Technology - Specialized in Mobile and Web Application",
 
   // OJT target — CONFIRM month/year
-  ojtTarget: "[CONFIRM MONTH YEAR]",
+  ojtTarget: "This month of November 2026",
 };
 
 // ---------------------------------------------------------------------------
