@@ -9,13 +9,13 @@
 // ---------------------------------------------------------------------------
 export const meta = {
   // CONFIRM: Replace with your full name
-  name: "YOUR FULL NAME",
+  name: "PIA ELLEINE LUCERO",
 
   title: "BSIT Student · Aspiring Business Analyst",
 
   // Hero paragraph — shown below h1
   heroParagraph:
-    "I'm YOUR FULL NAME, a 4th-year BSIT student at National University – " +
+    "I'm Pia Elleine Lucero, a 4th-year BSIT student at National University – " +
     "Dasmariñas, looking for a 400-hour internship in business analysis, " +
     "project coordination, front-end, UI/UX, or QA.",
 
@@ -28,16 +28,13 @@ export const meta = {
   },
 
   // CONFIRM: Replace with your email
-  email: "your@email.com",
-
-  // CONFIRM: Replace with your phone (optional — delete if not wanted)
-  phone: "[CONFIRM PHONE]",
+  email: "piaelleinelucero2105@gmail.com",
 
   // CONFIRM: Replace with your LinkedIn URL
-  linkedin: "https://linkedin.com/in/your-handle",
+  linkedin: "www.linkedin.com/in/pia-elleine-lucero-08960844a",
 
   // CONFIRM: Replace with your GitHub URL
-  github: "https://github.com/your-handle",
+  github: "https://github.com/pll2105",
 
   // Resume PDF — place at assets/resume.pdf
   resume: "assets/resume.pdf",

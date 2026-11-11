@@ -1,0 +1,450 @@
+/* ==========================================================================
+   certifications.css — Certiport certificate showcase
+   Every selector is prefixed .cert- to prevent Bootstrap/.card leaks.
+   Bootstrap has its own .card class with background/border/padding —
+   that is why all classes here are fully namespaced.
+   ========================================================================== */
+
+/* ── Token bridge ─────────────────────────────────────────────────────────── */
+:root {
+  --certs-blue:  #3b5bfd;
+  --certs-green: #12b184;
+  --certs-cream: #fffdf7;
+  --certs-cream-border: #e6e1d3;
+  --certs-mono:  'JetBrains Mono', 'Cascadia Code', ui-monospace, monospace;
+}
+
+/* ── SECTION ──────────────────────────────────────────────────────────────── */
+/* No overflow:hidden — the behind card must not be clipped at the top */
+.certs-section {
+  padding: 4vh 4vw;
+}
+
+/* ── GRID ─────────────────────────────────────────────────────────────────── */
+.certs-inner {
+  display:               grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr);
+  gap:                   3vw;
+  align-items:           center;
+}
+
+@media (max-width: 900px) {
+  .certs-inner {
+    grid-template-columns: 1fr;
+    gap:                   2.5rem;
+  }
+}
+
+/* ── LEFT COLUMN ──────────────────────────────────────────────────────────── */
+.certs-left {
+  display:        flex;
+  flex-direction: column;
+}
+
+.certs-eyebrow {
+  font-family:    var(--font-body);
+  font-size:      1.05rem;
+  font-weight:    500;
+  color:          var(--certs-blue);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom:  1rem;
+}
+
+.certs-headline {
+  font-family:    var(--font-display);
+  font-weight:    800;
+  font-size:      clamp(2.4rem, 4.6vw, 4.6rem);
+  line-height:    1.02;
+  letter-spacing: -0.04em;
+  color:          var(--ink);
+  margin:         0;
+}
+
+.certs-hl {
+  display:    inline;
+  background: #ffc94a;
+  color:      #14213d;
+  border-radius: 6px;
+  padding:    0 0.18em 0.05em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.certs-para {
+  font-family: var(--font-body);
+  font-size:   clamp(1rem, 1.25vw, 1.15rem);
+  color:       var(--muted);
+  line-height: 1.7;
+  max-width:   30em;
+  margin:      1.4rem 0 1.6rem;
+}
+
+/* Verify button — auto width, not stretched */
+.cert-btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  align-self:      flex-start;
+  background:      var(--certs-blue);
+  color:           #ffffff;
+  border:          none;
+  border-radius:   8px;
+  padding:         1rem 2rem;
+  font-family:     var(--font-body);
+  font-size:       1.05rem;
+  font-weight:     700;
+  letter-spacing:  0;
+  text-decoration: none;
+  cursor:          pointer;
+  white-space:     nowrap;
+  transition:      transform .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cert-btn:hover { transform: translateY(-2px); }
+
+@media (prefers-reduced-motion: reduce) { .cert-btn { transition: none; } }
+
+/* Chip row */
+.cert-chips {
+  display:    flex;
+  gap:        0.6rem;
+  flex-wrap:  wrap;
+  margin-top: 1.4rem;
+}
+
+/* Chip */
+.cert-chip {
+  display:        inline-flex;
+  align-items:    center;
+  font-family:    var(--font-body);
+  font-size:      0.95rem;
+  font-weight:    700;
+  letter-spacing: 0;
+  padding:        .8rem 1.4rem;
+  border-radius:  999px;
+  border:         1px solid var(--line);
+  background:     transparent;
+  color:          var(--muted);
+  cursor:         pointer;
+  transition:     all .25s ease;
+  -webkit-tap-highlight-color: transparent;
+  outline:        none;
+}
+
+.cert-chip:hover { color: var(--ink); border-color: var(--muted); }
+
+.cert-chip[aria-pressed="true"] {
+  background:   var(--ink);
+  color:        var(--bg);
+  border-color: var(--ink);
+}
+
+.cert-chip:focus-visible {
+  outline:        3px solid var(--certs-blue);
+  outline-offset: 2px;
+}
+
+/* ── RIGHT COLUMN — stage ─────────────────────────────────────────────────── */
+.cert-stage {
+  position:    relative;
+  margin-right: -1vw;
+  /* padding-top gives space so the rotated behind card isn't clipped */
+  padding-top:  4%;
+}
+
+/* Decorative dot-grid */
+.cert-stage::before {
+  content:          '';
+  position:         absolute;
+  right:            -4%;
+  top:              -4%;   /* adjusted for the extra padding-top */
+  width:            46%;
+  aspect-ratio:     1;
+  background-image: radial-gradient(var(--line) 2px, transparent 2.5px);
+  background-size:  22px 22px;
+  opacity:          .8;
+  pointer-events:   none;
+  z-index:          0;
+}
+
+/* Deck — aspect-ratio wrapper */
+.cert-deck {
+  position:     relative;
+  aspect-ratio: 16 / 12.2;
+}
+
+/* ── CARD wrapper ─────────────────────────────────────────────────────────────
+   NO background, border, padding, margin or shadow on the wrapper itself.
+   The face fills it exactly via inset:0.                                    */
+.cert-card {
+  /* Reset any Bootstrap .card leakage */
+  background:  none   !important;
+  border:      none   !important;
+  padding:     0      !important;
+  margin:      0      !important;
+  box-shadow:  none   !important;
+  border-radius: 0    !important;
+
+  position:      absolute;
+  left:          50%;
+  top:           50%;
+  /* Center the card in the deck both axes */
+  transform:     translate(-50%, -50%);
+  width:         88%;
+  aspect-ratio:  3 / 2;
+  perspective:   1200px;
+  cursor:        pointer;
+  outline:       none;
+  transition:    transform .7s cubic-bezier(.2,.8,.2,1),
+                 opacity  .5s ease,
+                 filter   .5s ease;
+}
+
+.cert-card.front {
+  z-index:   2;
+  /* Keep centered, no extra offset */
+  transform: translate(-50%, -50%);
+  opacity:   1;
+  filter:    none;
+}
+
+.cert-card.behind {
+  z-index:   1;
+  /* Centered base + behind offset + rotate */
+  transform: translate(calc(-50% + 12%), calc(-50% - 11%)) rotate(5deg) scale(.9);
+  opacity:   .75;
+  filter:    saturate(.7);
+}
+
+.cert-card.behind:hover {
+  transform: translate(calc(-50% + 14%), calc(-50% - 13%)) rotate(6deg) scale(.91);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-card          { transition: none; }
+  .cert-card.behind:hover { transform: translate(calc(-50% + 12%), calc(-50% - 11%)) rotate(5deg) scale(.9); }
+}
+
+/* ── TILT wrapper ─────────────────────────────────────────────────────────── */
+.cert-tilt {
+  position:        absolute;
+  inset:           0;
+  transform-style: preserve-3d;
+  transform:       rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition:      transform .15s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) { .cert-tilt { transition: none; } }
+
+/* ── FLIP wrapper ─────────────────────────────────────────────────────────── */
+.cert-flip {
+  position:        absolute;
+  inset:           0;
+  transform-style: preserve-3d;
+  transition:      transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.cert-card.flipped .cert-flip { transform: rotateY(180deg); }
+
+@media (prefers-reduced-motion: reduce) { .cert-flip { transition: none; } }
+
+/* ── FACE — shared ────────────────────────────────────────────────────────── */
+.cert-face {
+  position:               absolute;
+  inset:                  0;          /* fills the card wrapper exactly */
+  border-radius:          16px;
+  backface-visibility:    hidden;
+  -webkit-backface-visibility: hidden;
+  overflow:               hidden;
+  box-shadow:             0 30px 50px -28px rgba(15,26,58,.55);
+}
+
+/* ── FRONT FACE ───────────────────────────────────────────────────────────── */
+.cert-front {
+  /* Must stay position:absolute (from .cert-face) — do NOT set position:relative */
+  background:     var(--certs-cream);
+  color:          #14213d;
+  border:         1px solid var(--certs-cream-border);
+  padding:        6% 7%;
+  display:        flex;
+  flex-direction: column;
+  /* pseudo-elements (::before inset border, ::after glare) need a containing
+     block — set it here without breaking position:absolute from .cert-face */
+  isolation:      isolate;
+}
+
+/* Inset decorative border */
+.cert-front::before {
+  content:        '';
+  position:       absolute;
+  inset:          3.5%;
+  border:         1.5px solid var(--ac, #3b5bfd);
+  border-radius:  10px;
+  opacity:        .55;
+  pointer-events: none;
+}
+
+/* Glare overlay */
+.cert-front::after {
+  content:        '';
+  position:       absolute;
+  inset:          0;
+  border-radius:  inherit;
+  background:     radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 0%),
+    rgba(255,255,255,.75),
+    transparent 45%
+  );
+  opacity:        var(--go, 0);
+  transition:     opacity .3s ease;
+  pointer-events: none;
+  z-index:        4;
+}
+
+@media (prefers-reduced-motion: reduce) { .cert-front::after { display: none; } }
+
+.cert-fr-top {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+.cert-fr-issuer {
+  font-family:    var(--certs-mono);
+  font-weight:    700;
+  font-size:      clamp(.58rem, .88vw, .68rem);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color:          var(--ac, #3b5bfd);
+}
+
+.cert-fr-seal {
+  width:           clamp(34px, 5vw, 54px);
+  aspect-ratio:    1;
+  border-radius:   50%;
+  background:      var(--ac, #3b5bfd);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+}
+
+.cert-fr-seal svg {
+  width:   50%;
+  height:  50%;
+  display: block;
+}
+
+.cert-fr-bottom { margin-top: auto; }
+
+.cert-fr-cert-of {
+  font-family:    var(--certs-mono);
+  font-size:      clamp(.6rem, .9vw, .75rem);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color:          #6a7185;
+  margin-bottom:  .3rem;
+}
+
+.cert-fr-title {
+  font-family:    var(--font-display);
+  font-weight:    800;
+  font-size:      clamp(1.2rem, 3vw, 2.8rem);
+  letter-spacing: -.03em;
+  line-height:    1.1;
+  color:          #14213d;
+  margin:         .3rem 0 .4rem;
+}
+
+.cert-fr-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size:   clamp(.85rem, 1.6vw, 1.4rem);
+  color:       #3a4560;
+}
+
+.cert-fr-footer {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  border-top:      1px dashed #cfc9b8;
+  margin-top:      .8rem;
+  padding-top:     .7rem;
+  font-family:     var(--certs-mono);
+  font-size:       clamp(.58rem, .85vw, .72rem);
+  color:           #6a7185;
+}
+
+.cert-card:focus-visible .cert-front {
+  outline:        3px solid var(--certs-blue);
+  outline-offset: 3px;
+}
+
+/* ── BACK FACE ────────────────────────────────────────────────────────────── */
+.cert-back {
+  /* Keep position:absolute from .cert-face — do not override.
+     aspect-ratio and size come from the cert-card wrapper via inset:0. */
+  background:     #0d1430;
+  color:          #dfe5ff;
+  border:         1px solid var(--ac, #3b5bfd);
+  border-radius:  16px;
+  padding:        6% 7%;
+  display:        flex;
+  flex-direction: column;
+  gap:            .5rem;
+  transform:      rotateY(180deg);
+  font-family:    var(--certs-mono);
+  font-size:      clamp(.62rem, 1vw, .85rem);
+  line-height:    1.5;
+  overflow:       hidden;    /* clip content to the same boundary as front */
+}
+
+.cert-bk-heading {
+  font-family:   var(--font-display);
+  font-weight:   800;
+  font-size:     clamp(.9rem, 1.5vw, 1.2rem);
+  color:         var(--ac, #3b5bfd);
+  margin-bottom: .2rem;
+}
+
+.cert-bk-skills {
+  list-style:  disc;
+  padding-left:1.1em;
+  margin:      0;
+}
+
+.cert-bk-skills li { color: #dfe5ff; line-height: 1.6; }
+
+.cert-bk-id    { color: #dfe5ff; margin-top: .3rem; }
+
+.cert-bk-verify {
+  margin-top:      auto;
+  color:           var(--ac, #3b5bfd);
+  font-weight:     700;
+  text-decoration: none;
+}
+
+.cert-bk-verify:hover { text-decoration: underline; }
+
+.cert-card:focus-visible .cert-back {
+  outline:        3px solid var(--certs-blue);
+  outline-offset: 3px;
+}
+
+/* ── ARIA LIVE ─────────────────────────────────────────────────────────────── */
+.certs-live {
+  position:    absolute;
+  width:       1px; height: 1px;
+  overflow:    hidden;
+  clip:        rect(0,0,0,0);
+  white-space: nowrap;
+  border:      0;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .cert-stage    { margin-right: 0; }
+  .certs-section { padding: 3vh 4vw; }
+}

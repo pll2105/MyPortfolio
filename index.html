@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/portfolio.css">
+  <link rel="stylesheet" href="css/certifications.css">
   <link rel="stylesheet" href="css/whatido.css">
   <link rel="stylesheet" href="css/projects-new.css">
   <link rel="stylesheet" href="css/splash-hero.css">
@@ -98,39 +99,6 @@
 
     <main id="main-content" tabindex="-1">
 
-      <!-- B. HERO -->
-      <section id="hero" class="hero" aria-label="Introduction">
-        <div class="hero-inner">
-          <div class="hero-left">
-            <h1 class="hero-h1">
-              I turn messy requirements into software that
-              <mark class="hero-highlight">works.</mark>
-            </h1>
-            <p class="hero-subtitle" id="hero-subtitle" aria-live="polite"></p>
-            <p class="hero-para"     id="hero-para"></p>
-            <div class="hero-buttons">
-              <a href="#my-projects" class="btn-primary">View my projects</a>
-              <a href="#contact"     class="btn-secondary">Get in touch</a>
-            </div>
-            <div id="role-lens-desktop" class="role-lens-desktop"
-                 role="group" aria-label="View portfolio as role"></div>
-          </div>
-          <div class="hero-right" aria-hidden="true">
-            <div class="terminal-card" id="terminal-card">
-              <div class="terminal-title-bar">
-                <div class="terminal-dots">
-                  <span class="terminal-dot terminal-dot--red"></span>
-                  <span class="terminal-dot terminal-dot--yellow"></span>
-                  <span class="terminal-dot terminal-dot--green"></span>
-                </div>
-                <span class="terminal-title">bash</span>
-              </div>
-              <div class="terminal-body" id="terminal-body"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- C. TECH LOGOS -->
       <div class="tech-section" id="tech-strip">
         <div class="tech-inner">
@@ -158,47 +126,37 @@
         <div id="wid-items" class="wid-items-wrap"></div>
       </section>
 
-      <!-- E. DARK WRAPPER + WAVE STRIP -->
-      <div class="dark-wrapper" id="dark-wrapper">
-        <div class="wave-strip" id="wave-strip" aria-hidden="true">
-          <div class="wave-strip-track" id="wave-track">
-            <!-- tiles injected by initWaveStrip() -->
-          </div>
-        </div>
-      </div>
+      <!-- E. CERTIFICATIONS — Certiport showcase -->
+      <section id="certifications"
+               class="certs-section"
+               aria-labelledby="certs-heading">
+        <!-- renderCertifications() in certifications.js fills this section -->
+        <!-- The h2 "Proof that I know what works." is injected by JS -->
+        <!-- Hidden h2 for landmarks/outline while JS loads -->
+        <h2 id="certs-heading" class="sr-only">Certifications</h2>
+      </section>
 
-      <!-- F. MY PROJECTS -->
+      <!-- G. MY PROJECTS -->
       <section id="my-projects"
                class="my-projects-section"
                aria-labelledby="my-projects-heading">
         <h2 id="my-projects-heading" class="mp-intro-headline">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          These projects show how I turn unclear workflows into practical
+          software systems built for real users, reliable operations,
+          and long-term maintainability.
         </h2>
         <div id="my-projects-rows">
-          <!-- filled by renderMyProjects() -->
+          <!-- filled by projects.js → renderProjects() -->
         </div>
       </section>
 
-      <!-- G. OLD PROJECTS (hidden — keeps Bootstrap modal DOM alive) -->
+      <!-- F. OLD PROJECTS (hidden — keeps Bootstrap modal DOM alive) -->
       <section id="projects" aria-hidden="true"
                style="display:none;visibility:hidden;pointer-events:none;"
                aria-labelledby="projects-heading-hidden">
         <h2 id="projects-heading-hidden" class="sr-only">Projects (modal data)</h2>
         <div id="filter-row"    role="group" aria-label="Filter"></div>
         <div id="project-grid" aria-label="Project cards"></div>
-      </section>
-
-      <!-- H. SKILLS -->
-      <section id="skills" class="section" aria-labelledby="skills-heading"
-               style="background: var(--surface);">
-        <div class="section-inner">
-          <div class="section-header">
-            <h2 id="skills-heading" class="section-title">Skills</h2>
-          </div>
-          <div id="skills-grid" class="skills-grid" aria-live="polite"></div>
-          <div id="edu-card" class="edu-card" style="margin-top: var(--s3);"></div>
-        </div>
       </section>
 
       <!-- I. CONTACT -->
@@ -244,9 +202,15 @@
     crossorigin="anonymous"></script>
 
   <!-- Portfolio application -->
-  <script type="module" src="js/hero.js"></script>
+  <script type="module" src="js/app.js"></script>
 
-  <!-- Opening splash hero (new, runs independently) -->
+  <!-- Certifications section -->
+  <script type="module" src="js/certifications.js"></script>
+
+  <!-- My Projects section -->
+  <script type="module" src="js/projects.js"></script>
+
+  <!-- Opening splash hero (runs independently) -->
   <script type="module" src="js/splash-hero.js"></script>
 
 </body>
