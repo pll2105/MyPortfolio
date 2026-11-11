@@ -1,0 +1,263 @@
+/* ==========================================================================
+   splash-hero.css  v2
+   Full-viewport opening hero. Uses existing tokens for light/dark.
+
+   Veil color references:
+     Dark  bg: rgb(11, 16, 32)   (#0b1020)
+     Light bg: rgb(238, 241, 247) (#eef1f7)
+   Both are close enough to the actual token values that the veil always
+   reads correctly. We also expose CSS variables so it switches instantly.
+   ========================================================================== */
+
+/* ─── CSS variables consumed by the veil ─────────────────────────────────── */
+:root {
+  --sh-veil-r: 238; --sh-veil-g: 241; --sh-veil-b: 247;  /* light */
+}
+[data-theme="dark"] {
+  --sh-veil-r: 11;  --sh-veil-g: 16;  --sh-veil-b: 32;   /* dark  */
+}
+
+/* ─── HEADER: fixed overlay over the splash hero ────────────────────────── */
+/* Override the sticky positioning ONLY while the splash hero exists.
+   We target .site-header globally here, then undo for the rest of the page
+   by padding #page-wrapper.                                                  */
+.site-header {
+  position:   fixed !important;
+  top:        0;
+  left:       0;
+  right:      0;
+  z-index:    200 !important;
+  /* Transparent over the hero */
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  transition: background 300ms ease, border-bottom-color 300ms ease,
+              box-shadow 300ms ease, backdrop-filter 300ms ease !important;
+}
+
+/* After 40px scroll: frosted glass header */
+.site-header.sh-scrolled {
+  background:          rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.82) !important;
+  backdrop-filter:     blur(14px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+  border-bottom-color: rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.25) !important;
+  box-shadow:          0 1px 0 rgba(0,0,0,0.06) !important;
+}
+
+/* Compensate for the fixed header so the existing site doesn't get clipped */
+#page-wrapper {
+  padding-top: var(--nav-h);
+}
+
+/* ─── SECTION wrapper ────────────────────────────────────────────────────── */
+.splash-hero {
+  position:        relative;
+  min-height:      100svh;
+  width:           100%;
+  overflow:        hidden;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      var(--bg);
+  /* Content must not go behind fixed header */
+  padding-top:     var(--nav-h);
+}
+
+/* ─── Canvas field ───────────────────────────────────────────────────────── */
+#splash-canvas {
+  position:       absolute;
+  inset:          0;
+  width:          100%;
+  height:         100%;
+  pointer-events: none;
+  z-index:        0;
+  /* Fade in after first paint so content is never blocked */
+  opacity:        0;
+  transition:     opacity 600ms ease;
+  contain:        layout paint style;
+}
+
+#splash-canvas.sh-ready { opacity: 1; }
+
+/* ─── VEIL ───────────────────────────────────────────────────────────────── */
+/* Two layers stacked:
+   1. Radial ellipse — clears the center
+   2. Vertical gradient — darkens top+bottom edges                            */
+.splash-veil {
+  position:       absolute;
+  inset:          0;
+  z-index:        1;
+  pointer-events: none;
+  /* Radial: strong center, fade out */
+  background:
+    radial-gradient(
+      ellipse 52% 48% at 50% 50%,
+      rgba(var(--sh-veil-r),var(--sh-veil-g),var(--sh-veil-b),0.93)  0%,
+      rgba(var(--sh-veil-r),var(--sh-veil-g),var(--sh-veil-b),0.72) 58%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(var(--sh-veil-r),var(--sh-veil-g),var(--sh-veil-b),0.55)  0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(var(--sh-veil-r),var(--sh-veil-g),var(--sh-veil-b),0.70) 100%
+    );
+  /* NO backdrop-filter — large-area blur destroys perf */
+}
+
+/* ─── CENTER CONTENT ─────────────────────────────────────────────────────── */
+.splash-center {
+  position:        relative;
+  z-index:         2;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  text-align:      center;
+  gap:             1.4rem;
+  padding:         1.5rem clamp(1rem, 5vw, 3rem) 2rem;
+  max-width:       min(92vw, 760px);
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────────────────── */
+.splash-avatar-wrap {
+  position:    relative;
+  width:       clamp(96px, 11vw, 128px);
+  height:      clamp(96px, 11vw, 128px);
+  flex-shrink: 0;
+}
+
+.splash-avatar-ring {
+  position:      absolute;
+  inset:         -3px;
+  border-radius: 50%;
+  background:    conic-gradient(
+    var(--accent) 0deg,
+    var(--highlight) 130deg,
+    var(--accent) 270deg,
+    var(--highlight) 360deg
+  );
+  animation:     sh-ring-spin 10s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-avatar-ring { animation: none; }
+}
+
+@keyframes sh-ring-spin { to { transform: rotate(360deg); } }
+
+.splash-avatar-inner {
+  position:      absolute;
+  inset:         3px;
+  border-radius: 50%;
+  overflow:      hidden;
+  background:    var(--surface);
+}
+
+.splash-avatar-inner img {
+  width:         100%;
+  height:        100%;
+  object-fit:    cover;
+  display:       block;
+  /* NOT lazy — above the fold */
+}
+
+.splash-avatar-placeholder {
+  width:           100%;
+  height:          100%;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-family:     var(--font-display);
+  font-size:       clamp(1.5rem, 4vw, 2.2rem);
+  font-weight:     800;
+  color:           var(--accent);
+  user-select:     none;
+}
+
+/* ─── Name ───────────────────────────────────────────────────────────────── */
+.splash-name {
+  font-family:    var(--font-display);
+  font-weight:    800;
+  font-size:      clamp(2.8rem, 8vw, 7.5rem);
+  letter-spacing: -0.045em;
+  line-height:    0.95;
+  color:          var(--ink);
+  margin:         0;
+  text-transform: none;    /* explicit: NOT uppercase */
+}
+
+/* ─── Roles subtext ──────────────────────────────────────────────────────── */
+.splash-roles {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size:   clamp(1.05rem, 1.9vw, 1.55rem);
+  color:       var(--muted);
+  line-height: 1.5;
+  margin:      0;
+  max-width:   30em;
+}
+
+/* ─── Chip row ───────────────────────────────────────────────────────────── */
+.splash-links {
+  display:         flex;
+  align-items:     center;
+  gap:             0.75rem;
+  flex-wrap:       wrap;
+  justify-content: center;
+  margin-top:      0.8rem;  /* 2.2rem below subtext combined with gap above */
+}
+
+.splash-link {
+  display:              flex;
+  align-items:          center;
+  justify-content:      center;
+  width:                46px;
+  height:               46px;
+  border-radius:        30%;
+  background:           rgba(var(--sh-veil-r),var(--sh-veil-g),var(--sh-veil-b),0.55);
+  backdrop-filter:      blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  color:                var(--ink);
+  border:               1.5px solid var(--line);
+  text-decoration:      none;
+  transition:           transform    200ms ease,
+                        color        200ms ease,
+                        background   200ms ease,
+                        border-color 200ms ease,
+                        box-shadow   200ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.splash-link svg {
+  width:          22px;
+  height:         22px;
+  display:        block;
+  pointer-events: none;
+}
+
+/* Hover: lift + brand color */
+@media (hover: hover) and (pointer: fine) {
+  .splash-link:hover               { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+  .splash-link--linkedin:hover     { color: #0a66c2; border-color: #0a66c2; background: rgba(10,102,194,0.10); }
+  .splash-link--github:hover       { color: var(--ink); border-color: var(--ink); }
+  .splash-link--instagram:hover    { color: #e1306c; border-color: #e1306c; background: rgba(225,48,108,0.10); }
+  .splash-link--gmail:hover        { color: #ea4335; border-color: #ea4335; background: rgba(234,67,53,0.10); }
+  .splash-link--discord:hover      { color: #5865f2; border-color: #5865f2; background: rgba(88,101,242,0.10); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-link { transition: color 150ms ease, background 150ms ease; }
+  .splash-link:hover { transform: none !important; box-shadow: none !important; }
+}
+
+.splash-link:focus-visible {
+  outline:        2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius:  30%;
+}
+
+/* ─── Responsive adjustments ─────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .splash-name  { font-size: clamp(2.2rem, 10vw, 3.8rem); }
+  .splash-roles { font-size: clamp(0.95rem, 4vw, 1.2rem); }
+}
