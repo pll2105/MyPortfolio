@@ -16,13 +16,12 @@ const PROJECTS_DATA = [
     title:         'ALWAN',
     titleCase:     'upper',
     description:
-      'An online lending application built with a team of three. ' +
-      'As project lead I handled task assignment, stakeholder coordination, ' +
-      'requirements documentation, and contributed to the Flutter frontend. ' +
-      'The system manages loan applications and approvals end-to-end.',
-    tags:          ['Mobile App', 'Flutter', 'Laravel', 'Supabase'],
+      'ALWAN is an online lending application built to make borrowing simple, clear, and fully managed from your phone. ' +
+      'From sign-up and identity verification to applying and tracking your account, everything happens in one app. ' +
+      "It's designed around one idea: you should always know exactly what you're getting into.",
+    tags:          ['React', 'TailwindCSS', 'Expo', 'Supabase'],
     link:          'https://www.alwann.app/',
-    screenshot:    null,         // TODO: 'assets/alwan-screenshot.jpg'
+    screenshot:    'assets/alwan.png',
     screenshotAlt: 'ALWAN online lending application',
   },
   {
@@ -30,12 +29,12 @@ const PROJECTS_DATA = [
     title:         'LakbAI',
     titleCase:     'upper',
     description:
-      'Student-led Digital Jeepney System for Dasmariñas. ' +
-      'I coordinated tasks across the team, produced research and ' +
-      'documentation artifacts, and contributed to the frontend implementation.',
-    tags:          ['Web App', '[CONFIRM STACK]'],  // CONFIRM: replace with real stack
+      'LakbAI is a commuter app built to make riding the jeepney simpler and less stressful. ' +
+      'It helps riders plan their trips and find their way around, so getting from one place to another takes less guesswork. ' +
+      "It's designed around one idea: a smarter way to ride.",
+    tags:          ['React Native', 'Node JS', 'Firebase'],
     link:          'https://lakbai-jeepney.netlify.app/',
-    screenshot:    null,         // TODO: 'assets/lakbai-screenshot.jpg'
+    screenshot:    'assets/lakbai.png',
     screenshotAlt: 'LakbAI Digital Jeepney System website',
   },
   {
@@ -43,12 +42,12 @@ const PROJECTS_DATA = [
     title:         'Kya Ko Yarn',
     titleCase:     'original',
     description:
-      'A web application for yarn crafters built with a team of six, ' +
-      'deployed on Vercel. I distributed tasks, produced documentation, ' +
-      'and contributed to the frontend build and Vercel deployment pipeline.',
-    tags:          ['Web App', '[CONFIRM STACK]', 'Vercel'],  // CONFIRM: replace with real stack
+      'Kya Ko Yarn is a small local business that sells handcrafted crochet items, custom keychains, and aesthetic accessories. ' +
+      'This project is a mobile-responsive e-commerce website that replaces manual ordering through social media DMs. ' +
+      "It improves the brand's online presence and makes customer interactions smoother.",
+    tags:          ['React', 'Supabase', 'PostGreSQL', 'Vercel'],
     link:          'https://kya-ko-yarn.vercel.app/',
-    screenshot:    null,         // TODO: 'assets/kyakoyarn-screenshot.jpg'
+    screenshot:    'assets/kyakoyarn.png',
     screenshotAlt: 'Kya Ko Yarn web application',
   },
 ];

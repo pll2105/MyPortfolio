@@ -460,7 +460,7 @@ function renderContent(section) {
   const centerEl = section.querySelector('.splash-center');
   if (!centerEl) return;
 
-  const avatarSrc = 'assets/photo.jpg';  // swap to your real photo path
+  const avatarSrc = 'assets/pfp.jpg';  // swap to your real photo path
   const initials  = meta.name
     .split(/\s+/)
     .filter(w => /[A-Za-z]/.test(w))

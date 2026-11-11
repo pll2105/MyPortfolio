@@ -71,7 +71,7 @@
 
 .wid-eyebrow {
   font-family:    var(--font-body);
-  font-size:      12px;
+  font-size:      18px;             /* +50% from 12px */
   font-weight:    500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -81,7 +81,7 @@
 
 .wid-headline {
   font-family:    var(--font-display);
-  font-size:      clamp(2.5rem,7vw,6rem);
+  font-size:      clamp(2.375rem,6.65vw,5.7rem); /* −5% from clamp(2.5rem,7vw,6rem) */
   font-weight:    800;
   line-height:    1.0;
   letter-spacing: -0.04em;
@@ -99,19 +99,8 @@
   margin-bottom:clamp(3rem,6vw,6rem);
 }
 
-.wid-scroll-hint {
-  display:        flex;
-  flex-direction: column;
-  align-items:    center;
-  gap:            8px;
-  font-family:    var(--font-body);
-  font-size:      12px;
-  font-weight:    500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color:          var(--muted);
-  opacity:        0.7;
-}
+/* Scroll hint — hidden per design update */
+.wid-scroll-hint { display: none !important; }
 
 .wid-scroll-hint-line {
   width:      1px;
@@ -157,19 +146,8 @@
   position:       relative;
 }
 
-.wid-item-number {
-  font-family:    var(--font-body);
-  font-size:      clamp(0.75rem,1vw,0.875rem);
-  font-weight:    500;
-  letter-spacing: 0.1em;
-  color:          var(--accent);
-  display:        flex;
-  align-items:    center;
-  gap:            6px;
-}
-
-.wid-item:nth-child(odd)  .wid-item-number { justify-content: flex-end; }
-.wid-item:nth-child(even) .wid-item-number { justify-content: flex-start; }
+/* Number — hidden since the title now carries it ("01. Title") */
+.wid-item-number { display: none !important; }
 
 /* Dot */
 .wid-item-dot-wrap {
@@ -205,7 +183,7 @@
 /* Giant title */
 .wid-item-title {
   font-family:    var(--font-display);
-  font-size:      clamp(2.8rem,8vw,9rem);
+  font-size:      clamp(2.24rem,6.4vw,7.2rem); /* −20% from clamp(2.8rem,8vw,9rem) */
   font-weight:    800;
   line-height:    0.95;
   letter-spacing: -0.04em;
@@ -219,26 +197,9 @@
 body.wid-js .wid-item-title          { color: var(--wid-dim-title); }
 body.wid-js .wid-item.wid-in .wid-item-title { color: var(--ink); }
 
-/* Focus badge */
-.wid-focus-badge {
-  display:        none;
-  align-items:    center;
-  gap:            4px;
-  font-family:    var(--font-body);
-  font-size:      11px;
-  font-weight:    700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color:          var(--on-highlight);
-  background:     var(--highlight);
-  border-radius:  4px;
-  padding:        3px 8px;
-  white-space:    nowrap;
-  align-self:     center;
-}
-
-.wid-focus-badge.wid-focus-badge--active { display: inline-flex; }
-.wid-focus-badge svg { width: 10px; height: 10px; flex-shrink: 0; }
+/* Focus badge — hidden per design update */
+.wid-focus-badge { display: none !important; }
+.wid-focus-badge.wid-focus-badge--active { display: none !important; }
 
 /* Content column */
 .wid-item-content-col {
@@ -282,23 +243,8 @@ body.wid-js .wid-item.wid-in .wid-item-title { color: var(--ink); }
   line-height:  1.4;
 }
 
-.wid-project-tag {
-  font-family:  var(--font-body);
-  font-size:    13px;
-  font-weight:  600;
-  color:        var(--accent);
-  border:       1px solid var(--accent);
-  border-radius:6px;
-  padding:      4px 10px;
-  background:   transparent;
-  cursor:       pointer;
-  min-height:   32px;
-  line-height:  1.4;
-  transition:   background 0.15s ease, color 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.wid-project-tag:hover { background: var(--accent-dim); }
+/* Project tag buttons — hidden per design update */
+.wid-project-tag { display: none !important; }
 
 @media (max-width: 760px) {
   .wid-project-tag, .wid-tag { min-height: 44px; display: inline-flex; align-items: center; }
@@ -334,7 +280,7 @@ body.wid-js .wid-item.wid-in .wid-item-title { color: var(--ink); }
   .wid-item:nth-child(even) .wid-item-tags         { justify-content: flex-start; }
   .wid-item:nth-child(even) .wid-item-desc          { margin-left: 0; }
   .wid-item:nth-child(even) .wid-title-badge-row    { justify-content: flex-start; }
-  .wid-item-number { justify-content: flex-start !important; }
+  /* wid-item-number already hidden globally */
 
   .wid-item-dot-wrap {
     left:      28px;
@@ -342,7 +288,7 @@ body.wid-js .wid-item.wid-in .wid-item-title { color: var(--ink); }
     transform: translate(-50%,0);
   }
 
-  .wid-item-title { font-size: clamp(2rem,10vw,4rem); }
+  .wid-item-title { font-size: clamp(1.6rem,8vw,3.2rem); } /* −20% from clamp(2rem,10vw,4rem) */
 }
 
 .wid-project-tag:focus-visible,

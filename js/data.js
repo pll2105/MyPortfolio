@@ -31,7 +31,7 @@ export const meta = {
   email: "piaelleinelucero2105@gmail.com",
 
   // CONFIRM: Replace with your LinkedIn URL
-  linkedin: "www.linkedin.com/in/pia-elleine-lucero-08960844a",
+  linkedin: "https://www.linkedin.com/in/pia-elleine-lucero-08960844a",
 
   // CONFIRM: Replace with your GitHub URL
   github: "https://github.com/pll2105",
@@ -53,9 +53,10 @@ export const meta = {
 // NAV LINKS
 // ---------------------------------------------------------------------------
 export const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "Skills",   href: "#skills"   },
-  { label: "Contact",  href: "#contact"  },
+  { label: "What I Do",       href: "#what-i-do"     },
+  { label: "Certifications",  href: "#certifications" },
+  { label: "Projects",        href: "#my-projects"    },
+  { label: "Contact",         href: "#contact"        },
 ];
 
 // ---------------------------------------------------------------------------
@@ -322,7 +323,7 @@ export const certifications = [
     name: "Certiport — HTML",
     issuer: "Certiport",
     // CONFIRM: certification date
-    date: "[CONFIRM DATE]",
+    date: "6/8/2026",
     // CONFIRM: credential URL if available
     url: "[CONFIRM URL]",
   },
@@ -330,7 +331,7 @@ export const certifications = [
     name: "Certiport — CSS",
     issuer: "Certiport",
     // CONFIRM: certification date
-    date: "[CONFIRM DATE]",
+    date: "6/8/2026",
     // CONFIRM: credential URL if available
     url: "[CONFIRM URL]",
   },
@@ -458,54 +459,75 @@ export const focusAreas = [
     number: "01",
     title: "Business analysis",
     description:
-      "Researching the problem, gathering requirements, and turning them " +
-      "into clear documentation for developers and stakeholders.",
+      "Researching the problem, gathering requirements, anf turning" +
+      "them into clear documentation for developers and stakeholders." +
+      "I make sure every feature built traces back to real user need.",
     roleKey: "ba",
     tags: ["Research", "Documentation", "Requirements"],
-    projects: ["alwan", "nookph", "kyakoyarn"],
+    projects: [],
   },
   {
     number: "02",
     title: "Project coordination",
     description:
-      "Assigning tasks, tracking progress, and keeping the team aligned. " +
-      "I led a team of 3 on ALWAN and distributed tasks in a team of 6 on Kya Ko Yarn.",
+      "Coordinating tasks, timelines, and team communication to keep work on schedule and aligned with project goals. " +
+      "Tracking progress and addressing blockers early to support smooth delivery. ", 
     roleKey: "ba",
     tags: ["Task tracking", "Team coordination", "Jira (basic)"],
-    projects: ["alwan", "kyakoyarn", "nookph"],
+    projects: [],
   },
   {
     number: "03",
     title: "Front-end development",
     description:
-      "Building responsive interfaces with HTML, CSS, JavaScript, React, " +
-      "and Tailwind CSS. I deployed Kya Ko Yarn on Vercel.",
+      "Developing responsive, accessible user interfaces using HTML, CSS, JavaScript, React, and Tailwind CSS. " +
+      "Focused on clean, maintainable code and consistent performance across devices.",
     roleKey: "fe",
-    tags: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Certiport HTML and CSS"],
-    projects: ["alwan", "nookph", "kyakoyarn"],
+    tags: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
+    projects: [],
   },
   {
     number: "04",
     title: "UI/UX design",
-    // CONFIRM: which projects and what I designed
     description:
-      "Planning screens and user flows in Figma before building them. " +
-      "[CONFIRM which projects and what I designed]",
+      "Designing user flows, wireframes, and interface layouts in Figma" +
+      "to translate requirements into clear, usable experiences. Applying consistent " +
+      "design principles to improve usability and reduce friction.",
     roleKey: "ux",
-    // CONFIRM: add confirmed wireframe tools/deliverables
-    tags: ["Figma", "Wireframes [CONFIRM]", "User flows"],
+    tags: ["Figma", "Canva", "User flows"],
     projects: [],
   },
   {
     number: "05",
     title: "QA and testing",
-    // CONFIRM: what testing I actually did
     description:
-      "Checking that features work as expected, validating requirements, " +
-      "and reporting bugs. [CONFIRM what testing I actually did]",
+      "Testing features against defined requirements to verify expected behavior and identify defects before release." +
+      "Documenting issues with clear reproduction steps to support efficient resolution. ",
     roleKey: "qa",
-    // CONFIRM: confirm Postman usage
-    tags: ["Testing", "Validation", "Bug reporting", "Postman [CONFIRM]"],
+    tags: ["Testing", "Validation", "Bug reporting"],
     projects: [],
   },
 ];
+
+// ---------------------------------------------------------------------------
+// CONTACT SECTION
+// Edit all values here. Keep [CONFIRM] markers until you replace them.
+// ---------------------------------------------------------------------------
+export const contact = {
+  heading:    "Let's talk.",
+  intro:      "Have a project, an internship opening, or a question about my work? Send me a message. I'd love to hear what you're building.",
+  email:      "piaelleinelucero2105@gmail.com",
+  github:     "https://github.com/pll2105",
+  linkedin:   "https://www.linkedin.com/in/pia-elleine-lucero-08960844a",
+  resume:     "assets/Pia_Lucero_Resume.pdf",   // view-only — no download attribute
+  // CONFIRM: confirm actual page count
+  resumeNote: "PDF · 1",
+  status:     "--open-to-work",
+  roles: [
+    { label: "Business Analyst",    tag: "1st choice", featured: true  },
+    { label: "Project Manager",     tag: "2nd choice", featured: true  },
+    { label: "Front-End Developer",                    featured: false },
+    { label: "UI/UX Designer",                         featured: false },
+    { label: "QA Tester",                              featured: false },
+  ],
+};

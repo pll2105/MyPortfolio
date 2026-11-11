@@ -1,0 +1,488 @@
+/* ==========================================================================
+   contact.css — Contact section + footer bar redesign
+   All new selectors prefixed .ct- to avoid leaks into other sections.
+   Uses existing tokens: --bg, --surface, --ink, --muted, --line, --accent,
+   --on-accent, --highlight, --on-highlight, --max-w, --font-display,
+   --font-body, --font-mono, --r-*, --shadow-terminal, --ease-fast/mid.
+   ========================================================================== */
+
+/* ── Override old contact styles so nothing leaks ───────────────────────── */
+.contact-section  { all: unset; display: block; }
+.contact-heading,
+.contact-sub,
+.contact-actions  { display: none !important; }   /* replaced entirely */
+
+/* ── SECTION WRAPPER ─────────────────────────────────────────────────────── */
+.ct-section {
+  padding:    clamp(24px, 6vw, 72px) 0;
+  border-top: 1px solid var(--line);
+  overflow-x: hidden;
+}
+
+/* ── INNER CONTAINER ─────────────────────────────────────────────────────── */
+.ct-inner {
+  max-width:   var(--max-w);
+  margin:      0 auto;
+  padding:     0 var(--s4);
+  display:     grid;
+  grid-template-columns: 1fr 496px;
+  gap:         64px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .ct-inner {
+    grid-template-columns: 1fr minmax(0, 496px);
+    gap: clamp(32px, 5vw, 64px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .ct-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ct-inner { padding: 0 var(--s2); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LEFT COLUMN
+   ══════════════════════════════════════════════════════════════════════════ */
+.ct-left {
+  display:        flex;
+  flex-direction: column;
+  gap:            32px;
+}
+
+/* ── Heading ─────────────────────────────────────────────────────────────── */
+.ct-heading {
+  font-family:    var(--font-display);
+  font-weight:    800;
+  font-size:      clamp(42px, 9vw, 112px);
+  line-height:    1;
+  letter-spacing: -0.03em;
+  color:          var(--ink);
+  margin:         0;
+  /* prevent overflow at 320px */
+  overflow-wrap:  break-word;
+  word-break:     break-word;
+}
+
+.ct-heading mark {
+  background:    var(--highlight);
+  color:         var(--on-highlight);
+  padding:       0 .1em;
+  border-radius: 12px;
+  /* so descenders don't clip */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ── Intro paragraph ─────────────────────────────────────────────────────── */
+.ct-intro {
+  font-family: var(--font-body);
+  font-size:   19px;
+  line-height: 1.6;
+  color:       var(--muted);
+  max-width:   470px;
+  margin:      0;
+}
+
+/* ── Roles block ─────────────────────────────────────────────────────────── */
+.ct-roles-wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            14px;
+}
+
+.ct-roles-label {
+  font-family:    var(--font-body);
+  font-size:      12px;
+  font-weight:    500;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color:          var(--muted);
+}
+
+.ct-roles-list {
+  display:    flex;
+  flex-wrap:  wrap;
+  gap:        10px;
+  list-style: none;
+  padding:    0;
+  margin:     0;
+}
+
+/* Filled chip (featured: true) */
+.ct-chip-filled {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             10px;
+  background:      var(--ink);
+  color:           var(--bg);
+  font-family:     var(--font-body);
+  font-size:       15px;
+  font-weight:     500;
+  padding:         9px 12px 9px 18px;
+  border-radius:   var(--r-full);
+  white-space:     nowrap;
+  line-height:     1;
+}
+
+.ct-chip-tag {
+  background:    var(--highlight);
+  color:         #14213d;         /* always dark regardless of theme */
+  font-size:     12px;
+  font-weight:   500;
+  padding:       2px 10px;
+  border-radius: var(--r-full);
+  white-space:   nowrap;
+  line-height:   1.5;
+  flex-shrink:   0;
+}
+
+/* Outlined chip */
+.ct-chip-outline {
+  display:       inline-flex;
+  align-items:   center;
+  background:    var(--surface);
+  color:         var(--ink);
+  font-family:   var(--font-body);
+  font-size:     15px;
+  font-weight:   500;
+  padding:       9px 18px;
+  border-radius: var(--r-full);
+  border:        1px solid var(--line);
+  white-space:   nowrap;
+  line-height:   1;
+  transition:    border-color var(--ease-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ct-chip-outline:hover { border-color: var(--accent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-chip-outline { transition: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RIGHT COLUMN — TERMINAL CARD
+   ══════════════════════════════════════════════════════════════════════════ */
+.ct-card {
+  background:   var(--surface);
+  border:       1px solid var(--line);
+  border-radius:18px;
+  overflow:     hidden;
+  box-shadow:   8px 8px 0 var(--accent);
+  /* Align card to top even when left column is taller */
+  align-self:   start;
+}
+
+/* On mobile: full width, capped at 560px */
+@media (max-width: 1023px) {
+  .ct-card {
+    width:     100%;
+    max-width: 560px;
+    box-shadow: 6px 6px 0 var(--accent);
+  }
+}
+
+/* ── Title bar ───────────────────────────────────────────────────────────── */
+.ct-card-bar {
+  background:  #14213d;              /* always dark in both themes */
+  padding:     12px 16px;
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+}
+
+.ct-bar-dots {
+  display:   flex;
+  gap:       6px;
+  flex-shrink: 0;
+}
+
+.ct-dot {
+  width:         11px;
+  height:        11px;
+  border-radius: 50%;
+}
+.ct-dot--red    { background: #ff6b6b; }
+.ct-dot--yellow { background: #ffc857; }
+.ct-dot--green  { background: #5fd38d; }
+
+.ct-bar-label {
+  font-family:    var(--font-mono);
+  font-size:      13px;
+  color:          #cfe0ff;
+  letter-spacing: .02em;
+}
+
+/* ── Card body ───────────────────────────────────────────────────────────── */
+.ct-card-body {
+  padding:        20px;
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+  min-height:     408px;   /* desktop only */
+}
+
+@media (max-width: 1023px) {
+  .ct-card-body { min-height: unset; }
+}
+
+/* ── Email row ───────────────────────────────────────────────────────────── */
+.ct-email-row {
+  background:    var(--bg);
+  border:        1px solid var(--line);
+  border-radius: 12px;
+  padding:       14px 14px 14px 18px;
+  display:       flex;
+  align-items:   center;
+  gap:           12px;
+  flex-wrap:     wrap;    /* wraps on very narrow screens */
+}
+
+.ct-email-info {
+  flex:          1;
+  min-width:     0;        /* allow text to shrink */
+  display:       flex;
+  flex-direction:column;
+  gap:           3px;
+}
+
+.ct-email-label {
+  font-family:    var(--font-body);
+  font-size:      11px;
+  font-weight:    500;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color:          var(--muted);
+}
+
+.ct-email-addr {
+  font-family:  var(--font-body);
+  font-size:    17px;
+  font-weight:  500;
+  color:        var(--ink);
+  overflow-wrap:anywhere;
+  word-break:   break-all;
+  text-decoration: none;
+  transition:   color var(--ease-fast);
+}
+
+.ct-email-addr:hover { color: var(--accent); }
+
+/* Copy button */
+.ct-copy-btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  flex-shrink:     0;
+  background:      var(--accent);
+  color:           var(--on-accent);
+  font-family:     var(--font-body);
+  font-size:       14px;
+  font-weight:     500;
+  padding:         0 16px;
+  border:          none;
+  border-radius:   10px;
+  min-height:      44px;
+  cursor:          pointer;
+  white-space:     nowrap;
+  transition:      background var(--ease-fast), color var(--ease-fast),
+                   transform  var(--ease-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ct-copy-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .ct-copy-btn:hover { transform: translateY(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-copy-btn { transition: background var(--ease-fast), color var(--ease-fast); }
+  .ct-copy-btn:hover { transform: none; }
+}
+
+/* Below 480px: copy button goes full-width */
+@media (max-width: 479px) {
+  .ct-email-row  { flex-direction: column; align-items: stretch; }
+  .ct-copy-btn   { justify-content: center; width: 100%; }
+}
+
+/* ── Link rows (GitHub, LinkedIn, Resume) ───────────────────────────────── */
+.ct-link-row {
+  display:       flex;
+  align-items:   center;
+  gap:           14px;
+  background:    var(--surface);
+  border:        1px solid var(--line);
+  border-radius: 12px;
+  padding:       12px 16px;
+  text-decoration:none;
+  color:         var(--ink);
+  transition:    border-color var(--ease-fast), transform var(--ease-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ct-link-row:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .ct-link-row:hover .ct-link-arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-link-row { transition: border-color var(--ease-fast); }
+  .ct-link-row:hover { transform: none; }
+  .ct-link-row:hover .ct-link-arrow { transform: none; }
+}
+
+.ct-link-row:focus-visible {
+  outline:        2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius:  12px;
+}
+
+/* Icon tile */
+.ct-link-tile {
+  width:           40px;
+  height:          40px;
+  flex-shrink:     0;
+  border-radius:   10px;
+  background:      var(--bg);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+}
+
+/* Resume tile always yellow */
+.ct-link-tile--resume {
+  background: var(--highlight);
+}
+
+.ct-link-tile svg  { width: 20px; height: 20px; color: var(--accent); }
+.ct-link-tile--resume svg { color: #14213d; }
+
+.ct-link-text { flex: 1; min-width: 0; }
+
+.ct-link-title {
+  font-family: var(--font-body);
+  font-size:   16px;
+  font-weight: 500;
+  color:       var(--ink);
+  line-height: 1.3;
+}
+
+.ct-link-sub {
+  font-family: var(--font-body);
+  font-size:   14px;
+  color:       var(--muted);
+  line-height: 1.3;
+}
+
+.ct-link-arrow {
+  color:      var(--accent);
+  flex-shrink:0;
+  transition: transform var(--ease-fast);
+}
+
+.ct-link-arrow svg { width: 18px; height: 18px; }
+
+/* ── Status line ─────────────────────────────────────────────────────────── */
+.ct-status {
+  margin-top:  auto;      /* pins to bottom of card body */
+  padding-top: 8px;
+  font-family: var(--font-mono);
+  font-size:   13px;
+  color:       var(--muted);
+  display:     flex;
+  gap:         8px;
+  flex-wrap:   wrap;
+}
+
+.ct-status-value { color: var(--accent); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER BAR
+   ══════════════════════════════════════════════════════════════════════════ */
+.ct-footer {
+  border-top:  1px solid var(--line);
+  height:      72px;
+  display:     flex;
+  align-items: center;
+}
+
+.ct-footer-inner {
+  max-width:       var(--max-w);
+  margin:          0 auto;
+  padding:         0 var(--s4);
+  width:           100%;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--s2);
+  flex-wrap:       wrap;
+}
+
+@media (max-width: 480px) {
+  .ct-footer-inner { padding: 0 var(--s2); }
+  .ct-footer        { height: auto; padding: 16px 0; }
+}
+
+.ct-footer-copy {
+  font-family: var(--font-body);
+  font-size:   14px;
+  color:       var(--muted);
+}
+
+.ct-back-top {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  font-family:     var(--font-body);
+  font-size:       14px;
+  font-weight:     500;
+  color:           var(--ink);
+  text-decoration: none;
+  transition:      color var(--ease-fast);
+  min-height:      44px;    /* touch target */
+}
+
+.ct-back-top svg { width: 16px; height: 16px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .ct-back-top:hover { color: var(--accent); }
+}
+
+.ct-back-top:focus-visible {
+  outline:        2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius:  4px;
+}
+
+/* ── Focus rings on chips ────────────────────────────────────────────────── */
+.ct-chip-filled:focus-visible,
+.ct-chip-outline:focus-visible {
+  outline:        2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius:  var(--r-full);
+}
+
+/* ── ARIA live region ────────────────────────────────────────────────────── */
+#ct-copy-announce {
+  position:   absolute;
+  width:      1px;
+  height:     1px;
+  overflow:   hidden;
+  clip:       rect(0,0,0,0);
+  white-space:nowrap;
+}

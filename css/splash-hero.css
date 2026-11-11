@@ -122,8 +122,8 @@
 /* ─── Avatar ─────────────────────────────────────────────────────────────── */
 .splash-avatar-wrap {
   position:    relative;
-  width:       clamp(96px, 11vw, 128px);
-  height:      clamp(96px, 11vw, 128px);
+  width:       clamp(86px, 9.9vw, 115px);   /* −10% from clamp(96px,11vw,128px) */
+  height:      clamp(86px, 9.9vw, 115px);
   flex-shrink: 0;
 }
 
@@ -179,19 +179,20 @@
 .splash-name {
   font-family:    var(--font-display);
   font-weight:    800;
-  font-size:      clamp(2.8rem, 8vw, 7.5rem);
+  font-size:      clamp(1.82rem, 5.2vw, 4.875rem); /* −35% from clamp(2.8rem,8vw,7.5rem) */
   letter-spacing: -0.045em;
-  line-height:    0.95;
+  line-height:    1;
   color:          var(--ink);
   margin:         0;
-  text-transform: none;    /* explicit: NOT uppercase */
+  text-transform: none;
+  white-space:    nowrap;  /* force single line */
 }
 
 /* ─── Roles subtext ──────────────────────────────────────────────────────── */
 .splash-roles {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size:   clamp(1.05rem, 1.9vw, 1.55rem);
+  font-size:   clamp(0.945rem, 1.71vw, 1.395rem); /* −10% from clamp(1.05rem,1.9vw,1.55rem) */
   color:       var(--muted);
   line-height: 1.5;
   margin:      0;
@@ -259,6 +260,6 @@
 
 /* ─── Responsive adjustments ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
-  .splash-name  { font-size: clamp(2.2rem, 10vw, 3.8rem); }
-  .splash-roles { font-size: clamp(0.95rem, 4vw, 1.2rem); }
+  .splash-name  { font-size: clamp(1.43rem, 6.5vw, 2.47rem); white-space: normal; } /* −35% */
+  .splash-roles { font-size: clamp(0.855rem, 3.6vw, 1.08rem); }                     /* −10% */
 }

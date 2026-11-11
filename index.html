@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="css/projects-new.css">
   <link rel="stylesheet" href="css/laptop.css">
   <link rel="stylesheet" href="css/splash-hero.css">
+  <link rel="stylesheet" href="css/contact.css">
   <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- Prevent theme flash -->
@@ -142,9 +143,7 @@
                class="my-projects-section"
                aria-labelledby="my-projects-heading">
         <h2 id="my-projects-heading" class="mp-intro-headline">
-          These projects show how I turn unclear workflows into practical
-          software systems built for real users, reliable operations,
-          and long-term maintainability.
+          From problem statements to software people actually use. These are the projects where I led, built, and delivered.
         </h2>
         <div id="my-projects-rows">
           <!-- filled by projects.js → renderProjects() -->
@@ -161,16 +160,19 @@
       </section>
 
       <!-- I. CONTACT -->
-      <section id="contact" class="contact-section" aria-labelledby="contact-heading">
-        <div class="contact-inner">
-          <h2 id="contact-heading" class="contact-heading">Let's talk.</h2>
-          <p class="contact-sub">Open to internship opportunities.</p>
-          <div id="contact-actions" class="contact-actions"></div>
-        </div>
+      <section id="contact"
+               class="contact-section ct-section"
+               aria-labelledby="contact-heading">
+        <!-- renderContact() in app.js fills this section -->
       </section>
 
     </main>
   </div><!-- /#page-wrapper -->
+
+  <!-- FOOTER BAR -->
+  <footer id="ct-footer" class="ct-footer" aria-label="Site footer">
+    <!-- renderFooter() in app.js fills this -->
+  </footer>
 
   <!-- OFFCANVAS -->
   <div class="offcanvas offcanvas-start" tabindex="-1"

@@ -131,12 +131,12 @@
   border-radius:  var(--r-lg);
 }
 
-/* ── TILT WRAPPER ─────────────────────────────────────────────────────────── */
+/* ── TILT WRAPPER — disabled (static display) ────────────────────────────── */
 .proj-tilt {
   transform-style: preserve-3d;
-  transform:       rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg));
-  transition:      transform 120ms ease-out;
-  will-change:     transform;
+  transform:       none;   /* tilt disabled */
+  transition:      none;
+  will-change:     auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -152,6 +152,7 @@
   /* 16:10 screen ratio + bezel padding */
   aspect-ratio:  16 / 10.6;
   box-shadow:    var(--proj-shadow);
+  overflow:      hidden;   /* clip image to lid bounds during open animation */
 
   /* LID OPEN ANIMATION — starts closed, opens on .proj-laptop.is-open */
   transform-origin: bottom center;
@@ -200,38 +201,22 @@
   background:    var(--proj-screen-bg);
 }
 
-/* Glare overlay */
-.proj-screen::after {
-  content:        '';
-  position:       absolute;
-  inset:          0;
-  border-radius:  inherit;
-  background:     radial-gradient(
-    ellipse at var(--gx, 25%) var(--gy, 10%),
-    rgba(255,255,255,.18) 0%,
-    transparent 60%
-  );
-  opacity:        var(--go, 0);
-  transition:     opacity .25s ease;
-  pointer-events: none;
-  z-index:        3;
-}
+/* Glare overlay — disabled (no tilt effect) */
+.proj-screen::after { display: none; }
 
-@media (prefers-reduced-motion: reduce) { .proj-screen::after { display: none; } }
-
-/* ── PAGE (scrolling screenshot) ─────────────────────────────────────────── */
+/* ── PAGE (static screenshot — fills screen, no scroll) ─────────────────── */
 .proj-page {
-  display:       block;
-  width:         100%;
-  height:        auto;
-  /* object-fit: none so the full tall screenshot is used */
-  object-fit:    none;
-  object-position: top center;
-  transform:     translateY(0);
-  /* Transition set by JS (scroll speed) */
-  will-change:   transform;
-  position:      relative;
-  z-index:       1;
+  display:          block;
+  position:         absolute;   /* pinned inside the screen, cannot drift */
+  inset:            0;
+  width:            100%;
+  height:           100%;
+  object-fit:       cover;
+  object-position:  top center;
+  transform:        none !important;   /* block any JS or inherited transform */
+  transition:       none !important;
+  will-change:      auto;
+  z-index:          1;
 }
 
 /* ── PLACEHOLDER (no screenshot) ─────────────────────────────────────────── */

@@ -18,28 +18,33 @@ const CERT_DATA = [
     id:          'cert-html-css',
     ac:          '#3b5bfd',
     certName:    'HTML and CSS',
-    holderName:  'Your Full Name',           // REPLACE
-    issued:      'Month YYYY',               // CONFIRM
-    credentialId:'XXXX-XXXX-XXXX',           // CONFIRM
-    verifyUrl:   '#',                        // CONFIRM
+    holderName:  'Pia Elleine L. Lucero',           
+    issued:      'June 2026',               
+    credentialId: "nU6T-DwVk",           
+    verifyUrl:   'assets/HTML%26CSS.pdf',   /* opens HTML&CSS.pdf in a new tab, view-only */
     skills: [
-      'Semantic HTML structure',
-      'CSS layout and styling',
-      'Responsive design basics',
+      'HTML Fundamentals',
+      'CSS Fundamentals',
+      'Document Structure using HTML',
+      'Multimedia Structure using HTML',
+      'Webpage Styling using CSS',
+      'Accesibility, Readability, and Testing',
     ],
   },
   {
     id:          'cert-second',
     ac:          '#12b184',
-    certName:    'Second Certificate Name',  // CONFIRM
-    holderName:  'Your Full Name',           // REPLACE
-    issued:      'Month YYYY',               // CONFIRM
-    credentialId:'XXXX-XXXX-XXXX',           // CONFIRM
-    verifyUrl:   '#',                        // CONFIRM
+    certName:    'DATABASE',
+    holderName:  'Pia Elleine L. Lucero',           
+    issued:      'September 2025',               
+    credentialId: "wNdRJ-2Fvb",           
+    verifyUrl:   'assets/Databases.pdf',    /* opens Databases.pdf in a new tab, view-only */
     skills: [
-      'Lorem ipsum dolor sit',               // CONFIRM
-      'Consectetur adipiscing elit',
-      'Sed do eiusmod tempor',
+      'Database Design',
+      'Database Object Mamangement',
+      'Data Retrieval',
+      'Data Manipulation',
+      'Troubleshooting',
     ],
   },
 ];
@@ -99,8 +104,8 @@ function buildCard(i) {
            class="cert-bk-verify"
            target="_blank"
            rel="noopener noreferrer"
-           aria-label="Verify ${c.certName} on Certiport">
-          Verify on Certiport ↗
+           aria-label="View ${c.certName} certificate (opens PDF in new tab)">
+          Verify Credential ↗
         </a>
       </div>
 
@@ -135,8 +140,6 @@ function renderCertifications() {
       in my projects. Tilt a card, click it to flip it, or pick one to
       bring it to the front.
     </p>
-
-    <a href="#" class="cert-btn">Verify credential</a>
 
     <div class="cert-chips" role="group" aria-label="Select certificate">
       ${CERT_DATA.map((c, i) => `

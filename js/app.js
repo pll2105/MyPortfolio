@@ -12,7 +12,7 @@
 import {
   meta, navLinks, projects, projectFilters,
   skillCards, certifications, roleLens,
-  techLogos, focusAreas,
+  techLogos, focusAreas, contact,
 } from './data.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -670,44 +670,214 @@ function renderEduCard() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CONTACT
+// CONTACT  (redesigned two-column layout)
 // ─────────────────────────────────────────────────────────────────────────────
+
+// Inline SVG helpers (stroke, aria-hidden, round caps/joins)
+const SVG = {
+  copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12"/></svg>`,
+  code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  people: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+  arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  arrowUp: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>`,
+};
+
 function renderContact() {
-  const el = document.getElementById('contact-actions');
-  if (!el) return;
-  el.innerHTML = `
-    <button class="btn-contact btn-contact--email" id="copy-email-btn"
-      type="button" aria-label="Copy email address">
-      ${I.copy} Copy email
-    </button>
-    <a href="mailto:${meta.email}" class="btn-contact btn-contact--outline"
-      aria-label="Send email">
-      ${I.mail} ${meta.email}
-    </a>
-    <a href="${meta.github}" target="_blank" rel="noopener noreferrer"
-       class="btn-contact btn-contact--outline" aria-label="GitHub profile">
-      ${I.github} GitHub
-    </a>
-    <a href="${meta.linkedin}" target="_blank" rel="noopener noreferrer"
-       class="btn-contact btn-contact--outline" aria-label="LinkedIn profile">
-      ${I.linkedin} LinkedIn
-    </a>
-    <a href="${meta.resume}" download
-       class="btn-contact btn-contact--outline" aria-label="Download resume PDF">
-      ${I.download} Download resume
-    </a>`;
-  document.getElementById('copy-email-btn')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(meta.email)
-      .then(() => showToast('Email copied!'))
+  const section = document.getElementById('contact');
+  if (!section) return;
+
+  // ── Roles markup ─────────────────────────────────────────────────────────
+  const rolesHTML = contact.roles.map(r => r.featured
+    ? `<li><span class="ct-chip-filled">${r.label}
+         <span class="ct-chip-tag">${r.tag}</span>
+       </span></li>`
+    : `<li><span class="ct-chip-outline">${r.label}</span></li>`
+  ).join('');
+
+  // ── Link rows ─────────────────────────────────────────────────────────────
+  const links = [
+    {
+      href:    contact.github,
+      target:  '_blank',
+      rel:     'noopener noreferrer',
+      tile:    '',
+      icon:    SVG.code,
+      title:   'GitHub',
+      sub:     'Browse my code and projects',
+      label:   'View GitHub profile',
+    },
+    {
+      href:    contact.linkedin,
+      target:  '_blank',
+      rel:     'noopener noreferrer',
+      tile:    '',
+      icon:    SVG.people,
+      title:   'LinkedIn',
+      sub:     "Let's connect professionally",
+      label:   'View LinkedIn profile',
+    },
+    {
+      href:    contact.resume,
+      target:  '_blank',
+      rel:     'noopener noreferrer',
+      tile:    'ct-link-tile--resume',
+      icon:    SVG.download,
+      title:   'View résumé',
+      sub:     contact.resumeNote,
+      label:   'View resume PDF',
+    },
+  ];
+
+  const linksHTML = links.map(l => `
+    <a href="${l.href}"
+       class="ct-link-row"
+       target="${l.target}"
+       rel="${l.rel}"
+       aria-label="${l.label}">
+      <div class="ct-link-tile ${l.tile}" aria-hidden="true">${l.icon}</div>
+      <div class="ct-link-text">
+        <div class="ct-link-title">${l.title}</div>
+        <div class="ct-link-sub">${l.sub}</div>
+      </div>
+      <span class="ct-link-arrow" aria-hidden="true">${SVG.arrow}</span>
+    </a>`).join('');
+
+  // ── Full section HTML ─────────────────────────────────────────────────────
+  section.innerHTML = `
+    <!-- ARIA live for copy announcement -->
+    <div id="ct-copy-announce" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="ct-inner">
+
+      <!-- LEFT: heading, intro, roles -->
+      <div class="ct-left">
+        <h2 class="ct-heading" id="contact-heading">
+          Let's <mark>talk.</mark>
+        </h2>
+        <p class="ct-intro">${contact.intro}</p>
+        <div class="ct-roles-wrap">
+          <p class="ct-roles-label">ROLES I'M AIMING FOR</p>
+          <ul class="ct-roles-list" aria-label="Target roles">${rolesHTML}</ul>
+        </div>
+      </div>
+
+      <!-- RIGHT: terminal contact card -->
+      <div class="ct-card" role="region" aria-label="Contact card">
+
+        <!-- Title bar -->
+        <div class="ct-card-bar" aria-hidden="true">
+          <div class="ct-bar-dots">
+            <span class="ct-dot ct-dot--red"></span>
+            <span class="ct-dot ct-dot--yellow"></span>
+            <span class="ct-dot ct-dot--green"></span>
+          </div>
+          <span class="ct-bar-label">reach_me.sh</span>
+        </div>
+
+        <!-- Body -->
+        <div class="ct-card-body">
+
+          <!-- Email row -->
+          <div class="ct-email-row">
+            <div class="ct-email-info">
+              <span class="ct-email-label">EMAIL</span>
+              <a href="mailto:${contact.email}"
+                 class="ct-email-addr"
+                 aria-label="Send email to ${contact.email}">
+                ${contact.email}
+              </a>
+            </div>
+            <button class="ct-copy-btn"
+                    id="ct-copy-btn"
+                    type="button"
+                    aria-label="Copy email address to clipboard">
+              ${SVG.copy}
+              <span id="ct-copy-label">Copy</span>
+            </button>
+          </div>
+
+          <!-- Link rows -->
+          ${linksHTML}
+
+          <!-- Status line -->
+          <p class="ct-status">
+            <span>$ status</span>
+            <span class="ct-status-value">${contact.status}</span>
+          </p>
+
+        </div><!-- /.ct-card-body -->
+      </div><!-- /.ct-card -->
+    </div><!-- /.ct-inner -->
+  `;
+
+  // ── Copy email behavior ───────────────────────────────────────────────────
+  const copyBtn   = document.getElementById('ct-copy-btn');
+  const copyLabel = document.getElementById('ct-copy-label');
+  const announce  = document.getElementById('ct-copy-announce');
+
+  copyBtn?.addEventListener('click', () => {
+    const doSuccess = () => {
+      copyBtn.innerHTML  = SVG.check + '<span id="ct-copy-label">Copied</span>';
+      if (announce) announce.textContent = 'Email address copied to clipboard.';
+      showToast('Email copied!');
+      setTimeout(() => {
+        copyBtn.innerHTML  = SVG.copy + '<span id="ct-copy-label">Copy</span>';
+        if (announce) announce.textContent = '';
+      }, 2000);
+    };
+    navigator.clipboard.writeText(contact.email)
+      .then(doSuccess)
       .catch(() => {
-        const ta = Object.assign(document.createElement('textarea'),
-          { value: meta.email, style: 'position:fixed;opacity:0' });
+        // Fallback for browsers without clipboard API
+        const ta = Object.assign(document.createElement('textarea'), {
+          value: contact.email,
+          style: 'position:fixed;opacity:0',
+        });
         document.body.appendChild(ta);
         ta.select();
-        document.execCommand('copy');
+        try { document.execCommand('copy'); doSuccess(); } catch {}
         document.body.removeChild(ta);
-        showToast('Email copied!');
       });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FOOTER BAR
+// ─────────────────────────────────────────────────────────────────────────────
+function renderFooter() {
+  const footer = document.getElementById('ct-footer');
+  if (!footer) return;
+  footer.innerHTML = `
+    <div class="ct-footer-inner">
+      <span class="ct-footer-copy">© 2026 ${meta.name}</span>
+      <a href="#" class="ct-back-top" aria-label="Back to top of page">
+        Back to top ${SVG.arrowUp}
+      </a>
+    </div>`;
+
+  // Smooth scroll to top
+  footer.querySelector('.ct-back-top')?.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
@@ -767,6 +937,7 @@ function init() {
   renderFilterChips();
   renderProjectGrid();
   renderContact();
+  renderFooter();
 
   initDotGrid();
   initSpotlight();
