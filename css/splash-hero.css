@@ -27,11 +27,19 @@
   left:       0;
   right:      0;
   z-index:    200 !important;
-  /* Transparent over the hero */
+  /* Transparent over the splash hero — becomes frosted on scroll */
   background: transparent !important;
   border-bottom-color: transparent !important;
   transition: background 300ms ease, border-bottom-color 300ms ease,
               box-shadow 300ms ease, backdrop-filter 300ms ease !important;
+}
+
+/* Browsers that don't support backdrop-filter get a solid bg immediately */
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header {
+    background: rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.95) !important;
+    border-bottom-color: rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.3) !important;
+  }
 }
 
 /* After 40px scroll: frosted glass header */
@@ -41,6 +49,13 @@
   -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
   border-bottom-color: rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.25) !important;
   box-shadow:          0 1px 0 rgba(0,0,0,0.06) !important;
+}
+
+/* Solid fallback for sh-scrolled without backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header.sh-scrolled {
+    background: rgba(var(--sh-veil-r), var(--sh-veil-g), var(--sh-veil-b), 0.97) !important;
+  }
 }
 
 /* Compensate for the fixed header — only the page content below the splash

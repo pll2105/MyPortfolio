@@ -58,7 +58,8 @@
 
 /* Intro block */
 .wid-intro {
-  min-height:     100vh;
+  min-height:     100vh;    /* fallback for browsers without svh */
+  min-height:     100svh;   /* small viewport height — stable on mobile scroll */
   display:        flex;
   flex-direction: column;
   align-items:    center;
@@ -121,7 +122,8 @@
 
 /* Item */
 .wid-item {
-  min-height: 100vh;
+  min-height: 100vh;    /* fallback */
+  min-height: 100svh;   /* stable on mobile — doesn't jump when browser bar hides */
   display:    grid;
   position:   relative;
   z-index:    1;

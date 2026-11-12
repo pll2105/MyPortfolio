@@ -183,27 +183,9 @@
 }
 
 /* --------------------------------------------------------------------------
-   ROLE LENS — sticky chip row (mobile, below header; desktop: in hero)
+   ROLE LENS — desktop only (mobile chip row removed)
    -------------------------------------------------------------------------- */
-.role-lens-strip {
-  display: none; /* shown on mobile only */
-  align-items: center;
-  gap: var(--s1);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding: 0.5rem var(--s2);
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: var(--nav-h);
-  z-index: 90;
-}
-
-.role-lens-strip::-webkit-scrollbar { display: none; }
-
-@media (max-width: 1023px) { .role-lens-strip { display: flex; } }
-
+/* .lens-chip is used by role-lens-desktop in the hero section */
 .lens-chip {
   display: inline-flex;
   align-items: center;
@@ -491,40 +473,72 @@
   margin-bottom: var(--s3);
 }
 
+/* ── Tech logos — CSS grid (always balanced, never wraps unevenly) ──────── */
+
 .tech-logos {
-  display:    flex;
-  align-items:center;
-  flex-wrap:  wrap;          /* logos wrap to the next line instead of scrolling */
-  gap:        var(--s3) var(--s4);
-  overflow-x: visible;
-  padding-bottom: 4px;
+  /* Mobile-first: 5 × 2 grid for exactly 10 logos */
+  display:               grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap:            16px;
+  row-gap:               20px;
+  /* Center the whole grid in the container */
+  justify-items:         center;
+  align-items:           center;
+  /* No horizontal scroll ever */
+  overflow-x:            hidden;
+}
+
+/* Very narrow (280px foldable): tighten gaps, icons already scale via clamp */
+@media (max-width: 359px) {
+  .tech-logos {
+    column-gap: 12px;
+    row-gap:    16px;
+  }
+}
+
+/* 768px and up: 10-column single row, capped and centered */
+@media (min-width: 768px) {
+  .tech-logos {
+    grid-template-columns: repeat(10, 1fr);
+    column-gap:            24px;
+    row-gap:               0;
+    max-width:             720px;
+    margin-left:           auto;
+    margin-right:          auto;
+  }
 }
 
 .tech-logos::-webkit-scrollbar { display: none; }
 
-/* Each logo is a link */
+/* Each logo cell */
 .tech-logo-btn {
-  display: flex;
-  align-items: center;
+  display:         flex;
+  align-items:     center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: var(--r-md);
+  /* square touch-target */
+  width:           clamp(40px, 10vw, 48px);
+  height:          clamp(40px, 10vw, 48px);
+  border-radius:   var(--r-md);
   text-decoration: none;
-  position: relative;
-  transition: transform 220ms ease, filter 220ms ease;
-  /* tooltip via title attribute — enhanced with custom tooltip below */
+  position:        relative;
+  transition:      transform 220ms ease, filter 220ms ease;
 }
 
+/* Phone icon size: scales between 32px (280px viewport) and 40px (430px+) */
 .tech-logo-btn img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  display: block;
-  /* slightly desaturate at rest */
-  filter: saturate(0.85);
-  transition: filter 220ms ease;
+  width:        clamp(32px, 9vw, 40px);
+  height:       clamp(32px, 9vw, 40px);
+  object-fit:   contain;
+  display:      block;
+  flex-shrink:  0;
+  filter:       saturate(0.85);
+  transition:   filter 220ms ease;
+}
+
+/* Tablet/desktop: larger icons */
+@media (min-width: 768px) {
+  .tech-logo-btn { width: 48px; height: 48px; }
+  .tech-logo-btn img { width: 44px; height: 44px; }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -631,7 +645,7 @@
   background: none;
   color: var(--muted);
   cursor: pointer;
-  min-height: 36px;
+  min-height: 44px;   /* WCAG 2.5.5 touch target (was 36px) */
   transition: color var(--ease-fast), border-color var(--ease-fast),
               background var(--ease-fast);
 }
@@ -907,7 +921,7 @@
   background: transparent;
   text-decoration: none;
   transition: background var(--ease-fast), color var(--ease-fast);
-  min-height: 40px;
+  min-height: 44px;   /* WCAG touch target (was 40px) */
 }
 
 .btn-modal-link:hover {
@@ -1106,8 +1120,8 @@
 /* Toast */
 #toast-container {
   position: fixed;
-  bottom: var(--s3);
-  right: var(--s3);
+  bottom: calc(var(--s3) + env(safe-area-inset-bottom, 0px));  /* clear iPhone home bar */
+  right: calc(var(--s3) + env(safe-area-inset-right, 0px));
   z-index: 9999;
 }
 
@@ -1161,6 +1175,9 @@
   font-weight: 500;
   color: var(--muted);
   padding: 0.75rem var(--s3);
+  min-height: 44px;    /* touch target */
+  display: flex;
+  align-items: center;
   transition: color var(--ease-fast), background var(--ease-fast);
   text-decoration: none;
   border-left: 3px solid transparent;
@@ -1188,7 +1205,7 @@
    PRINT
    -------------------------------------------------------------------------- */
 @media print {
-  .site-header, #bg-canvas, #spotlight, .role-lens-strip,
+  .site-header, #bg-canvas, #spotlight,
   .terminal-card, .contact-actions { display: none !important; }
   body { background: white; color: black; }
 }

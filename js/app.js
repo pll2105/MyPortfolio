@@ -929,7 +929,7 @@ function init() {
 
   renderHeader();
   renderOffcanvas();
-  renderLens('role-lens-strip');
+  // role-lens-strip removed — no mobile chip row
   // certifications.js handles #certifications — no role-lens-desktop in that section
   renderTechLogos();
   renderWhatIDo();

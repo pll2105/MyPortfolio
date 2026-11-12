@@ -339,7 +339,9 @@ function initSplashHero() {
   const header = document.getElementById('site-header');
   function updateHeader() {
     if (!header) return;
-    header.classList.toggle('sh-scrolled', window.scrollY > 40);
+    // Show header background once scrolled past 40px OR past the splash section
+    const splashH = section.offsetHeight || window.innerHeight;
+    header.classList.toggle('sh-scrolled', window.scrollY > 40 || window.scrollY >= splashH - 10);
   }
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
