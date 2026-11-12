@@ -30,14 +30,13 @@ export const meta = {
   // CONFIRM: Replace with your email
   email: "piaelleinelucero2105@gmail.com",
 
-  // CONFIRM: Replace with your LinkedIn URL
+  // [CONFIRM] Replace with your LinkedIn URL
   linkedin: "https://www.linkedin.com/in/pia-elleine-lucero-08960844a",
 
-  // CONFIRM: Replace with your GitHub URL
+  // [CONFIRM] Replace with your GitHub URL
   github: "https://github.com/pll2105",
 
-  // Resume PDF — place at assets/resume.pdf
-  resume: "assets/resume.pdf",
+  resume: "resume.html",
 
   // CONFIRM: graduation year
   gradYear: "2027",
@@ -517,11 +516,11 @@ export const contact = {
   heading:    "Let's talk.",
   intro:      "Have a project, an internship opening, or a question about my work? Send me a message. I'd love to hear what you're building.",
   email:      "piaelleinelucero2105@gmail.com",
+  // [CONFIRM] Existing portfolio profile URLs; verify before publishing.
   github:     "https://github.com/pll2105",
   linkedin:   "https://www.linkedin.com/in/pia-elleine-lucero-08960844a",
-  resume:     "assets/Pia_Lucero_Resume.pdf",   // view-only — no download attribute
-  // CONFIRM: confirm actual page count
-  resumeNote: "PDF · 1",
+  resume:     "resume.html",
+  resumeLabel:"Resume",
   status:     "--open-to-work",
   roles: [
     { label: "Business Analyst",    tag: "1st choice", featured: true  },
@@ -529,5 +528,117 @@ export const contact = {
     { label: "Front-End Developer",                    featured: false },
     { label: "UI/UX Designer",                         featured: false },
     { label: "QA Tester",                              featured: false },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// RESUME PAGE
+// Keep resume content here so the page renderer only handles presentation.
+// ---------------------------------------------------------------------------
+export const resume = {
+  eyebrow: "RESUME",
+  headline: "Coordination, code, and research in ",
+  highlight: "one record.",
+  intro: "A concise view of my academic projects, skills, and the roles I’m aiming for.",
+  name: "Pia Elleine L. Lucero",
+  affiliation: "BS Information Technology student · National University Dasmariñas · Dasmariñas, Cavite",
+  phoneNotice: "Phone number available on request",
+  summary:
+    "Fourth-year BSIT student with academic project experience in web and mobile development, " +
+    "UI/UX, software testing, requirements-related research, and project coordination. Seeking a " +
+    "400-hour OJT where technical skills, analytical thinking, and collaboration can support a " +
+    "software or IT team.",
+  education: [
+    {
+      title: "National University | Dasmariñas, Cavite",
+      detail: "Bachelor of Science in Information Technology (BSIT), 4th year",
+      status: "Expected 2027",
+    },
+    {
+      title: "Cavite Science Integrated School | Maragondon, Cavite",
+      detail: "Senior High School, STEM (Regional Science High School)",
+      status: "2023",
+    },
+    {
+      title: "King’s Way Christian Academe | Naic, Cavite",
+      detail: "Junior High School",
+      status: "2021",
+    },
+  ],
+  projects: [
+    {
+      title: "ALWAN, Online Lending Application",
+      tag: "Capstone",
+      status: "Deployed",
+      stack: "React, Tailwind CSS, Supabase",
+      bullets: [
+        "Led the project team: assigned tasks, coordinated development, conducted research, and maintained documentation.",
+        "Coordinated with developers and project stakeholders while contributing to the frontend.",
+      ],
+    },
+    {
+      title: "NOOK PH, Rental Management Application",
+      status: "Academic · Not deployed",
+      bullets: [
+        "Coordinated a five-member team: organized tasks, followed up on progress, and aligned contributions with project requirements.",
+        "Contributed to research, documentation, and frontend work.",
+      ],
+    },
+    {
+      title: "Kya Ko Yarn, E-commerce Website",
+      status: "Academic · Deployed on Vercel",
+      bullets: [
+        "Led a six-member team through task distribution, research, documentation, and coordination with stakeholders.",
+        "Contributed to frontend development and helped complete the project.",
+      ],
+    },
+    {
+      title: "LakbAI / TsuperTech, Jeepney QR Fare and Location Concept",
+      status: "Academic · Concept",
+      bullets: [
+        "Worked on a proposed QR-based jeepney fare and location solution, using React/Expo and Firebase.",
+        "Contributed to early planning of user-facing and operational workflows.",
+      ],
+    },
+  ],
+  skills: [
+    {
+      label: "Project coordination",
+      items: "task assignment, team coordination, progress follow-up, research, documentation",
+    },
+    {
+      label: "Business/system analysis",
+      items: "requirements-related research, understanding project needs, stakeholder communication",
+    },
+    { label: "Web", items: "HTML, CSS, Tailwind CSS, React, Flutter, Bootstrap" },
+    { label: "Mobile", items: "Flutter, React Native, Expo" },
+    { label: "Backend", items: "Java, Supabase, MySQL, Oracle Database" },
+    { label: "Design", items: "Figma, UI/UX fundamentals, Canva" },
+    {
+      label: "Tools",
+      items: "Google Docs, Sheets, and Drive, Microsoft Excel, Jira (basic familiarity), Git, GitHub, Visual Studio Code, Android Studio",
+    },
+    { label: "Other", items: "AI-assisted frontend development; basic AI concepts" },
+  ],
+  organizations: [
+    {
+      title: "Graphic Designer | Computer Society",
+      detail: "Designed publication materials (pubmats) for organization events and announcements.",
+    },
+  ],
+  certifications: [
+    { title: "Certiport Certification | HTML and CSS", status: "Jun 2026" },
+    { title: "Certiport Certification | Databases", status: "Sep 2025" },
+  ],
+  additional: [
+    {
+      label: "Availability",
+      detail: "required 400-hour OJT; schedule and start date to be coordinated with the employer",
+    },
+    { label: "Languages", detail: "Filipino, English" },
+    {
+      label: "Soft skills",
+      detail: "Leadership, teamwork, communication, time management, adaptability, attention to detail",
+    },
   ],
 };

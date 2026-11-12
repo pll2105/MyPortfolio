@@ -317,6 +317,13 @@
 }
 
 /* ── Link rows (GitHub, LinkedIn, Resume) ───────────────────────────────── */
+.ct-link-list {
+  display:         grid;
+  grid-auto-rows:  1fr;
+  gap:             10px;
+  min-width:       0;
+}
+
 .ct-link-row {
   display:       flex;
   align-items:   center;

@@ -202,46 +202,46 @@ function setActive(newIdx) {
 // ─────────────────────────────────────────────────────────────────────────────
 // TILT + GLARE — fine pointer, front card only
 // ─────────────────────────────────────────────────────────────────────────────
+function attachCardControls(cardEl) {
+  cardEl.addEventListener('click', e => handleCardClick(e, cardEl));
+  cardEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCardClick(e, cardEl);
+    }
+  });
+}
+
 function attachTilt(cardEl) {
-  if (RM) return;
-  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-
-  const tiltEl  = cardEl.querySelector('.cert-tilt');
-  const frontEl = cardEl.querySelector('.cert-front');
-  if (!tiltEl || !frontEl) return;
-
-  // Clone to strip old listeners
+  // Clone to strip old listeners before wiring the card for its new state.
   const fresh = cardEl.cloneNode(true);
   cardEl.parentNode.replaceChild(fresh, cardEl);
 
   const tilt  = fresh.querySelector('.cert-tilt');
   const front = fresh.querySelector('.cert-front');
+  const canTilt = !RM && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  fresh.addEventListener('pointermove', e => {
-    if (e.pointerType === 'touch') return;
-    const r  = fresh.getBoundingClientRect();
-    const x  = (e.clientX - r.left) / r.width;
-    const y  = (e.clientY - r.top)  / r.height;
-    tilt.style.setProperty('--ry', `${(x - .5) * 16}deg`);
-    tilt.style.setProperty('--rx', `${(.5 - y) * 12}deg`);
-    front.style.setProperty('--gx', `${(x * 100).toFixed(1)}%`);
-    front.style.setProperty('--gy', `${(y * 100).toFixed(1)}%`);
-    front.style.setProperty('--go', '1');
-  }, { passive: true });
+  if (canTilt && tilt && front) {
+    fresh.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const r  = fresh.getBoundingClientRect();
+      const x  = (e.clientX - r.left) / r.width;
+      const y  = (e.clientY - r.top)  / r.height;
+      tilt.style.setProperty('--ry', `${(x - .5) * 16}deg`);
+      tilt.style.setProperty('--rx', `${(.5 - y) * 12}deg`);
+      front.style.setProperty('--gx', `${(x * 100).toFixed(1)}%`);
+      front.style.setProperty('--gy', `${(y * 100).toFixed(1)}%`);
+      front.style.setProperty('--go', '1');
+    }, { passive: true });
 
-  fresh.addEventListener('pointerleave', () => {
-    tilt.style.setProperty('--rx', '0deg');
-    tilt.style.setProperty('--ry', '0deg');
-    front.style.setProperty('--go', '0');
-  }, { passive: true });
+    fresh.addEventListener('pointerleave', () => {
+      tilt.style.setProperty('--rx', '0deg');
+      tilt.style.setProperty('--ry', '0deg');
+      front.style.setProperty('--go', '0');
+    }, { passive: true });
+  }
 
-  fresh.addEventListener('click',   e => handleCardClick(e, fresh));
-  fresh.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleCardClick(e, fresh);
-    }
-  });
+  attachCardControls(fresh);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -269,23 +269,9 @@ function attachBehavior(section) {
 
   deck.querySelectorAll('.cert-card').forEach(card => {
     if (card.classList.contains('front')) {
-      if (RM) {
-        card.addEventListener('click',   e => handleCardClick(e, card));
-        card.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault(); handleCardClick(e, card);
-          }
-        });
-      } else {
-        attachTilt(card);  // attachTilt clones and re-wires
-      }
+      attachTilt(card);
     } else {
-      card.addEventListener('click',   e => handleCardClick(e, card));
-      card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault(); handleCardClick(e, card);
-        }
-      });
+      attachCardControls(card);
     }
   });
 

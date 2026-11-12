@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description"
+    content="A concise resume of Pia Elleine L. Lucero's academic projects, skills, and experience.">
+  <meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1626" media="(prefers-color-scheme: dark)">
+  <title>Pia Elleine L. Lucero – Resume</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/resume.css">
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('portfolio-theme');
+      var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = saved === 'dark' || saved === 'light' ? saved : system;
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+
+<body class="resume-page">
+  <a href="#resume-main" class="skip-link">Skip to resume content</a>
+
+  <header class="resume-topbar">
+    <div class="resume-topbar-inner mx-auto flex items-center justify-between">
+      <a class="resume-brand flex items-center" href="index.html" aria-label="Pia Lucero — portfolio home">
+        <img src="assets/logo.svg" width="36" height="36" alt="">
+        <span>Pia Lucero</span>
+      </a>
+      <a class="resume-back flex items-center justify-center" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        <span class="resume-back-full">Back to portfolio</span>
+        <span class="resume-back-short">Back</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="resume-main" class="resume-main">
+    <article class="resume-card mx-auto w-full" aria-label="Resume">
+      <div class="resume-card-bar" aria-hidden="true">
+        <div class="resume-card-dots">
+          <span class="resume-dot resume-dot--red"></span>
+          <span class="resume-dot resume-dot--yellow"></span>
+          <span class="resume-dot resume-dot--green"></span>
+        </div>
+        <span class="resume-card-label">pia_lucero.resume</span>
+      </div>
+      <div id="resume-content" class="resume-card-body"></div>
+    </article>
+  </main>
+
+  <footer class="resume-page-footer mx-auto flex items-center justify-between">
+    <span>© 2026 Pia Lucero</span>
+    <a class="resume-back-top flex items-center" href="#resume-main">
+      Back to top
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="12" y1="19" x2="12" y2="5"/>
+        <polyline points="5 12 12 5 19 12"/>
+      </svg>
+    </a>
+  </footer>
+
+  <script type="module" src="js/resume.js"></script>
+</body>
+</html>

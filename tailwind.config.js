@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     './index.html',
+    './resume.html',
     './js/**/*.js',
   ],
 
