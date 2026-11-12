@@ -178,8 +178,35 @@
 .menu-btn svg { width: 20px; height: 20px; pointer-events: none; }
 
 @media (max-width: 779px) {
-  .header-nav { display: none; }
-  .menu-btn   { display: flex; }
+  .site-header { height: auto; }
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand controls"
+      "nav nav";
+    height: auto;
+    min-height: var(--nav-h);
+    padding-block: var(--s1);
+    gap: var(--s1) var(--s2);
+  }
+
+  .header-brand { grid-area: brand; }
+  .header-nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(0.5rem, 3vw, 1.25rem);
+    width: 100%;
+  }
+  .header-nav a {
+    font-size: clamp(0.7rem, 3.2vw, 0.875rem);
+    white-space: nowrap;
+  }
+
+  .header-right { grid-area: controls; }
+  .menu-btn { display: none; }
 }
 
 /* --------------------------------------------------------------------------
