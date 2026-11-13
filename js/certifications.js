@@ -34,7 +34,7 @@ const CERT_DATA = [
   {
     id:          'cert-second',
     ac:          '#12b184',
-    certName:    'DATABASE',
+    certName:    'DATABASES',
     holderName:  'Pia Elleine L. Lucero',           
     issued:      'September 2025',               
     credentialId: "wNdRJ-2Fvb",           
@@ -48,6 +48,8 @@ const CERT_DATA = [
     ],
   },
 ];
+
+const CHIP_LABELS = ['HTML and CSS', 'Databases'];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // STATE
@@ -121,8 +123,6 @@ function renderCertifications() {
   const section = document.getElementById('certifications');
   if (!section) return;
 
-  const chipLabels = ['HTML and CSS', 'Second certificate'];
-
   section.innerHTML = `
 <div class="certs-inner">
 
@@ -148,7 +148,7 @@ function renderCertifications() {
               aria-pressed="${i === activeIdx}"
               aria-label="Show ${c.certName} certificate"
               data-chip-idx="${i}">
-        ${i === activeIdx ? '✓ ' : ''}${chipLabels[i]}
+        ${i === activeIdx ? '✓ ' : ''}${CHIP_LABELS[i]}
       </button>`).join('')}
     </div>
   </div>
@@ -173,7 +173,6 @@ function setActive(newIdx) {
   const deck     = document.getElementById('cert-deck');
   const cards    = Array.from(deck.querySelectorAll('.cert-card'));
   const chips    = Array.from(document.querySelectorAll('.cert-chip'));
-  const labels   = ['HTML and CSS', 'Second certificate'];
 
   cards.forEach(c => c.classList.remove('flipped'));
   activeIdx = newIdx;
@@ -189,7 +188,7 @@ function setActive(newIdx) {
   chips.forEach((chip, i) => {
     const active = i === activeIdx;
     chip.setAttribute('aria-pressed', String(active));
-    chip.textContent = active ? `✓ ${labels[i]}` : labels[i];
+    chip.textContent = active ? `✓ ${CHIP_LABELS[i]}` : CHIP_LABELS[i];
   });
 
   announce(`Now showing: ${CERT_DATA[activeIdx].certName}`);
